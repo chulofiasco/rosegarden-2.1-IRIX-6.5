@@ -1,0 +1,4 @@
+#define darkgrey_width 2
+#define darkgrey_height 2
+static char darkgrey_bits[] = {
+   0x01, 0x02};

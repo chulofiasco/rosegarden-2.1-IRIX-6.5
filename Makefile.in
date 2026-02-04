@@ -1,0 +1,302 @@
+#
+# Chris Cannam, February 1995 and on
+
+
+# This should point to a Bourne shell (bash will do)
+
+SHELL		= /bin/sh
+
+
+# Root of the Rosegarden tree.  This will be exported to
+# inferior makes
+
+ROSEGARDEN	= @rosegarden@
+
+
+# System include directories.  This will also be exported
+
+SYSINCDIRS	= @X_CFLAGS@
+
+
+# System library directories, also exported
+
+SYSLDFLAGS	= @X_LIBS@ @LDFLAGS@ @X_PRE_LIBS@ @X_EXTRA_LIBS@
+SYSEXTRALIBS	= @extra_libs@
+
+
+# ranlib program, make it just "touch" or something if your
+# archiver doesn't need a separate contents-table generator
+
+RANLIB		= @RANLIB@
+
+
+# makedepend program, if you don't have it just use
+# /bin/true or something (anything that won't actually fail)
+
+MAKEDEPEND	= @MAKEDEPEND@ @makedepend_flag@
+
+
+# Flags for both compilation and linking stages
+
+#OPTFLAGS	= -ansi -pipe -O
+OPTFLAGS	= @CFLAGS@
+
+
+# Compile defines
+DEFINES		= @defines@
+
+# Name of the compiler, plus any flags common to both compile
+# and link stages; also exported
+
+CC		= @CC@
+
+###
+###
+###
+###
+
+# Nothing below this line will be exported, so leave it alone
+
+EXPORTATION	= ROSEGARDEN="$(ROSEGARDEN)" ; SYSINCDIRS="$(SYSINCDIRS)" ; SYSLDFLAGS="$(SYSLDFLAGS)" ; CC="$(CC)" ; DEFINES="$(DEFINES)" ; RANLIB="$(RANLIB)" ; OPTFLAGS="$(OPTFLAGS)" ; MAKEDEPEND="$(MAKEDEPEND)" ; SYSEXTRALIBS="$(SYSEXTRALIBS)" ; export ROSEGARDEN SYSINCDIRS DEFINES SYSLDFLAGS CC RANLIB OPTFLAGS MAKEDEPEND SYSEXTRALIBS
+
+LISTLIB		= $(ROSEGARDEN)/lists/lib/libLists.a
+YAWNLIB		= $(ROSEGARDEN)/yawn/lib/libY.a
+LOCKLIB		= $(ROSEGARDEN)/interlock/lib/libInterlock.a
+MIDILIB		= $(ROSEGARDEN)/midi/lib/libMidi.a
+REGXLIB		= $(ROSEGARDEN)/regexp/lib/libRegexp.a
+MAPPLIB		= $(ROSEGARDEN)/mapper/lib/libMapper.a
+
+TOPBOX		= $(ROSEGARDEN)/bin/rosegarden
+SEQUENCER	= $(ROSEGARDEN)/bin/sequencer
+EDITOR		= $(ROSEGARDEN)/bin/editor
+
+DO_SUBMAKE	= $(MAKE)
+
+all:		structure depend Libraries Rosegarden midi-tools
+Libraries:	@rosegarden_libs@ @Petal@ Mapper
+Rosegarden:	Sequencer Editor Topbox
+
+
+Lists:
+		echo ; echo Checking the List library ; echo
+		rm -f $(LISTLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/lists/src ; $(DO_SUBMAKE) )
+
+Yawn:
+		echo ; echo Checking the Yawn library ; echo
+		rm -f $(YAWNLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/yawn/src ; $(DO_SUBMAKE) )
+
+Interlock:
+		echo ; echo Checking the Interlock library ; echo
+		rm -f $(LOCKLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/interlock/src ; \
+		  $(DO_SUBMAKE) )
+
+Midi:
+		echo ; echo Checking the Midi library ; echo
+		rm -f $(MIDILIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/midi/src ; $(DO_SUBMAKE) )
+
+Regexp:
+		echo ; echo Checking the Regexp library ; echo
+		rm -f $(REGXLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/regexp/src ; $(DO_SUBMAKE) )
+
+Mapper:
+		echo ; echo Checking the Mapper library ; echo
+		rm -f $(MAPPLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/mapper/src ; $(DO_SUBMAKE) )
+
+Petal:
+		echo ; echo Checking the Petal library ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/petal ; $(DO_SUBMAKE) ) || \
+		( echo ; echo Petal build failed, ignoring ; echo ; true )
+
+
+# these all used to begin with $(MAKE) Libraries
+# but I decided that was just possibly overkill
+
+Sequencer:
+		rm -f $(SEQUENCER)
+		echo ; echo Checking the Sequencer ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/sequencer/src ; \
+		  $(DO_SUBMAKE) )
+
+Editor:
+		rm -f $(EDITOR)
+		echo ; echo Checking the Editor ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/editor/src ; \
+		  $(DO_SUBMAKE) )
+
+Topbox:
+		rm -f $(TOPBOX)
+		echo ; echo Checking the Top Box ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/topbox/src ; \
+		  $(DO_SUBMAKE) )
+
+depend:
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/lists/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/yawn/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/interlock/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/midi/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/mapper/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/regexp/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/sequencer/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/editor/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/topbox/src ; \
+		  $(MAKE) depend )
+
+midi-tools:	Midi Lists
+		echo ; echo Building MIDI utility tools ; echo
+		@mkdir -p $(ROSEGARDEN)/bin
+		$(CC) $(OPTFLAGS) -n32 -I$(ROSEGARDEN)/include -o $(ROSEGARDEN)/bin/dump-midi-events \
+		    $(ROSEGARDEN)/miditools/dump-midi-events.c \
+		    $(MIDILIB) $(LISTLIB) \
+		    -L/usr/lib32 -lmd -ldmedia
+		$(CC) $(OPTFLAGS) -n32 -I$(ROSEGARDEN)/include -o $(ROSEGARDEN)/bin/test-midi-devices \
+		    $(ROSEGARDEN)/miditools/test-midi-devices.c \
+		    -L/usr/lib32 -lmd -ldmedia
+		$(CC) $(OPTFLAGS) -n32 -I$(ROSEGARDEN)/include -o $(ROSEGARDEN)/bin/test-midi-timing \
+		    $(ROSEGARDEN)/miditools/test-midi-timing.c \
+		    -L/usr/lib32 -lmd -ldmedia
+		@echo Built dump-midi-events, test-midi-devices, test-midi-timing
+
+clean:
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/lists/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/yawn/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/interlock/src ; \
+		  $(MAKE) clean )
+		rm -f $(ROSEGARDEN)/bin/dump-midi-events
+		rm -f $(ROSEGARDEN)/bin/test-midi-devices
+		rm -f $(ROSEGARDEN)/bin/test-midi-timing
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/petal ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/midi/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/mapper/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/regexp/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/sequencer/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/editor/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/topbox/src ; \
+		  $(MAKE) clean )
+		rm -f *.o
+
+distclean:
+		$(MAKE) clean
+		rm -f $(SEQUENCER) $(EDITOR) $(TOPBOX)
+		rm -f $(LISTLIB) $(YAWNLIB) $(LOCKLIB) $(MIDILIB) $(REGXLIB)
+		cd $(ROSEGARDEN)
+		rm -f */src/Makefile.bak \
+		      */src/Makefile.orig \
+		      */src/Makefile-old
+		rm -f *~ */*/*~ core bin/core
+		rm -f config.h config.cache config.log config.status
+		rm -f Makefile petal/Makefile
+
+lint:
+		$(MAKE) CC="g++ -Wall" clean all
+
+structure:
+		chmod +x $(ROSEGARDEN)/scripts/make-structure.sh
+		$(ROSEGARDEN)/scripts/make-structure.sh $(ROSEGARDEN)
+
+dist:
+		@echo "Creating distribution tarball..."
+		rm -rf rosegarden-dist rosegarden-2.1-irix.tar rosegarden-2.1-irix.tar.gz
+		mkdir -p rosegarden-dist/bin
+		mkdir -p rosegarden-dist/lib/rosegarden/bin
+		mkdir -p rosegarden-dist/lib/rosegarden/example
+		mkdir -p rosegarden-dist/lib/rosegarden/synth-patches
+		mkdir -p rosegarden-dist/lib/rosegarden/miditools
+		cp bin/rosegarden rosegarden-dist/bin/
+		cp bin/sequencer rosegarden-dist/lib/rosegarden/bin/
+		cp bin/editor rosegarden-dist/lib/rosegarden/bin/
+		test -f bin/dump-midi-events && cp bin/dump-midi-events rosegarden-dist/lib/rosegarden/miditools/ || true
+		test -f bin/test-midi-devices && cp bin/test-midi-devices rosegarden-dist/lib/rosegarden/miditools/ || true
+		test -f bin/test-midi-timing && cp bin/test-midi-timing rosegarden-dist/lib/rosegarden/miditools/ || true-filters
+		cp bin/rosegarden rosegarden-dist/bin/
+		cp bin/sequencer rosegarden-dist/lib/rosegarden/bin/
+		cp bin/editor rosegarden-dist/lib/rosegarden/bin/
+		cp common/music/glazunov.rose rosegarden-dist/lib/rosegarden/example/
+		cp common/synth-patches/std.sb rosegarden-dist/lib/rosegarden/synth-patches/
+		cp common/synth-patches/drums.sb rosegarden-dist/lib/rosegarden/synth-patches/
+		cp common/help/rosehelp.info rosegarden-dist/lib/rosegarden/help/
+		cp common/help/rosehelp.hnx rosegarden-dist/lib/rosegarden/help/
+		test -f petal/Petal.so && cp petal/Petal.so rosegarden-dist/lib/rosegarden/petal/ || true
+		test -f petal/pkgIndex.tcl && cp petal/pkgIndex.tcl rosegarden-dist/lib/rosegarden/petal/ || true
+		cp petal/Petal.tcl rosegarden-dist/lib/rosegarden/petal/
+		cp petal/petaleditor/PetalEditor.tcl rosegarden-dist/lib/rosegarden/petal/
+		cp petal/petalmidi/PetalMidi.tcl rosegarden-dist/lib/rosegarden/petal/
+		cp petal/harmonizer.tcl rosegarden-dist/lib/rosegarden/rosepetal-filters/
+		cp petal/pattern.tcl rosegarden-dist/lib/rosegarden/rosepetal-filters/
+		cp Rosegarden rosegarden-dist/lib/rosegarden/
+		cp README rosegarden-dist/
+		cp ANNOUNCEMENT rosegarden-dist/
+		cp do-install rosegarden-dist/
+		cp install-sh rosegarden-dist/
+		cp env.sh rosegarden-dist/
+		cp env.csh rosegarden-dist/
+		( cd rosegarden-dist ; tar cvf ../rosegarden-2.1-irix.tar . )
+		gzip rosegarden-2.1-irix.tar
+		rm -rf rosegarden-dist
+		@echo "Created rosegarden-2.1-irix.tar.gz"
+
+env-scripts:
+		@echo "Creating environment setup scripts..."
+		@echo '#!/bin/sh' > env.sh
+		@echo '# Rosegarden 2.1 environment setup for IRIX 6.5 (sh/bash)' >> env.sh
+		@echo 'TCLLIBPATH="/usr/local/lib/tclmidi /usr/local/lib/rosegarden/petal"' >> env.sh
+		@echo 'export TCLLIBPATH' >> env.sh
+		@echo '' >> env.sh
+		@echo '# Set X resources for Rosegarden (use actual build directory)' >> env.sh
+		@echo 'ROSEGARDEN_DIR="$$(cd "$$(dirname "$$0")" && pwd)"' >> env.sh
+		@echo 'XAPPLRESDIR="$$ROSEGARDEN_DIR"' >> env.sh
+		@echo 'export XAPPLRESDIR' >> env.sh
+		@echo '' >> env.sh
+		@echo 'CC=cc' >> env.sh
+		@echo 'CFLAGS="-n32 -woff 608"' >> env.sh
+		@echo 'CXX=CC' >> env.sh
+		@echo 'CXXFLAGS="-n32 -woff 608 -I/usr/include -I/usr/include/CC"' >> env.sh
+		@echo 'LDFLAGS="-n32 -L/usr/lib32 -L/usr/freeware/lib/tcl8.0/"' >> env.sh
+		@echo 'CPPFLAGS="-I/usr/freeware/include/tcl"' >> env.sh
+		@echo 'export CC CFLAGS CXX CXXFLAGS LDFLAGS CPPFLAGS' >> env.sh
+		@chmod +x env.sh
+		@echo '' >> env.sh
+		@echo 'echo "Rosegarden 2.1 build environment configured for IRIX 6.5"' >> env.sh
+		@echo 'echo "XAPPLRESDIR set to: $$XAPPLRESDIR"' >> env.sh
+		@echo 'echo "TCLLIBPATH set to: $$TCLLIBPATH"' >> env.sh
+		@echo '#!/bin/csh' > env.csh
+		@echo '# Rosegarden 2.1 environment setup for IRIX 6.5 (csh/tcsh)' >> env.csh
+		@echo 'setenv TCLLIBPATH "/usr/local/lib/tclmidi /usr/local/lib/rosegarden/petal"' >> env.csh
+		@echo '' >> env.csh
+		@echo '# Set X resources for Rosegarden (use actual build directory)' >> env.csh
+		@echo 'set ROSEGARDEN_DIR = `pwd`' >> env.csh
+		@echo 'setenv XAPPLRESDIR "$$ROSEGARDEN_DIR"' >> env.csh
+		@echo '' >> env.csh
+		@echo 'setenv CC cc' >> env.csh
+		@echo 'setenv CFLAGS "-n32 -woff 608"' >> env.csh
+		@echo 'setenv CXX CC' >> env.csh
+		@echo 'setenv CXXFLAGS "-n32 -woff 608 -I/usr/include -I/usr/include/CC"' >> env.csh
+		@echo 'setenv LDFLAGS "-n32 -L/usr/lib32 -L/usr/freeware/lib/tcl8.0/"' >> env.csh
+		@echo 'setenv CPPFLAGS "-I/usr/freeware/include/tcl"' >> env.csh
+		@echo '' >> env.csh
+		@echo 'echo "Rosegarden 2.1 build environment configured for IRIX 6.5"' >> env.csh
+		@echo 'echo "XAPPLRESDIR set to: $XAPPLRESDIR"' >> env.csh
+		@echo 'echo "TCLLIBPATH set to: $TCLLIBPATH"' >> env.csh
+		@chmod +x env.csh
+		@echo "Created env.sh and env.csh"

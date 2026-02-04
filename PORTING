@@ -1,0 +1,39 @@
+
+Porting attempts for Rosegarden 2.1
+===================================
+
+ IRIX 5.3 and 6.2
+ Solaris
+ Linux (a.out and ELF)
+	These should all build okay; check out the various
+	supplied Makefiles.  Binaries for SGI and Linux are
+	available by anonymous ftp.
+
+ IRIX 4.x, 5.2
+	Use SYSTEM_ZILOG instead of SYSTEM_SGI.  Untested for this
+        release.
+
+ HP-UX 9, 10
+	Should build, with Makefile mods; you probably shouldn't
+	have to modify the source.
+
+ IBM AIX
+	Might build, with Makefile mods.  If you have the OSS sound
+        driver, you'll probably be able to use it.
+
+ SunOS 4.x
+	Older versions of Rosegarden have been built under SunOS,
+	though you'll need an ANSI C compiler (I used the C++
+	compiler, and that was okay).  Don't know yet about this
+	version.
+
+Remember that whichever system you use, you'll need to have the Athena
+libraries and headers (libXaw and the Xaw include directory).  This 
+has been known to be a problem with HP-UX and AIX.
+
+If you manage to port the system to something else, please let me know
+-- especially if you had to modify the source to do it.  Why not
+provide your own binary distribution? -- see scripts/make-bindist.sh.
+
+
+Chris Cannam, October 1997

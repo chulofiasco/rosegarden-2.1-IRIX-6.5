@@ -1,0 +1,47 @@
+
+Rosegarden 2.1 for Unix credits and copyright
+=============================================
+
+The code contained in this directory tree was written by the following
+people:
+
+All source files below ./editor, ./topbox, ./yawn, ./lists and
+./common were written by Chris Cannam, copyright 1994-1997 Chris
+Cannam, with the following exceptions: yawn/src/YSmeBSB.c, YSmeBSB.h
+and YSmeBSBP.h were plagiarised from the X11 Project Athena widget
+set, copyright 1989 M.I.T; editor/src/[DR]echord.[ch] were written and
+contributed by Guillaume Laurent, copyright 1996 Guillaume Laurent.
+
+All source files below ./midi and ./interlock were written by Andy
+Green, copyright 1994-1997 Andrew Green.
+
+All source files below ./sequencer were written by Andy Green and Rich
+Bown, copyright 1994-1997 Andrew Green and Richard Bown.  Some parts
+were written and contributed by other authors as identified in the
+source files; in particular the Csound output code is by John ffitch.
+
+All source files below ./mapper were written by Rich Bown and Chris
+Cannam, copyright 1997 Richard Bown and Chris Cannam.
+
+All source files below ./petal were written by Guillaume Laurent,
+copyright 1997 Guillaume Laurent.
+
+All source files below ./regexp were written by Henry Spencer,
+copyright 1986, 1993, 1995 University of Toronto; yes, it's another
+copy of the legendary Henry Spencer regexp library. Small
+modifications in function definition syntax (for more pedantic ANSI-C
+and C++ compilers) were introduced by Chris Cannam.  See
+./regexp/src/COPYRIGHT for details and redistribution rights.
+
+
+Redistribution
+==============
+
+Rosegarden is distributed under the terms of the GNU General Public
+Licence.  See the file COPYING for details.  (We're using an American
+document, even though we all live in Europe, because we think its
+intentions at least are pretty much recognised everywhere.  If you
+don't think it applies to you, fine -- don't copy Rosegarden.)
+
+
+Chris Cannam, Andrew Green, Richard Bown, 1997

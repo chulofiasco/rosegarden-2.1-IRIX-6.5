@@ -1,0 +1,230 @@
+
+!!! Rosegarden X resources file.  Edit as appropriate, and place
+!!! in your home directory, XAPPLRESDIR or wherever suitable
+
+
+Rosegarden*foundDefaults: 	True
+
+
+!!! Paths, edit these
+
+Rosegarden*editorName:		/usr/local/lib/rosegarden/bin/editor
+Rosegarden*sequencerName:	/usr/local/lib/rosegarden/bin/sequencer
+Rosegarden*helpFile:		/usr/local/lib/rosegarden/help/rosehelp.info
+Rosegarden*midiFmPatchFile:	/usr/local/lib/rosegarden/synth-patches/std.sb
+Rosegarden*midiFmDrumPFile:	/usr/local/lib/rosegarden/synth-patches/drums.sb
+
+!!! directory for Petal filters.  ~/.rosepetal-filters will also be searched
+
+Rosegarden*filtersDirectory:	/usr/local/lib/rosegarden/rosepetal-filters
+
+!!! this is the default directory used for file dialogs:
+
+Rosegarden*musicDirectory:	.
+
+!!! this is for the sequencer's "Play through Slave":
+
+Rosegarden*externalPlayer:	/usr/sbin/soundplayer
+
+!!! midi device location
+!!! for OSS this is normally /dev/sequencer, for ZILOG it's
+!!! the output port (/dev/ttyd2 or whatever), and for SGI
+!!! it's not referred to at all...
+
+Rosegarden*midiPort:		internal
+
+Rosegarden*shouldWarpPointer:	False
+
+Rosegarden*midiBarEmphasis:	4
+Rosegarden*midiDynamics:	True
+
+
+!!! Colours
+
+! SGI/Win95 look (black on varying shades of grey)
+Rosegarden*highlightThickness:			0
+Rosegarden*foreground:				black
+Rosegarden*background:				#bbbbbb
+Rosegarden*yawn.noShade.background:		#bbbbbb
+Rosegarden*yawn.highlight.background:		#dddddd
+Rosegarden*yawn.lightShade.background:		#d5d5d5
+Rosegarden*yawn.surroundShade.background:	#c1c1c1
+Rosegarden*yawn.mediumShade.background:		#999999
+Rosegarden*yawn.xor.background:			#667788
+Rosegarden*yawn.xor.foreground:			#887766
+
+!! cream on green
+!Rosegarden*highlightThickness:			1
+!Rosegarden*foreground:				black
+!Rosegarden*background:				#ffe4b5
+!Rosegarden*yawn.noShade.background:		#ffe4b5
+!Rosegarden*yawn.highlight.background:		#ffe4b5
+!Rosegarden*yawn.lightShade.background:		#cfb485
+!Rosegarden*yawn.mediumShade.foreground:	#ffe4b5
+!Rosegarden*yawn.mediumShade.background:	#005200
+
+!! peach on deep blue
+!Rosegarden*highlightThickness:			1
+!Rosegarden*background:				peachpuff
+!Rosegarden*foreground:				black
+!Rosegarden*yawn.noShade.background:		peachpuff
+!Rosegarden*yawn.highlight.background:		peachpuff
+!Rosegarden*yawn.lightShade.background:		maroon4
+!Rosegarden*yawn.mediumShade.foreground:	gold2
+!Rosegarden*yawn.mediumShade.background:	midnightblue
+!Rosegarden*yawn.surroundShade.background:	peachpuff
+
+
+!!! Fonts
+
+Rosegarden*Command.font:			-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*MenuButton.font:			-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*Label.font:				-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*List*font:				-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*File Name.font:			-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*Text*font:				-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*Dialog*Label.font:			-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*Toggle.font:				-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*SimpleMenu*font:			-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*aboutTextFont:			-*-lucida-medium-r-*-*-18-*-75-*-*-*-*-*
+Rosegarden*Time Signature*Label.font:		-*-new century schoolbook-medium-r-*--20-*-*-*-*-*-*-*
+Rosegarden*Status*font:				-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*helpTextFont:			-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden*helpXrefFont:			-*-lucida-medium-i-*-*-14-*-75-*-*-*-*-*
+Rosegarden*helpTitleFont:			-*-lucida-medium-r-*-*-18-*-75-*-*-*-*-*
+Rosegarden*helpVerbatimFont:			-*-lucidatypewriter-medium-r-*-*-12-*-75-*-*-*-*-*
+Rosegarden Editor Palette*Palette Item.font:	-*-lucidatypewriter-medium-*-*-*-12-*-75-*-*-*-*-*
+Rosegarden*Help*Node Label.font:		-*-lucida-medium-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden Sequencer*Track List*font: 		-*-lucidatypewriter-bold-r-*-*-14-*-75-*-*-*-*-*
+Rosegarden Sequencer*Message Label*font:	-*-lucida-bold-i-*-*-14-*-75-*-*-*-*-*
+Rosegarden Sequencer Clipboard*List Box*font:	-*-courier-medium-r-*-*-14-*-*-*-*-*-*-*
+Rosegarden Sequencer Event List*List Box*font: 	-*-courier-medium-r-*-*-20-*-100-*-*-*-*-*
+
+
+!!! Geometries
+
+Palette.geometry:				150x615-10-10
+Rosegarden Editor.geometry:      		830x615-173-10
+Rosegarden Top Box.geometry:			+15+15
+Rosegarden*Editor Clipboard.geometry:		480x250
+Rosegarden*File Selector.geometry:		300x410
+Rosegarden Sequencer.geometry:          	700x400+90+73
+Rosegarden Sequencer Event List.geometry:	700x500
+Rosegarden Sequencer Clipboard.geometry:  	420x300
+Rosegarden Sequencer Piano Roll.geometry: 	700x440
+Rosegarden*Help.geometry:			620x500-40+40
+
+
+!!! Various other resources
+
+Rosegarden*yawn.mono.foreground:			black
+Rosegarden*yawn.mono.background:			white
+
+Rosegarden*SimpleMenu*lineWidth:			1
+Rosegarden*SimpleMenu*SmeLine.height:			2
+Rosegarden*borderWidth:					1
+Rosegarden*showGrip:					False
+Rosegarden*Box.vSpace:					4
+Rosegarden*Box.hSpace:					4
+
+Rosegarden*Repeater.initialDelay:			500
+Rosegarden*Repeater.minimumDelay:			50
+Rosegarden*Repeater.repeatDelay:			300
+Rosegarden*Repeater.decay:				20
+
+Rosegarden Editor*Words.label:				Text
+Rosegarden Editor*Words*Text1.label:			Text
+Rosegarden Editor*Words*Text2.label:			Text
+Rosegarden Editor*Words*Text3.label:			Text
+Rosegarden Editor*Words*Text4.label:			Text
+
+Rosegarden Editor*Clipboard Viewport.allowHoriz:	True
+Rosegarden Editor*Clipboard Viewport.allowVert:		False
+Rosegarden Editor*Clipboard Viewport.useBottom:		True
+Rosegarden Editor*Clipboard Viewport.forceBars:		False
+
+
+Rosegarden Editor*Music View.allowHoriz:		True
+Rosegarden Editor*Music View.allowVert:			True
+Rosegarden Editor*Music View.forceBars:			True
+Rosegarden Editor*Music View.useBottom:			True
+Rosegarden Editor*Music Form.borderWidth:		0
+
+Rosegarden Editor*Bottom Box.showGrip:			False
+Rosegarden Editor*Music Viewport.showGrip:		False
+
+Palette*Palette Form.top:         			chainTop
+Palette*Palette Top Box.showGrip:			False
+Palette*Palette Box.showGrip:				False
+Palette*Palette Space.showGrip:				False
+Palette*Palette Form.showGrip:				False
+Palette*Palette Space.showGrip:				False
+Palette*Palette Top Pane.internalBorderWidth:		0
+Palette*highlightThickness:				0
+
+Rosegarden Top Box*Editor.fromHoriz:			About
+Rosegarden Top Box*Sequencer.fromHoriz:			Editor
+Rosegarden Top Box*Quit.fromHoriz:			Sequencer
+Rosegarden Top Box*Help.fromHoriz:			Quit
+
+Rosegarden Top Box*Editor.label:			Notate
+Rosegarden Top Box*Sequencer.label:			Sequence
+Rosegarden Top Box*Quit.label:				Exit
+
+Rosegarden*File Selector*defaultColumns:		1
+Rosegarden*File Selector*forceColumns:			True
+
+Rosegarden Sequencer*ViewPort.showGrip:       		False
+Rosegarden Sequencer*MenuBar.showGrip:          	False
+Rosegarden Sequencer*Track List*defaultColumns:		1
+Rosegarden Sequencer*Track List*forceColumns:		True
+Rosegarden Sequencer*View Port.allowVert:		True
+
+Rosegarden Sequencer Clipboard*List Box*scrollHorizontal:	whenNeeded
+Rosegarden Sequencer Clipboard*List Box*scrollVertical:		whenNeeded
+Rosegarden Sequencer Event List*List Box*scrollHorizontal:	whenNeeded
+Rosegarden Sequencer Event List*List Box*scrollVertical:	whenNeeded
+
+
+!!! Keyboard accelerators.  Not implemented in the code
+
+Rosegarden*acceleratorTable: \
+   Mod1<Key>X:		menu-function(File-Menu-Exit) \n\
+   Ctrl<Key>F:		menu-function(File-Menu-Open) \n\
+   Ctrl<Key>S:		menu-function(File-Menu-Save) \n\
+   <Key>Delete:		menu-function(Edit-Menu-Delete) \n\
+   Ctrl<Key>U:		menu-function(Edit-Menu-Undo) \n\
+   Ctrl<Key>K:		menu-function(Edit-Menu-Cut) \n\
+   Ctrl<Key>Y:		menu-function(Edit-Menu-Paste) \n\
+   Ctrl<Key>V:		menu-function(Edit-Menu-Copy) \n\
+   Ctrl<Key>B:		menu-function(Edit-Menu-Show-Clipboard) \n\
+   Shift<Key>F:		menu-function(Stave-Menu-Fill-To-End) \n\
+   Shift<Key>Up:	menu-function(Group-Menu-Crescendo) \n\
+   Shift<Key>Down:	menu-function(Group-Menu-Decrescendo) \n\
+   Shift<Key>C:		menu-function(Group-Menu-Chord) \n\
+   Shift<Key>S:		menu-function(Group-Menu-Slur) \n\
+   Shift<Key>B:		menu-function(Group-Menu-Beam) \n\
+   Shift<Key>T:		menu-function(Group-Menu-Tuplet) \n\
+   Shift<Key>A:		menu-function(Group-Menu-Auto-Beam) \n\
+   Shift<Key>X:		menu-function(Group-Menu-Break-Group) \n\
+   Shift<Key>L:		menu-function(Bar-Menu-Label) \n\
+   Shift<Key>1:		menu-function(Text-Menu-Text1) \n\
+   Shift<Key>2:		menu-function(Text-Menu-Text2) \n\
+   Shift<Key>3:		menu-function(Text-Menu-Text3) \n\
+   Shift<Key>4:		menu-function(Text-Menu-Text4) \n\
+   Shift<Key>>:		menu-function(Mark-Menu-Accent) \n\
+   <Key>.:		menu-function(Mark-Menu-Staccato) \n\
+   <Key>-:		menu-function(Mark-Menu-Legato) \n\
+   Mod1<Key>S:		menu-function(Tools-Menu-Sequence) \n\
+   <Key>F1:		generic-help(Editor)
+
+Rosegarden*TransientShell*Translations: #augment \n\
+   <Key>Return:		dialogue-default() \n\
+   <Key>Escape:		dialogue-cancel() \n\
+   <Key>F1:		dialogue-help()
+
+Rosegarden*TransientShell*Text.Translations: #override \n\
+   <Key>Return:		dialogue-default() \n\
+   <Key>Escape:		dialogue-cancel() \n\
+   <Key>F1:		dialogue-help()
+

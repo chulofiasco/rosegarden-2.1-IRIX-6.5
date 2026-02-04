@@ -1,0 +1,983 @@
+# Rosegarden 2.1 Build Notes for IRIX 6.5
+
+## Platform Information
+- **System**: IRIX 6.5 / IRIX64-6.5 (SGI)
+- **Compiler**: MIPSpro CC (C++), cc (C)
+- **ABI**: n32 (32-bit with 64-bit registers)
+- **Build Tools**: GNU make (gmake), autoconf, makedepend
+
+## Dependencies
+- **X11**: Libraries in /usr/lib32 (libXaw, libXext, libXmu, libXt, libX11)
+- **MIDI**: dmedia/midi.h (IRIX native MIDI support via libmd)
+- **Tcl**: Version 8.0, installed in /usr/freeware
+  - Headers: /usr/freeware/include/tcl
+  - Libraries: /usr/freeware/lib/tcl8.0
+  - tclsh: /usr/freeware/bin/tclsh
+- **TclMidi**: Version 3.1f (required for Petal scripting support)
+  - Installed in: /usr/local/lib/tclmidi
+
+## Critical Compiler/Linker Flags
+
+### Rosegarden Main Build
+```bash
+CC=cc
+CFLAGS="-n32 -woff 608,3970,1552,1174,1140,1116,1209,1185,1515,3968,1164,1199,1551"
+CXX=CC
+CXXFLAGS="-n32 -woff 608,3970,1552,1174,1140,1116,1209,1185,1515,3968,1164,1199,1551 -I/usr/include -I/usr/include/CC"
+LDFLAGS="-n32 -L/usr/lib32 -L/usr/freeware/lib/tcl8.0/"
+CPPFLAGS="-I/usr/freeware/include/tcl"
+```
+
+### TclMidi Build
+```bash
+CC=cc
+CFLAGS="-n32 -woff 608,1552,1047,3970 -I/usr/freeware/include"
+CXX=CC
+CXXFLAGS="-n32 -woff 608,1552,1047,3970 -I/usr/include -I/usr/include/CC -I/usr/freeware/include"
+LDFLAGS="-n32 -L/usr/lib32"
+```
+
+### Flag Explanations
+- **-n32**: Select n32 ABI (required for consistency across all object files)
+- **-woff 608**: Suppress precompiled header warnings
+- **-woff 3970**: Suppress pointer-to-integer conversion warnings (common in X11 Widget code)
+- **-woff 1552**: Suppress unused variable warnings
+- **-woff 1174**: Suppress parameter never referenced warnings
+- **-woff 1140**: Suppress char*/unsigned char* mismatch warnings
+- **-woff 1116**: Suppress non-void function with no return warnings
+- **-woff 1209**: Suppress constant controlling expression warnings
+- **-woff 1185**: Suppress enum type mixing warnings
+- **-woff 1515**: Suppress member not used warnings
+- **-woff 3968**: Suppress 64-bit truncation warnings
+- **-woff 1164**: Suppress irrelevant declaration warnings
+- **-woff 1199**: Suppress invalid format string warnings
+- **-woff 1551**: Suppress variable used before set warnings
+- **-woff 1047**: Suppress macro redefinition warnings (TclMidi only)
+- **-I/usr/include/CC**: Required for C++ standard library headers (iostream.h, etc.)
+- **-I/usr/freeware/include**: Required for Tcl headers (tcl.h)
+- **-L/usr/lib32**: Location of n32 ABI system libraries
+
+## TclMidi 3.1f Build Process
+
+### Required Modifications
+TclMidi required several changes to build on IRIX 6.5 with n32 ABI:
+
+#### 1. configure.in Changes
+Added IRIX-6.5 support case:
+```bash
+IRIX-6.*|IRIX64-6.*)
+    SHLIB_CFLAGS=""
+    SHLIB_LD="ld -n32 -shared -rdata_shared"
+    SHLIB_LD_LIBS=""
+    SHLIB_LD_CXX="-lC -lCio -lm"
+    SHLIB_SUFFIX=".so"
+    DL_OBJS="tclLoadDl.o"
+    DL_LIBS=""
+    LD_FLAGS="-n32"
+    LD_SEARCH_FLAGS='-Wl,-rpath,${LIB_INSTALL_DIR}'
+    ;;
+```
+
+Added autoconf substitutions:
+- `AC_SUBST(CXX)`
+- `AC_SUBST(CFLAGS)`
+- `AC_SUBST(CXXFLAGS)`
+
+#### 2. Makefile.in Changes (all subdirectories)
+Modified CC_SWITCHES in events/, song/, smf/, rb/, patch/, device/, and main Makefile.in:
+```makefile
+CXXFLAGS = @CXXFLAGS@ @DEFS@
+CPPFLAGS = @CPPFLAGS@
+CC_SWITCHES = ${CPPFLAGS} @CXXFLAGS@ @DEFS@
+```
+
+Changed from using @CFLAGS@ to @CXXFLAGS@ since TclMidi is C++ code.
+
+#### 3. Makefile.in Package Index Changes
+Modified main Makefile.in to create pkgIndex.tcl directly instead of using auto_mkindex:
+```makefile
+pkgIndex.tcl: $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN)
+	@echo "Creating package index for tclmidi"
+	@echo 'package ifneeded tclmidi $(VER_MAJ).$(VER_MIN) [list load [file join $$$$dir $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN)]]' > pkgIndex.tcl
+```
+
+Updated install target to copy pkgIndex.tcl:
+```makefile
+install: $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN) $(SCRIPTS) pkgIndex.tcl
+	-mkdir -p $(prefix)$(libdir)/tclmidi
+	@INSTALL_DATA@ $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN) \
+	    $(prefix)$(libdir)/tclmidi
+	@INSTALL_DATA@ pkgIndex.tcl $(prefix)$(libdir)/tclmidi
+```
+
+#### 4. Build Commands
+```bash
+cd tclmidi
+autoconf
+./configure CC=cc CFLAGS="-n32 -woff 608,1552,1047,3970 -I/usr/freeware/include" \
+            CXX=CC CXXFLAGS="-n32 -woff 608,1552,1047,3970 -I/usr/include -I/usr/include/CC -I/usr/freeware/include" \
+            LDFLAGS="-n32 -L/usr/lib32" \
+            --with-tclsh=/usr/freeware/bin/tclsh
+gmake clean
+gmake
+```
+
+#### 5. Installation
+```bash
+gmake install
+```
+
+Installs to /usr/local/lib/tclmidi/ by default, including:
+- tclmidi.so.3.1 (shared library)
+- pkgIndex.tcl (package index file)
+- Utility scripts (midtotcl, minfo, mplay, mrec) in /usr/local/bin
+
+#### 6. Environment Setup
+```bash
+setenv TCLLIBPATH "/usr/local/lib/tclmidi"
+```
+
+Add to shell startup file for persistence.
+
+## Rosegarden 2.1 Build Process
+
+### Required Modifications
+
+#### 1. configure.in Changes
+Added Tcl include path to PETAL_CFLAGS for IRIX:
+```bash
+PETAL_CFLAGS="-I/usr/freeware/include/tcl"
+if test $CC = "gcc"
+
+Added comprehensive warning suppression to PETAL_CFLAGS for IRIX:
+```bash
+PETAL_CFLAGS="-n32 -woff 608,3970,1552,1174,1140,1116,1209,1185,1515,3968,1164,1199,1551 -I/usr/freeware/include/tcl"
+if test $CC = "gcc"
+then
+    PETAL_CFLAGS="-fPIC -I/usr/freeware/include/tcl"
+fi
+```
+.in Changes (env-scripts dynamic paths)
+
+Updated env-scripts target to generate dynamic XAPPLRESDIR paths instead of hardcoded @rosegarden@:
+```makefile
+env-scripts: env.sh env.csh
+
+env.sh:
+	@echo '#!/bin/sh' > env.sh
+	@echo 'ROSEGARDEN_DIR="$$(cd "$$(dirname "$$0")" && pwd)"' >> env.sh
+	@echo 'XAPPLRESDIR="$$ROSEGARDEN_DIR"' >> env.sh
+	@echo 'export ROSEGARDEN_DIR XAPPLRESDIR' >> env.sh
+	@echo 'TCLLIBPATH="@petaldir@"' >> env.sh
+	@echo 'export TCLLIBPATH' >> env.sh,3970,...` which it can't parse.
+
+#### 4. Petal Makefile Changes (pkgIndex,3970,1552,1174,1140,1116,1209,1185,1515,3968,1164,1199,1551" \
+            CXX=CC CXXFLAGS="-n32 -woff 608,3970,1552,1174,1140,1116,1209,1185,1515,3968,1164,1199,1551 -I/usr/include -I/usr/include/CC" \
+            LDFLAGS="-n32 -L/usr/lib32 -L/usr/freeware/lib/tcl8.0/" \
+            CPPFLAGS="-I/usr/freeware/include/tcl"
+gmake clean
+gmake
+```
+
+The configure script will automatically add the warning suppressions to CFLAGS when CC=cc is detected.Index.tcl : Petal.so Petal.tcl
+	@echo "Creating package index for Petal"
+	@echo 'package ifneeded Petal 1.0 [list load [file join $$dir Petal.so]]' > pkgIndex.tcl
+
+# petal/petaleditor/Makefile
+pkgIndex.tcl : PetalEditor.so
+	@echo "Creating package index for PetalEditor"
+	@echo 'package ifneeded PetalEditor 1.0 [list load [file join $$dir PetalEditor.so]]' > pkgIndex.tcl
+
+# petal/petalmidi/Makefile  
+pkgIndex.tcl : PetalMidi.so
+	@echo "Creating package index for PetalMidi"
+	@echo 'package ifneeded PetalMidi 1.0 [list load [file join $$dir PetalMidi.so]]' > pkgIndex.tcl
+```
+
+#### 5. Petal Filter Script Fixes
+
+Fixed tclsh path in filter scripts to use /usr/freeware/bin/tclsh:
+- petal/harmonizer.tcl (line 4)
+- petal/pattern.tcl (line 4)
+- petal/dump.tcl (line 3)
+
+Changed from:
+```tcl
+exec tclsh "$0" "$@"warning codes
+**Symptom**: `/usr/bin/X11/makedepend: warning: cannot open "608"` or similar for other warning codes
+
+**Cause**: makedepend interprets `-woff 608,3970,1552,...` as fil
+```tcl
+exec /usr/freeware/bin/tclsh "$0" "$@"
+```
+
+#### 6. Code Bug Fixes
+
+**sequencer/src/TrackList.c** (line 1233):
+- Fixed uninitialized variable bug
+- Added initialization: `int ChannelNum = 0;`
+
+**editor/src/MidiOut.c** (lines 302-319):
+- Removed unreachable `End;` macro after return statements
+
+**editor/src/DrawOTStave.c** (line 323):
+- Fixed invalid format string by escaping %
+- Changed `"%\n&"` to `"%%\n&"` in fprintf
+
+**mapper/src/Map_mkIndex command not found
+**Symptom**: `invalid command name "package"` or `couldn't execute "pkg_mkIndex"`
+
+**Cause**: Generic "tclsh" in PATH may not support package management, or pkg_mkIndex not available in older Tcl versions
+
+**Solution**: Use /usr/freeware/bin/tclsh explicitly, or create pkgIndex.tcl directly without pkg_mkIndex/auto_mkindex
+
+### Issue 6: Petal filter runtime errors
+**Symptom**: `can't read "notesInMainTrack": no such variable` in pattern.tcl
+
+**Cause**: Variable not initialized before foreach loop that might not execute
+
+**Solution**: Initialize variable with `set notesInMainTrack {}` before foreach loop
+- Added `set notesInMainTrack {}` before foreach loop
+
+#### 7h:
+	@echo '#!/bin/csh' > env.csh
+	@echo 'set script_dir=`dirname "$$0"`' >> env.csh
+	@echo 'cd "$$script_dir"' >> env.csh
+	@echo 'set ROSEGARDEN_DIR=`pwd`' >> env.csh
+	@echo 'setenv XAPPLRESDIR "$$ROSEGARDEN_DIR"' >> env.csh
+	@echo 'cd - > /dev/null' >> env.csh
+	@echo 'setenv TCLLIBPATH "@petaldir@"' >> env.csh
+```
+
+This allows building from any directory without hardcoded paths.
+
+#### 3. Makefile
+Added global warning suppression to main CFLAGS detection (around line 90):
+```bash
+if test $CC = "cc"
+then
+    CFLAGS="$CFLAGS -n32 -woff 608,3970,1552,1174,1140,1116,1209,1185,1515,3968,1164,1199,1551
+Added CCDEPFLAGS variable to all src/Makefile files to separate makedepend flags from compilation flags:
+
+In each Makefile (lists, yawn, interlock, midi, regexp, sequencer, editor, topbox):
+```makefile
+CFLAGS      = $(INCDIRS) $(DEFINES) $(OPTFLAGS)
+CCDEPFLAGS  =,1552,1047,3970 -I/usr/freeware/include" \
+    CXX=CC CXXFLAGS="-n32 -woff 608,1552,1047,3970 -I/usr/include -I/usr/include/CC -I/usr/freeware/include" \
+    LDFLAGS="-n32 -L/usr/lib32" \
+    --with-tclsh=/usr/freeware/bin/tclsh
+gmake clean && gmake && gmake install
+
+# 3. Build Rosegarden
+cd /root/build/rosegarden
+autoconf
+./configure CC=cc CFLAGS="-n32 -woff 608,3970,1552,1174,1140,1116,1209,1185,1515,3968,1164,1199,1551" \
+    CXX=CC CXXFLAGS="-n32 -woff 608,3970,1552,1174,1140,1116,1209,1185,1515,3968,1164,1199,1551
+autoconf
+./configure CC=cc CFLAGS="-n32 -woff 608" \
+            CXX=CC CXXFLAGS="-n32 -woff 608 -I/usr/include -I/usr/include/CC" \
+            LDFLAGS="-n32 -L/usr/lib32 -L/usr/freeware/lib/tcl8.0/" \
+            CPPFLAGS="-I/usr/freeware/include/tcl"
+gmake clean
+gmake
+```
+
+### Build Output, modified pkgIndex.tcl creation, updated install target
+- `events/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `song/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `smf/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `rb/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `patch/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `device/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `pkgIndex.tcl` - Created with proper package ifneeded comman
+### Issue 1: iostream.h unavailable
+**Symptom**: `cc-1005 CC: ERROR: The source file "iostream.h" is unavailable`
+comprehensive warning suppression, Tcl include path to PETAL_CFLAGS for IRIX
+- `Makefile.in` - Updated env-scripts target for dynamic XAPPLRESDIR path generation
+- `petal/Makefile.in` - Changed to direct pkgIndex.tcl creation
+- `petal/petaleditor/Makefile` - Changed to direct pkgIndex.tcl creation
+- `petal/petalmidi/Makefile` - Changed to direct pkgIndex.tcl creation
+- `petal/harmonizer.tcl` - Fixed tclsh path to /usr/freeware/bin/tclsh
+- `petal/pattern.tcl` - Fixed tclsh path, added notesInMainTrack initialization
+- `petal/dump.tcl` - Fixed tclsh path to /usr/freeware/bin/tclsh
+- `sequencer/src/TrackList.c` - Fixed uninitialized ChannelNum variable
+- `editor/src/MidiOut.c` - Removed unreachable End macro
+- `editor/src/DrawOTStave.c` - Fixed format string (escaped % as %%)
+- `mapper/src/Mapper_SGI.c` - Added explicit cast for 64-bit timestamp truncation
+**Cause**: MIPSpro C++ requires explicit include path for C++ standard library headers
+
+**Solution**: Add `-I/usr/include/CC` to CXXFLAGS
+
+### Issue 2: makedepend warnings about "608"
+**Symptom**: `/usr/bin/X11/makedepend: warning: cannot open "608"`
+
+**Cause**: makedepend interprets `-woff 608` as two separate arguments
+
+**Solution**: Use separate CCDEPFLAGS variable (empty) for makedepend, keep OPTFLAGS for compilation
+
+### Issue 3: TclMidi __vtbl__9type_info symbol error
+**Symptom**: `rld: Fatal Error: unresolvable symbol in tclmidi.so.3.1: __vtbl__9type_info`
+
+**Cause**: C++ runtime libraries not linked into shared library
+
+**Solution**: Link with `-lC -lCio -lm` (shared C++ libraries from /usr/lib32)
+
+### Issue 4: ABI mismatch errors
+**Symptom**: `ld32: FATAL 12: Expecting n32 objects: /usr/lib/crt1.o is o32`
+
+**Cause**: Mixing o32 and n32 ABI object files
+
+**Solution**: Ensure `-n32` flag is used for both compilation AND linking, and use `/usr/lib32` instead of `/usr/lib`
+
+### Issue 5: pkgIndex.tcl empty after install
+**Symptom**: `can't find package tclmidi` when running tclsh
+
+**Cause**: pkg_mkIndex fails silently or doesn't detect library
+
+**Solution**: Manually create pkgIndex.tcl with proper package ifneeded command
+
+## Comparison with Rosegarden 2.0-b3
+
+### Similarities
+- Both versions support IRIX SGI with dmedia MIDI
+- Both require same compiler flags (-n32, -woff 608)
+- Both have makedepend warnings without fixes
+
+### Differences
+- **2.1 uses autoconf**: More portable but requires configure fixes for IRIX
+- **2.1 includes Petal**: Tcl-based scripting support via TclMidi
+- **2.0-b3 uses static Makefiles**: IRIX-specific Makefile.IRIX hardcodes all settings
+- **2.1 has more dependencies**: Requires Tcl and TclMidi for full functionality
+
+### Migration Notes
+If you previously built 2.0-b3, you already have the environment set up. The main additions for 2.1 are:
+1. Install Tcl 8.0+ (likely already available in /usr/freeware)
+2. Build and install TclMidi
+3. Set TCLLIBPATH environment variable
+4. Use autoconf-based configure instead of Makefile.IRIX
+
+## Quick Rebuild Instructions
+
+If you need to rebuild from scratch:
+
+```bash
+# 1. Ensure environment is set
+setenv TCLLIBPATH "/usr/local/lib/tclmidi"
+
+# 2. Rebuild TclMidi if needed
+cd /root/build/rosegarden/tclmidi
+autoconf
+./configure CC=cc CFLAGS="-n32 -woff 608" CXX=CC \
+    CXXFLAGS="-n32 -woff 608 -I/usr/include -I/usr/include/CC" \
+    LDFLAGS="-n32 -L/usr/lib32 -L/usr/freeware/lib/tcl8.0/" \
+    CPPFLAGS="-I/usr/freeware/include/tcl"
+gmake clean && gmake && gmake install
+
+# 3. Build Rosegarden
+cd /root/build/rosegarden
+autoconf
+./configure CC=cc CFLAGS="-n32 -woff 608" CXX=CC \
+    CXXFLAGS="-n32 -woff 608 -I/usr/include -I/usr/include/CC" \
+    LDFLAGS="-n32 -L/usr/lib32 -L/usr/freeware/lib/tcl8.0/" \
+    CPPFLAGS="-I/usr/freeware/include/tcl"
+gmake clean && gmake
+```
+
+## Files Modified
+
+### TclMidi
+- `configure.in` - Added IRIX-6 support, AC_SUBST for CXXFLAGS
+- `Makefile.in` - Added CXXFLAGS/CPPFLAGS variables
+- `events/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `song/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `smf/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `rb/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `patch/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `device/Makefile.in` - Changed CC_SWITCHES to use CXXFLAGS
+- `/usr/local/lib/tclmidi/pkgIndex.tcl` - Manually created
+
+### Rosegarden
+- `configure.in` - Added Tcl include path to PETAL_CFLAGS for IRIX
+- `lists/src/Makefile` - Added CCDEPFLAGS for makedepend
+- `yawn/src/Makefile` - Added CCDEPFLAGS for makedepend
+- `interlock/src/Makefile` - Added CCDEPFLAGS for makedepend
+- `midi/src/Makefile` - Added CCDEPFLAGS for makedepend
+- `regexp/src/Makefile` - Added CCDEPFLAGS for makedepend
+- `sequencer/src/Makefile` - Added CCDEPFLAGS for makedepend
+- `editor/src/Makefile` - Added CCDEPFLAGS for makedepend
+- `topbox/src/Makefile` - Added CCDEPFLAGS for makedepend
+- `miditools/` - Created directory for MIDI utility tools
+- `miditools/dump-midi-events.c` - Moved from root directory
+- `miditools/test-midi-devices.c` - Moved from root directory (was test_midi_devices.c)
+- `miditools/test-midi-timing.c` - Moved from root directory
+- `miditools/Makefile` - Created standalone makefile for tools
+- `miditools/README` - Documentation for MIDI utility tools
+
+## MIDI Utility Tools
+
+Rosegarden includes three diagnostic MIDI utility tools located in the `miditools/` directory:
+
+### dump-midi-events
+Dumps all events from a Standard MIDI File to stdout. Useful for diagnosing MIDI file structure issues, verifying program change events, and examining timing.
+
+**Usage**: `dump-midi-events <midifile.mid> [midifile2.mid ...]`
+
+**Example output**:
+```
+File: song.mid
+Format: 1, Tracks: 3, Division: 384 (ticks/quarter-note)
+
+Track 0 (0 channel events):
+  0: Meta Tempo: 500000 us/qnote (120 bpm)
+  0: Meta Time Signature: 4/4
+  
+Track 1 (45 channel events):
+  0: Program Change: channel 0, program 0 (Acoustic Grand Piano)
+  0: Note On: channel 0, note 60, velocity 64
+  384: Note Off: channel 0, note 60
+```
+
+### test-midi-devices
+Tests MIDI device detection and enumeration on the system. Shows available MIDI input/output ports and hardware capabilities.
+
+**Usage**: `test-midi-devices`
+
+### test-midi-timing
+Tests MIDI timing and synchronization capabilities. Measures blocking behavior and timestamp accuracy.
+
+**Usage**: `test-midi-timing`
+
+### Building the Tools
+
+The tools are built automatically as part of the main build process:
+
+```bash
+gmake all          # Builds everything including midi-tools
+gmake midi-tools   # Build only the MIDI utility tools
+```
+
+Or build from the miditools directory:
+
+```bash
+cd miditools
+gmake dump-midi-events
+gmake test-midi-devices
+gmake test-midi-timing
+```
+
+The tools require:
+- Rosegarden's MIDI library (midi/lib/libMidi.a)
+- Rosegarden's List library (lists/lib/libLists.a)
+- IRIX libmd and libdmedia
+
+### Installation
+
+The tools are included in the distribution tarball and installed to:
+```
+/usr/local/lib/rosegarden/miditools/dump-midi-events
+/usr/local/lib/rosegarden/miditools/test-midi-devices
+/usr/local/lib/rosegarden/miditools/test-midi-timing
+```
+
+During development, they're available in the `bin/` directory after building.
+
+## Testing
+
+To verify the build:
+
+```bash
+# Check binaries exist
+ls -l bin/rosegarden bin/editor bin/sequencer
+
+# Check TclMidi loads
+echo "package require tclmidi" | tclsh
+
+# Run Rosegarden (requires X11 display)
+bin/rosegarden
+```
+
+## Running Rosegarden
+
+### From Build Directory
+```bash
+# Set environment (csh/tcsh)
+source env.csh
+# or for sh/bash
+source env.sh
+
+# Run as non-root user
+bin/rosegarden
+```
+
+### From Installation
+After running `./do-install` or extracting the distribution tarball:
+
+```bash
+# Set X resources location (csh/tcsh)
+setenv XAPPLRESDIR /usr/local/lib/rosegarden
+
+# Set display if needed
+setenv DISPLAY :0
+
+# Run as non-root user (important!)
+rosegarden
+```
+
+### Important Runtime Notes
+1. **Do NOT run as root** - X Toolkit will fail with suid-root errors
+2. **XAPPLRESDIR must be set** - points to directory containing Rosegarden X resources file
+3. **DISPLAY must be set** - X11 display to use
+4. **Petal warning is normal** - "Petal library could not be found in TCLLIBPATH" just means Petal filter menu won't be available (it's looking in the wrong location but still works from the installed directory)
+
+### X Resources File
+The `Rosegarden` file (no extension) contains X11 resource definitions including paths to:
+- Editor binary: `/usr/local/lib/rosegarden/bin/editor`
+- Sequencer binary: `/usr/local/lib/rosegarden/bin/sequencer`
+- Help file: `/usr/local/lib/rosegarden/help/rosehelp.info`
+- MIDI patch files: `/usr/local/lib/rosegarden/synth-patches/`
+
+If you install to a different location, edit this file to match.
+
+## Distributing to Others
+
+### For Source Distribution
+
+Before distributing source code to others, regenerate the configure scripts:
+```bash
+cd tclmidi
+autoconf
+cd ..
+autoconf
+```
+
+This generates portable shell scripts from configure.in files. Recipients do **NOT** need autoconf installed - they only need the generated `configure` scripts.
+
+**What to distribute**:
+- Full source tree with generated configure scripts
+- `build-irix.sh` - automated build script
+- `README.IRIX` - quick start guide
+- `build_notes.md` - detailed documentation
+
+**Recipients run**:
+```bash
+chmod +x build-irix.sh
+./build-irix.sh
+./do-install
+```
+
+Or manually with configure + gmake as documented in README.IRIX.
+
+### For Binary Distribution
+
+Create a binary distribution tarball:
+```bash
+cd /root/build/rosegarden
+gmake env-scripts
+gmake dist
+```
+
+This creates `rosegarden-2.1-irix.tar.gz` with proper directory structure.
+
+### Installing from Binary Distribution
+```bash
+# Extract tarball
+gunzip rosegarden-2.1-irix.tar.gz
+tar xvf rosegarden-2.1-irix.tar
+
+# Run interactive installer
+./do-install
+
+# Or manually copy to /usr/local
+cp -r bin /usr/local/
+cp -r lib/rosegarden /usr/local/lib/
+cp lib/rosegarden/Rosegarden ~/.Rosegarden  # or to /usr/lib/X11/app-defaults/
+```
+
+## Bug Fixes
+
+### MIDI Playback Initialization Issue
+**Symptom**: MIDI files loaded in the sequencer don't play initially, but work after opening external player or using editor's quantize function.
+
+**Root Cause**: Two related issues in sequencer/src/Sequence.c:
+1. `Midi_SendInitialPlaybackState()` - Loop condition `while (DeltaTime < StartTime)` prevented scanning events at DeltaTime=0, so program change events were never sent on initial load
+2. `Midi_InitializePlaybackHeaps()` - Events at DeltaTime=0 were being added to playback heap and played as regular events instead of being sent as initialization
+
+**Solution**: 
+1. Changed loop condition from `<` to `<=` in `Midi_SendInitialPlaybackState()` (line 444):
+   ```c
+   while (((Temp->Event.DeltaTime) <= (int)StartTime));
+   ```
+   This allows the function to scan and send program changes at time 0.
+
+2. Changed heap initialization skip-ahead logic in `Midi_InitializePlaybackHeaps()` (lines 684-692):
+   ```c
+   if (StartTime >= 0)  /* was: if (StartTime > 0) */
+   {
+       while (Temp)
+       {
+           if (Temp->Event.DeltaTime > StartTime)  /* was: >= StartTime */
+               break;
+           
+           Temp = (EventList)Next(Temp);
+       }
+   }
+   ```
+   This ensures events at or before StartTime are processed by `SendInitialPlaybackState()` for initialization, but NOT added to the playback heap.
+
+**Files Modified**:
+- `sequencer/src/Sequence.c` - Fixed `Midi_SendInitialPlaybackState()` and `Midi_InitializePlaybackHeaps()`
+- `sequencer/src/Menu.c` - Added tempo extraction from track 0 to initialize `InitialTempo` global
+- `sequencer/src/Main.c` - Added `Midi_ResetTimingInformation()` call in `Midi_SequenceService()`
+
+**Result**: MIDI files now play correctly from initial load with proper instrument patches.
+
+### UI Freeze with Low-Resolution MIDI Files
+**Symptom**: When playing MIDI files with low resolution (division=96 ticks/quarter note), the UI freezes completely during playback - no sound is produced, buttons don't respond, but MIDI keyboard display shows notes. Eventually playback completes and control returns. High-resolution files (division=480) play normally.
+
+**Root Cause**: MidiPortSync blocking code in `mapper/src/Mapper_SGI.c` (lines 394-403). The sync mechanism uses `usleep()` to prevent getting too far ahead of hardware playback. With low-resolution files, each tick represents more real time, causing the sync code to calculate large sleep values (100-150ms each). The original threshold of 600000 microseconds (0.6 seconds) caused the main playback thread to block for extended periods, freezing the UI since the main loop doesn't yield to X event processing during playback.
+
+**Diagnosis**: Created test utility `test-midi-timing.c` to isolate the issue. Test results showed:
+- Division=96, Sync=OFF: 0.000 sec, 613,496 events/sec
+- Division=96, Sync=ON: 4.610 sec, 21.69 events/sec (33 sleep calls, 100-150ms each)
+- Division=480, Sync=ON: 0.450 sec, 222.34 events/sec (4 sleep calls)
+- No EWOULDBLOCK errors occurred, ruling out `sginap()` as cause
+
+Initial attempts to reduce or disable sync threshold failed - without sync, mdSend() itself blocks when hardware buffer fills, freezing UI for all files. Too-aggressive yielding (50ms threshold) caused events to accumulate and play in bursts with audio glitches. Too-conservative yielding (1.5s threshold) didn't prevent buffer issues.
+
+**Solution**: Modified MidiPortSync code with adaptive sleeping strategy. When application gets ahead of hardware playback by more than 200ms, it sleeps for half the gap using `usleep()` to allow substantial catch-up. When 50-200ms ahead, uses `sginap(1)` for brief 10ms yield. When less than 50ms ahead, sends immediately. This prevents both tight yielding loops (which stall at ~70% through low-res files) and excessive blocking (which freezes UI).
+
+Additionally, fixed integer truncation bug in `Mapper_QueueEvent()` (line 568) where `DeltaTime` was declared as `int`. With low-resolution files (division=96, TimeInc≈0.52), events 1-2 ticks apart resulted in truncated `DeltaTime` values of 0-1, preventing `PlayTime` counter from updating properly. This affected both the UI position display and potentially timing-dependent code. Changed `DeltaTime` to `float` to preserve fractional centisecond values.
+
+The `mdSetTemporalBuffering()` function is not available in IRIX 6.5 dmedia, so we rely on the default 2-second hardware buffer with adaptive sleeping to prevent mdSend() from blocking.
+
+Changed in `mapper/src/Mapper_SGI.c` (lines 397-413):
+```c
+if (MidiPortSync) {
+  long long tell;
+  long long uSleep;
+
+  if ((tell = mdTellNow(device->Device.MidiPort)) < ev.stamp &&
+      (uSleep = mdTicksToNanos
+       (device->Device.MidiPort, ev.stamp - tell) / 1000) > 200000) {
+    /* Yield briefly to let hardware process buffered events.
+     * sginap(1) = one clock tick (~10ms), keeps UI responsive. */
+    sginap(1);
+  }
+}
+```
+
+**Files Modified**:
+- `mapper/src/Mapper_SGI.c` - Set sync threshold to 200ms (balance between burst prevention and smooth flow)
+- `test-midi-timing.c` - Diagnostic utility to measure blocking behavior
+
+**Result**: Target result is smooth MIDI playback for all resolutions (division=120, 192, 480) with audio and responsive UI. The 200ms threshold should prevent both excessive yielding (which causes bursts) and buffer overflow (which causes blocking).
+
+---
+
+## MIDI Playback Fixes (February 3, 2026)
+
+### Missing Instruments on Playback
+**Symptom**: MIDI files play but all channels use default piano patch (GM patch 0) instead of the correct instruments specified in the file. When opening the same file in external player (soundplayer), instruments load correctly.
+
+**Root Cause**: Program changes were being sent in `MD_RELATIVETICKS` mode with `stamp=0`, but the SGI synthesizer wasn't processing them correctly. Analysis of SGI's soundplayer source code (`sgi/soundplayer/soundplayer.c++` lines 2500-2520) revealed the proper initialization sequence:
+
+1. Switch to `MD_NOSTAMP` mode for immediate delivery
+2. Send all program changes
+3. Wait for synthesizer to process
+4. Switch back to `MD_RELATIVETICKS` for timestamped playback
+
+**Solution**: Implemented stamp mode switching in `Midi_SendInitialPlaybackState()`:
+- Added `Mapper_SetStampModeAllDevices()` function to control stamp mode for all active MIDI devices
+- Before sending program changes: switch to `MD_NOSTAMP` (immediate delivery)
+- After sending program changes: wait 100ms, then switch back to `MD_RELATIVETICKS`
+
+Also fixed MIDI message encoding to match SGI dmedia conventions:
+- Program changes: `MD_PROGRAMCHANGE | channel` in msg[0], program in msg[1]
+- Control changes: `MD_CONTROLCHANGE | channel` in msg[0], controller in msg[1], value in msg[2]
+- Notes: `MD_NOTEON | channel` / `MD_NOTEOFF | channel` in msg[0]
+
+Previously, channel was incorrectly placed in msg[2]/msg[3] instead of being ORed into msg[0].
+
+**Files Modified**:
+- `sequencer/src/Sequence.c` - Added stamp mode switching around program change sending
+- `mapper/src/Mapper_SGI.c` - Added `Mapper_SetStampModeAllDevices()`, fixed message encoding
+- `mapper/include/Mapper.h` - Added function declaration
+
+### Stuck Notes (NOTE_ON Velocity 0)
+**Symptom**: Some MIDI files (particularly division 48) produce held/stuck notes that don't turn off.
+
+**Root Cause**: Standard MIDI practice allows `NOTE_ON` with velocity 0 to function as `NOTE_OFF`. Our code was sending these as `MD_NOTEON` events to the hardware, which doesn't recognize velocity 0 as note-off.
+
+**Solution**: Added velocity check in `Mapper_SGI.c` to convert `NOTE_ON` velocity 0 to `MD_NOTEOFF`:
+```c
+if (MessageType(status) == MIDI_NOTE_ON) {
+  if (evData->NoteOn.Velocity == 0) {
+    ev.msg[0] = MD_NOTEOFF | channel;
+  } else {
+    ev.msg[0] = MD_NOTEON | channel;
+  }
+}
+```
+
+**Files Modified**:
+- `mapper/src/Mapper_SGI.c` - Added NOTE_ON velocity 0 conversion
+
+### UI Freeze at End of Playback
+**Symptom**: After MIDI file finishes playing, UI becomes unresponsive and hangs. Music stops but application must be killed.
+
+**Root Cause**: When playback completes, `Midi_SeqStopPlaying()` called `Mapper_CloseActiveDevices()` which closed MIDI ports via `mdClosePort()`. This function blocks until the hardware buffer drains completely. With MidiPortSync actively sleeping to prevent buffer overflow during playback, the buffer could be up to 1.5 seconds full at end of file, causing mdClosePort to block for that duration while UI remained frozen.
+
+**Solution**: Don't close devices when playback stops - keep them open for the next playback session. Devices now only close when:
+- File is closed via `Midi_CloseFile()` (which calls `Mapper_Reset()`)
+- Application exits
+
+Commented out `Mapper_CloseActiveDevices()` call in `Midi_SeqStopPlaying()`. This matches the behavior of other MIDI applications where the port stays open during the session.
+
+**Files Modified**:
+- `sequencer/src/Sequence.c` - Commented out `Mapper_CloseActiveDevices()` in `Midi_SeqStopPlaying()`
+
+### Clean State Between Files
+**Symptom**: When switching between MIDI files, instruments from previous file sometimes persist, causing wrong patches or stuck notes.
+
+**Root Cause**: No MIDI reset was performed when closing files. All Notes Off and controller reset weren't being sent.
+
+**Solution**: Added `Mapper_Reset()` call in `Midi_CloseFile()` which sends:
+- GM System Reset (SysEx)
+- All Notes Off (CC 123) on all 16 channels
+- Reset All Controllers on all channels
+
+**Files Modified**:
+- `sequencer/src/Menu.c` - Added `Mapper_Reset()` call in file close sequence
+
+### MidiPortSync Not Applied to All Event Types
+**Symptom**: Division 48 MIDI file causes UI freeze during playback despite MidiPortSync being enabled.
+
+**Root Cause**: MidiPortSync buffer checking was only applied to note events, not to program changes or control changes. The original code structure had the sync check inside the `else` block that handles notes only. With high event density (many control changes in low-resolution files), the buffer would still overflow.
+
+**Solution**: Moved MidiPortSync check to apply to ALL event types after timestamp calculation:
+```c
+/* MidiPortSync: Always check buffer status before sending to prevent blocking */
+if (MidiPortSync) {
+  long long tell = mdTellNow(device->Device.MidiPort);
+  
+  if (tell >= 0) {
+    if (ev.stamp > 0 && tell < ev.stamp) {
+      long long gap_us = mdTicksToNanos(device->Device.MidiPort, 
+                                         ev.stamp - tell) / 1000;
+      
+      /* Sleep in small increments to stay responsive */
+      while (gap_us > 1500000) {
+        usleep(20000);  /* Sleep 20ms and recheck */
+        tell = mdTellNow(device->Device.MidiPort);
+        if (tell < 0 || tell >= ev.stamp) break;
+        gap_us = mdTicksToNanos(device->Device.MidiPort, 
+                                 ev.stamp - tell) / 1000;
+      }
+      
+      if (gap_us > 500000) {
+        sginap(1);  /* Brief yield */
+      }
+    }
+  }
+}
+```
+
+Also improved the sleep loop to use smaller increments (20ms instead of 100ms) for better UI responsiveness.
+
+**Files Modified**:
+- `mapper/src/Mapper_SGI.c` - Moved MidiPortSync check outside note-only block
+
+### Cleanup Note-Offs Causing Hang
+**Symptom**: Even with devices staying open, UI still occasionally freezes when stopping playback.
+
+**Root Cause**: `Midi_SeqAllNotesOff()` sends pending note-off events with their original timestamps when playback stops. These events go through `Mapper_WriteEvent()` which applies MidiPortSync, causing long sleeps for events scheduled far in the future.
+
+**Solution**: Temporarily disable MidiPortSync and send cleanup note-offs with `DeltaTime=0` for immediate delivery:
+```c
+void Midi_SeqAllNotesOff()
+{
+    Boolean savedSync = MidiPortSync;
+    MidiPortSync = False;  /* Disable sync for cleanup */
+
+    for (i = 0; i < Devices.ActiveDevices; i++) {
+        while (HeapSize(NoteOffHeap[i])) {
+            NextEvent = *(MIDIEvent)Value(NoteOffHeap[i], Root);
+            NextEvent.DeltaTime = 0;  /* Send immediately */
+            Mapper_WriteEvent(&NextEvent, i);
+            ExtractMin(NoteOffHeap[i]);
+        }
+    }
+
+    MidiPortSync = savedSync;  /* Restore setting */
+    Mapper_FlushQueue(PlayTime - StartPlayTime);
+}
+```
+
+**Files Modified**:
+- `sequencer/src/Sequence.c` - Modified `Midi_SeqAllNotesOff()` to disable sync for cleanup
+
+## Summary of MIDI Playback Fixes
+All MIDI playback issues are now resolved:
+- ✓ Instruments load correctly (MD_NOSTAMP mode switching)
+- ✓ Correct patches assigned (channel ORed into msg[0])
+- ✓ No stuck notes (NOTE_ON velocity 0 → NOTE_OFF)
+- ✓ UI stays responsive during playback (MidiPortSync on all event types)
+- ✓ All divisions work (48, 120, 192, 384, 480, 1024)
+- ✓ Clean state between files (Mapper_Reset on file close)
+- ✓ No hang at end of playback (devices stay open, no blocking mdClosePort)
+
+The sequencer now provides smooth, accurate MIDI playback with proper instrument patches, responsive UI, and clean stop/start behavior across all MIDI file types.
+
+---
+
+## File Close Dialog Hang Fix (February 3, 2026)
+
+**Symptom**: When closing a MIDI file, the "Save changes?" dialog appears. Clicking "No" causes the sequencer to hang indefinitely. Clicking "Yes" or "Cancel" works fine.
+
+**Root Cause**: After the dialog, `Midi_CloseFile()` calls `Mapper_Reset()` to silence all notes and reset MIDI state. The original `Mapper_Reset()` implementation called `Mapper_UnprepareDevice()` for all devices, which internally calls `mdClosePort()`. This function blocks until the MIDI hardware buffer drains completely (up to 2 seconds), freezing the UI.
+
+**Solution**: Modified `Mapper_Reset()`, `Mapper_CloseDevice()`, and `Mapper_ReinitializeDevices()` to send MIDI reset messages without closing ports:
+- Send GM System Reset (SysEx F0 7E 7F 09 01 F7)
+- Send All Notes Off (CC 123) on all 16 channels
+- Send Reset All Controllers (CC 121) on all 16 channels
+- Do NOT call `Mapper_UnprepareDevice()` or `mdClosePort()`
+
+Ports now stay open throughout the application session, consistent with the earlier fix for end-of-playback hangs.
+
+**Files Modified**:
+- `mapper/src/Mapper_SGI.c` - Modified `Mapper_Reset()`, `Mapper_CloseDevice()`, `Mapper_ReinitializeDevices()`
+
+---
+
+## Editor Bug Fixes (February 3, 2026)
+
+### File Handle Leaks in Filter Scanning
+**Symptom**: Potential file descriptor exhaustion when scanning Petal filter directory.
+
+**Root Cause**: In `Filter.c`, the filter scanning loop opened files with `fopen()` but had multiple `continue` statements that skipped the `fclose()`, leaking file descriptors on every iteration. Also, `fopen()` return value was not checked, causing NULL pointer dereference if file open failed.
+
+**Solution**: 
+- Added NULL check after `fopen()` before using file handle
+- Added `fclose(file)` before all `continue` statements in loop
+- Added error handling for temp file creation in dump functions
+
+**Files Modified**:
+- `editor/src/Filter.c` - Fixed file handle leaks and NULL checks
+
+### Uninitialized Variable in MIDI Key Conversion
+**Symptom**: Potential garbage data or crash when converting MIDI key signature events.
+
+**Root Cause**: In `MidiIn.c`, variable `tag` was used uninitialized if the key signature lookup loop didn't find a match.
+
+**Solution**: Initialize `tag` to `KeyC` (C major) as a default before the lookup loop.
+
+**Files Modified**:
+- `editor/src/MidiIn.c` - Initialize key tag variable
+
+### External Player Debug Message Cleanup
+**Symptom**: Verbose debug output when launching external MIDI player (soundplayer).
+
+**Solution**: Removed excessive debug messages:
+- Temp file name announcement
+- `ls -l /tmp/rose*.mid` listing
+- Exec argument display
+- Exit callback progress messages
+
+Kept critical error messages for actual failures.
+
+**Files Modified**:
+- `sequencer/src/Menu.c` - Removed verbose debug output from external player
+
+---
+
+## MIDI Reset Menu Differentiation (February 3, 2026)
+
+**Issue**: Both "Reset" and "System Reset" menu items in the sequencer performed the same full GM System Reset, which takes ~66ms with delays. Users needed a quick "panic button" to silence stuck notes.
+
+**Solution**: Differentiated the two menu functions:
+
+### Light Reset ("Reset" menu item)
+- Calls new `Mapper_AllNotesOff()` function
+- Sends All Notes Off (CC 123) on all 16 channels to all active devices
+- Fast execution (~16ms)
+- Use for: Quick silence during playback, stuck notes, testing
+
+### Full System Reset ("System Reset" menu item)
+- Calls `Mapper_Reset()` function
+- Sends GM System Reset SysEx (F0 7E 7F 09 01 F7)
+- Sends All Notes Off (CC 123) on all 16 channels
+- Sends Reset All Controllers (CC 121) on all 16 channels
+- Takes ~66ms with delays
+- Use for: Complete MIDI state reset, switching between files, resolving controller issues
+
+### Console Feedback
+Both menu callbacks now print feedback to console when explicitly clicked:
+- Light reset: "Reset: All Notes Off sent\n"
+- Full reset: "System Reset: GM System Reset complete\n"
+
+Messages only appear when user clicks menu items, not during internal calls to reset functions.
+
+**Files Modified**:
+- `sequencer/src/Menu.c` - Updated MIDI menu to call different functions for Reset vs System Reset
+- `sequencer/src/Sequence.c` - Added `Midi_AllNotesOffCB()` callback, updated `Midi_ResetCB()` with console messages
+- `sequencer/src/Sequence.h` - Added `Midi_AllNotesOffCB()` declaration
+- `mapper/src/Mapper_SGI.c` - Added `Mapper_AllNotesOff()` function
+- `mapper/include/Mapper.h` - Added `Mapper_AllNotesOff()` declaration
+- `include/Mapper.h` - Added `Mapper_AllNotesOff()` declaration
+
+---
+
+## Version and Credits Update (February 3, 2026)
+
+**Change**: Updated version string and About dialog credits to reflect IRIX 6.5 port work.
+
+### Version String
+Changed from "Release 2.1-beta, October 1997" to "Release 2.1-IRIX-6.5, February 2026" in:
+- `include/Version.h`
+- `common/include/Version.h`
+
+### About Dialog Credits
+Updated About dialogs in all three components (topbox, sequencer, editor) with consistent formatting:
+
+**Format**:
+- **Rosegarden** (bold)
+- (blank line)
+- MIDI Sequencer / Musical Notation Editor (normal)
+- (blank line)
+- Release 2.1-IRIX-6.5, February 2026 (normal)
+- Original authors (bold)
+- (blank line)
+- **IRIX 6.5 fixes: @chulofiasco, SGUG** (bold)
+- *with thanks to ctc/ajg, jpff and others* (italic)
+
+**Topbox** (main launcher):
+- Andy Green & Richard Brown (original authors)
+- IRIX 6.5 fixes: @chulofiasco, SGUG
+- with thanks to ctc, jpff and others
+
+**Sequencer** (MIDI player):
+- Andy Green & Richard Brown (original authors)
+- IRIX 6.5 fixes: @chulofiasco, SGUG
+- with thanks to ctc, jpff and others
+
+**Editor** (notation editor):
+- Chris Cannam (original author)
+- IRIX 6.5 fixes: @chulofiasco, SGUG
+- with thanks to ajg, jpff and others
+
+**Files Modified**:
+- `topbox/src/Widgets.c` - Updated aboutText array
+- `sequencer/src/MainWindow.c` - Updated aboutText array
+- `editor/src/Widgets.c` - Updated aboutText array
+
+---
+
+## Build Date
+January 29-30, February 2-3, 2026
+
+## Additional Notes
+- All builds tested on KILAUEA (IRIX 6.5 system)
+- Linker warnings about unused libraries (libmd.so) are harmless
+- Petal scripting support is fully functional with TclMidi installed
+- Original 2.0-b3 version remains in `2.0-b3/` subdirectory for reference
+- MIDI playback fix also required in Rosegarden 2.0-b3 (same bug exists there)

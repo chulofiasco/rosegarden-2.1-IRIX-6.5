@@ -1,0 +1,19 @@
+
+Rosegarden 2.1 available
+========================
+
+Rosegarden is a free integrated musical notation editor and MIDI
+sequencer for Unix/X platforms, with specific support for Linux PCs
+and SGI IRIX workstations.  Binaries for these machines are available
+by ftp, together with (we hope) fairly portable sources.
+
+Version 2.1 is now available.  A number of new features have been
+introduced since the previous 2.0.1 release.
+
+See the Rosegarden Web page at http://www.bath.ac.uk/~masjpf/rose.html
+for more information, or anonymous ftp to ftp.maths.bath.ac.uk,
+directory /pub/dream/ROSE .
+
+
+Chris Cannam, October 1997
+cannam@zands.com
