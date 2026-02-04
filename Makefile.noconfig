@@ -1,0 +1,319 @@
+
+# Makefile for Rosegarden installation without "configure"
+#
+# Chris Cannam, February 1995 and on
+
+# You will need:
+#
+#     + An ANSI C (or C++) compiler.
+#
+#     + Approximately ANSI-standard runtime libraries
+#	with POSIX extensions.  (Most "modern" Unices
+#	should be okay; a "pure" SysV or BSD may have
+#	a bit of trouble, but the code's mostly pretty
+#	uncontentious.  I have problems with AIX, but
+#       I'd be worried if I didn't.)
+#
+#     + X11R5 or R6 with the Athena widget set (Xaw).
+#	X11R4 won't work (we use widgets from R5+ Xaw).
+
+# Defines:
+#
+#     + Check first batch of defines in this Makefile for
+#	library locations, source tree location, that kind
+#	of thing.  Pay attention.
+#
+#     + Define for the sort of record/sequence support you
+#       want:
+#
+#	- define SYSTEM_SGI to use Silicon Graphics IRIX
+#         (5.3, 6.x) dmedia MIDI library; in this case
+#         you'll need -lmd in the link too.
+#
+#	- define SYSTEM_ZILOG to use the Zilog Z8530
+#         output controller found on many SGI Indigo/Indy
+#         machines (if your IRIX release doesn't have the
+#         dmedia library).
+#
+#	- define SYSTEM_OSS to use OSS or OSS-Lite (formerly
+#         VoxWare) sound support, e.g. for Linux or FreeBSD.
+#
+# 	If you don't define any of these, no record/play
+#	code will be compiled in.
+#
+#     + Define POSIX_PLEASE if you want as much POSIX
+#	compliance as possible.  (You'll only get strict
+#	POSIX compliance if you also opt for none of the
+#	actual music-making options, which are obviously
+#	machine-dependent.)  Defining POSIX_PLEASE will
+#	automatically define NO_GETHOSTNAME, NO_SYS_ERRLIST
+#	and NO_STRCASECMP, for which see below.
+#
+# Most of the rest can normally be omitted safely, though
+# check the very last one if you're using a C++ compiler:
+#
+#     + Define DEBUG for function entry/exit and memory
+#       allocation debugging messages.  Lots of output,
+#       not advised for real-world builds.
+#
+#     + Define REPORT_LINE_AND_FILE for verbose debugging
+#       messages listing process id, filename and line no
+#       for function entry and exit messages.  This is only
+#       active if DEBUG is also defined; otherwise defining
+#	REPORT_LINE_AND_FILE just increases the information
+#	content of midi read/write errors.
+#
+#     + Define LIST_WARNINGS for warning messages in
+#       dubious list operations (defined automatically if
+#       DEBUG is set, and only active if you have an ANSI
+#       preprocessor with __STDC__ set); recommended for
+#       development but definitely not advised for real
+#       "production" code (it makes everything slower).
+#
+#     + Define HAVE_SPECIALIST_MALLOC_LIBRARY if you are
+#       linking with a fast malloc library which provides
+#       the mallopt() call.  This has only been tested
+#       under SGI IRIX 4.x and 5.x.
+#
+#     + Define NO_GETHOSTNAME if you have not got the
+#       gethostname() call, or if you don't want the host
+#       name displayed in the title bar.
+#
+#     + Define NO_SYS_ERRLIST for systems which do not
+#       provide built-in external sys_errlist and sys_nerr
+#       variables for error reporting, or if you don't
+#	want them to be used for some reason.  This only
+#	affects the quality of file error reporting.
+#
+#     + Define NO_STRCASECMP if you haven't got strcasecmp()
+#       or strncasecmp(), or if you like the idea of making
+#	me work to reimplement them.
+#
+#     + Define NO_VIEWPORT_SET_FUNCTIONS if you're missing
+#	the Athena XawViewportSetCoordinates() convenience
+#	function (undocumented and often absent).  This
+#	is used in YFile.c in the Yawn library.  It's
+#       debatable whether you actually get any benefit
+#       from the use of this function.
+#
+#     + Define YAWN_AVAILABLE if you want MIDI warning
+#	messages to appear in X dialogue boxes rather than
+#	being sent to the controlling terminal.  This can
+#	be very annoying, especially if there are a lot.
+#	YAWN_AVAILABLE has no other application, whatever
+#	its name may imply.
+#
+#     + If the type of the callback expected by signal()
+#       on your system is something other than
+#       (void (*)()), define SIGNAL_CALLBACK_TYPE=
+#       whatever.  For instance, under SunOS 4.x you may
+#       need to define SIGNAL_CALLBACK_TYPE=(SIG_PF),
+#	and some systems will require
+#	SIGNAL_CALLBACK_TYPE='(void (*)(int))'.  This
+#       define should only be necessary if you're using a
+#       particularly pedantic (C++?) compiler.  Don't
+#	forget the outer set of parentheses.
+
+
+# This should point to a Bourne shell (bash will do)
+
+SHELL		= /bin/sh
+
+
+# Root of the Rosegarden build tree (ie. path of this
+# directory).  You'll certainly need to change this
+
+ROSEGARDEN	= /home/cannam/rosegarden
+
+
+# System include and X11 include directories
+
+SYSINCDIRS	= -I/usr/include -I/usr/include/X11
+
+
+# System library and X11 library directories
+
+SYSLDFLAGS	= -L/usr/lib -L/usr/X11R6/lib
+SYSEXTRALIBS	= 
+
+
+# ranlib program, make it just "touch" or something if your
+# archiver doesn't need a separate contents-table generator
+
+RANLIB		= ranlib
+
+
+# makedepend program, if you don't have it just use
+# /bin/true or something (anything that won't actually fail)
+
+# on my Linux system I use the i386 flag to suppress the
+# irritating '#error architecture not supported' messages
+
+MAKEDEPEND	= makedepend -D__i386__
+
+
+# Flags for both compilation and linking stages
+
+OPTFLAGS	= -ansi -pipe -O2 -g
+
+
+# Compile defines
+# [some crappy systems may want -DNeedFunctionPrototypes]
+DEFINES		= -DPOSIX_PLEASE -DSYSTEM_OSS
+
+
+# Name of the compiler, plus any flags common to both compile
+# and link stages
+
+CC		= gcc
+
+
+
+###
+###
+###
+###
+
+# Don't change anything below this line
+
+EXPORTATION	= ROSEGARDEN="$(ROSEGARDEN)" ; SYSINCDIRS="$(SYSINCDIRS)" ; SYSLDFLAGS="$(SYSLDFLAGS)" ; CC="$(CC)" ; DEFINES="$(DEFINES)" ; RANLIB="$(RANLIB)" ; OPTFLAGS="$(OPTFLAGS)" ; MAKEDEPEND="$(MAKEDEPEND)" ; SYSEXTRALIBS="$(SYSEXTRALIBS)" ; export ROSEGARDEN SYSINCDIRS DEFINES SYSLDFLAGS CC RANLIB OPTFLAGS MAKEDEPEND SYSEXTRALIBS
+
+LISTLIB		= $(ROSEGARDEN)/lists/lib/libLists.a
+YAWNLIB		= $(ROSEGARDEN)/yawn/lib/libY.a
+LOCKLIB		= $(ROSEGARDEN)/interlock/lib/libInterlock.a
+MIDILIB		= $(ROSEGARDEN)/midi/lib/libMidi.a
+MAPPLIB		= $(ROSEGARDEN)/midi/lib/libMidi.a
+REGXLIB		= $(ROSEGARDEN)/regexp/lib/libRegexp.a
+
+TOPBOX		= $(ROSEGARDEN)/bin/rosegarden
+SEQUENCER	= $(ROSEGARDEN)/bin/sequencer
+EDITOR		= $(ROSEGARDEN)/bin/editor
+
+DO_SUBMAKE	= $(MAKE)
+
+
+all:		structure depend Libraries Rosegarden
+Libraries:	Lists Yawn Interlock Midi Regexp Petal Mapper
+Rosegarden:	Sequencer Editor Topbox
+
+
+Lists:
+		echo ; echo Checking the List library ; echo
+		rm -f $(LISTLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/lists/src ; $(DO_SUBMAKE) )
+
+Yawn:
+		echo ; echo Checking the Yawn library ; echo
+		rm -f $(YAWNLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/yawn/src ; $(DO_SUBMAKE) )
+
+Interlock:
+		echo ; echo Checking the Interlock library ; echo
+		rm -f $(LOCKLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/interlock/src ; \
+		  $(DO_SUBMAKE) )
+
+Midi:
+		echo ; echo Checking the Midi library ; echo
+		rm -f $(MIDILIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/midi/src ; $(DO_SUBMAKE) )
+
+
+Mapper:
+		echo ; echo Checking the Mapper library ; echo
+		rm -f $(MAPPLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/mapper/src ; $(DO_SUBMAKE) )
+
+Regexp:
+		echo ; echo Checking the Regexp library ; echo
+		rm -f $(REGXLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/regexp/src ; $(DO_SUBMAKE) )
+
+Petal:
+		echo ; echo Checking the Petal library ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/petal ; $(DO_SUBMAKE) ) || \
+		( echo ; echo Petal build failed, ignoring ; echo ; true )
+
+
+# these all used to begin with $(MAKE) Libraries
+# but I decided that was just possibly overkill
+
+Sequencer:
+		rm -f $(SEQUENCER)
+		echo ; echo Checking the Sequencer ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/sequencer/src ; \
+		  $(DO_SUBMAKE) )
+
+Editor:
+		rm -f $(EDITOR)
+		echo ; echo Checking the Editor ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/editor/src ; \
+		  $(DO_SUBMAKE) )
+
+Topbox:
+		rm -f $(TOPBOX)
+		echo ; echo Checking the Top Box ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/topbox/src ; \
+		  $(DO_SUBMAKE) )
+
+depend:
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/lists/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/yawn/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/interlock/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/midi/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/mapper/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/regexp/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/sequencer/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/editor/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/topbox/src ; \
+		  $(MAKE) depend )
+
+clean:
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/lists/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/yawn/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/interlock/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/petal ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/midi/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/mapper/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/regexp/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/sequencer/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/editor/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/topbox/src ; \
+		  $(MAKE) clean )
+
+distclean:
+		$(MAKE) clean
+		rm -f $(SEQUENCER) $(EDITOR) $(TOPBOX)
+		rm -f $(LISTLIB) $(YAWNLIB) $(LOCKLIB) $(MIDILIB) $(REGXLIB)
+		cd $(ROSEGARDEN)
+		rm -f */src/Makefile.bak \
+		      */src/Makefile.orig \
+		      */src/Makefile-old
+		rm -f *~ */*/*~ core bin/core
+		rm -f config.h config.cache config.log config.status
+		rm -f Makefile
+
+lint:
+		$(MAKE) CC="g++ -Wall" clean all
+
+structure:
+		chmod +x $(ROSEGARDEN)/scripts/make-structure.sh
+		$(ROSEGARDEN)/scripts/make-structure.sh $(ROSEGARDEN)
+

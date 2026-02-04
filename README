@@ -1,0 +1,31 @@
+
+Rosegarden 2.1
+==============
+
+This is the Rosegarden Editor and Sequencer suite, release 2.1.
+
+See COPYRIGHT for information about copyrights, and COPYING for
+information about redistribution and (the lack of) warranty.
+
+See INSTALL for details of how to install this distribution.
+
+
+Support
+=======
+
+We're doing a certain amount of maintenance and development of
+Rosegarden, but we don't support it as such.
+
+However, if you have any complaints, bug reports, modifications, news
+of successful or unsuccessful ports to other machines, or constructive
+criticism, please email them to me.  (I don't particularly want to
+hear about installation problems, but if you're really desperate, go
+ahead and ask.)  A better idea, for some sorts of problems, ideas or
+comments, may be to join and consult the Rosegarden mailing list: send
+an email to the administrator at rosegarden-request@maths.bath.ac.uk
+asking to be added.
+
+
+Chris Cannam, cannam@zands.com
+October 1997
+

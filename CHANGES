@@ -1,0 +1,96 @@
+
+Changes from Rosegarden 2.0.1 to Rosegarden 2.1
+===============================================
+
+Editor
+------
+
+  * A full multi-level per-buffer Undo, with Redo, has been added.
+
+  * Automatic chord naming has been added to complement the chord
+    construction from names that was added to 2.0.1.
+
+  * The Editor can now do some optional experimental velocity
+    heuristics when writing out MIDI from a score with dynamic marks.
+    `Dynamic' is now a distinct Text field type.
+
+  * There is a new search-and-replace function on combinations of
+    pitches in chords.
+
+  * Output to OpusTeX and PMX are now included as an alternative to
+    MusicTeX.  The OpusTeX output in particular needs more work, but
+    from now on it'll probably get more development time than the
+    MusicTeX code.
+
+  * The Petal scripting language has been integrated, although so far
+    only with an initial proof-of-concept interface.
+
+  * The menus have been rearranged slightly.  There is a new Chord
+    menu, and the Tools menu has disappeared and most of its functions
+    moved onto File.
+
+  * Cut and Paste now retain any complete slurs, ties or dynamics
+    encountered.
+
+  * The palette has been extended to include breves and breve rests.
+
+  * There's a little vertical bar that follows the insertion cursor to
+    track the insertion point (very exciting).
+
+  * A keyboard control for Transpose Up/Down has been added.
+
+  * The range of notes and rests available from the palette has been
+    extended to include breves.
+
+
+Sequencer
+---------
+
+  * The sequencing code has been completely rewritten for multiple
+    simultaneous devices, with a new device mapper library.  You can
+    send individual tracks to individual MIDI devices, and there is
+    a new All Device meta-device which routes events to (surprise!)
+    all the available devices.
+
+  * You can now step forwards and backwards through the piece, and
+    start playback at any point.
+
+  * Selected tracks can be muted during playback.
+
+  * The piano-roll now shows a piano keyboard layout, rather than
+    five-line staff layout.  It now shows note velocity information,
+    and is zoomable.
+
+  * Events can be opened and edited from event-list windows with a
+    double-click action.  All kinds of events can now be inserted
+    from the Event List menu.
+
+  * With a soundcard synth and OSS sound drivers, drum patches are
+    available on MIDI channel 10 (represented as channel 9 in
+    Rosegarden).
+
+  * The MIDI menu Reset functions are (partly) implemented.
+
+  * You can record while playing, although this hasn't been tested
+    very thoroughly and shouldn't be expected to work reliably in
+    this release.
+
+  * The Petal scripting language has been integrated, although so far
+    only with an initial proof-of-concept interface.
+
+
+In general
+----------
+
+  * File boxes work a bit better: some obvious things that didn't
+    work before now do (click on the file name field, type in the name
+    of a directory and hit Return -- the directory will be listed in
+    the expected manner)
+
+  * The look and feel when using the 3d Athena widget set (Xaw3d) is
+    slightly improved.
+
+  * New "configure" and "do-install" scripts have been added to the
+    source distribution.
+
+

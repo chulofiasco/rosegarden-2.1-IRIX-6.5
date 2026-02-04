@@ -1,0 +1,198 @@
+#
+# Chris Cannam, February 1995 and on
+
+
+# This should point to a Bourne shell (bash will do)
+
+SHELL		= /bin/sh
+
+
+# Root of the Rosegarden tree.  This will be exported to
+# inferior makes
+
+ROSEGARDEN	= @rosegarden@
+
+
+# System include directories.  This will also be exported
+
+SYSINCDIRS	= @X_CFLAGS@
+
+
+# System library directories, also exported
+
+SYSLDFLAGS	= @X_LIBS@ @LDFLAGS@ @X_PRE_LIBS@ @X_EXTRA_LIBS@
+SYSEXTRALIBS	= @extra_libs@
+
+
+# ranlib program, make it just "touch" or something if your
+# archiver doesn't need a separate contents-table generator
+
+RANLIB		= @RANLIB@
+
+
+# makedepend program, if you don't have it just use
+# /bin/true or something (anything that won't actually fail)
+
+MAKEDEPEND	= @MAKEDEPEND@ @makedepend_flag@
+
+
+# Flags for both compilation and linking stages
+
+#OPTFLAGS	= -ansi -pipe -O
+OPTFLAGS	= @CFLAGS@
+
+
+# Compile defines
+DEFINES		= @defines@
+
+# Name of the compiler, plus any flags common to both compile
+# and link stages; also exported
+
+CC		= @CC@
+
+###
+###
+###
+###
+
+# Nothing below this line will be exported, so leave it alone
+
+EXPORTATION	= ROSEGARDEN="$(ROSEGARDEN)" ; SYSINCDIRS="$(SYSINCDIRS)" ; SYSLDFLAGS="$(SYSLDFLAGS)" ; CC="$(CC)" ; DEFINES="$(DEFINES)" ; RANLIB="$(RANLIB)" ; OPTFLAGS="$(OPTFLAGS)" ; MAKEDEPEND="$(MAKEDEPEND)" ; SYSEXTRALIBS="$(SYSEXTRALIBS)" ; export ROSEGARDEN SYSINCDIRS DEFINES SYSLDFLAGS CC RANLIB OPTFLAGS MAKEDEPEND SYSEXTRALIBS
+
+LISTLIB		= $(ROSEGARDEN)/lists/lib/libLists.a
+YAWNLIB		= $(ROSEGARDEN)/yawn/lib/libY.a
+LOCKLIB		= $(ROSEGARDEN)/interlock/lib/libInterlock.a
+MIDILIB		= $(ROSEGARDEN)/midi/lib/libMidi.a
+REGXLIB		= $(ROSEGARDEN)/regexp/lib/libRegexp.a
+MAPPLIB		= $(ROSEGARDEN)/mapper/lib/libMapper.a
+
+TOPBOX		= $(ROSEGARDEN)/bin/rosegarden
+SEQUENCER	= $(ROSEGARDEN)/bin/sequencer
+EDITOR		= $(ROSEGARDEN)/bin/editor
+
+DO_SUBMAKE	= $(MAKE)
+
+all:		structure depend Libraries Rosegarden
+Libraries:	@rosegarden_libs@ @Petal@ Mapper
+Rosegarden:	Sequencer Editor Topbox
+
+
+Lists:
+		echo ; echo Checking the List library ; echo
+		rm -f $(LISTLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/lists/src ; $(DO_SUBMAKE) )
+
+Yawn:
+		echo ; echo Checking the Yawn library ; echo
+		rm -f $(YAWNLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/yawn/src ; $(DO_SUBMAKE) )
+
+Interlock:
+		echo ; echo Checking the Interlock library ; echo
+		rm -f $(LOCKLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/interlock/src ; \
+		  $(DO_SUBMAKE) )
+
+Midi:
+		echo ; echo Checking the Midi library ; echo
+		rm -f $(MIDILIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/midi/src ; $(DO_SUBMAKE) )
+
+Regexp:
+		echo ; echo Checking the Regexp library ; echo
+		rm -f $(REGXLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/regexp/src ; $(DO_SUBMAKE) )
+
+Mapper:
+		echo ; echo Checking the Mapper library ; echo
+		rm -f $(MAPPLIB)
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/mapper/src ; $(DO_SUBMAKE) )
+
+Petal:
+		echo ; echo Checking the Petal library ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/petal ; $(DO_SUBMAKE) ) || \
+		( echo ; echo Petal build failed, ignoring ; echo ; true )
+
+
+# these all used to begin with $(MAKE) Libraries
+# but I decided that was just possibly overkill
+
+Sequencer:
+		rm -f $(SEQUENCER)
+		echo ; echo Checking the Sequencer ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/sequencer/src ; \
+		  $(DO_SUBMAKE) )
+
+Editor:
+		rm -f $(EDITOR)
+		echo ; echo Checking the Editor ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/editor/src ; \
+		  $(DO_SUBMAKE) )
+
+Topbox:
+		rm -f $(TOPBOX)
+		echo ; echo Checking the Top Box ; echo
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/topbox/src ; \
+		  $(DO_SUBMAKE) )
+
+depend:
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/lists/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/yawn/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/interlock/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/midi/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/mapper/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/regexp/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/sequencer/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/editor/src ; \
+		  $(MAKE) depend )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/topbox/src ; \
+		  $(MAKE) depend )
+
+clean:
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/lists/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/yawn/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/interlock/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/petal ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/midi/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/mapper/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/regexp/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/sequencer/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/editor/src ; \
+		  $(MAKE) clean )
+		( $(EXPORTATION) ; cd $(ROSEGARDEN)/topbox/src ; \
+		  $(MAKE) clean )
+
+distclean:
+		$(MAKE) clean
+		rm -f $(SEQUENCER) $(EDITOR) $(TOPBOX)
+		rm -f $(LISTLIB) $(YAWNLIB) $(LOCKLIB) $(MIDILIB) $(REGXLIB)
+		cd $(ROSEGARDEN)
+		rm -f */src/Makefile.bak \
+		      */src/Makefile.orig \
+		      */src/Makefile-old
+		rm -f *~ */*/*~ core bin/core
+		rm -f config.h config.cache config.log config.status
+		rm -f Makefile petal/Makefile
+
+lint:
+		$(MAKE) CC="g++ -Wall" clean all
+
+structure:
+		chmod +x $(ROSEGARDEN)/scripts/make-structure.sh
+		$(ROSEGARDEN)/scripts/make-structure.sh $(ROSEGARDEN)
+

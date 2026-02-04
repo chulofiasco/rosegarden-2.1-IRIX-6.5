@@ -1,0 +1,79 @@
+
+Rosegarden 2.1 installation
+===========================
+
+These instructions are for compiling and installing from the source
+distribution of Rosegarden 2.1 for Unix.  Pre-compiled binaries for
+Rosegarden are also available for some systems, from the ftp site
+(ftp://ftp.maths.bath.ac.uk/pub/dream/ROSE), and are generally easier
+to install.
+
+
+Building with "configure"
+=========================
+
+This release includes a new configure script built with the GNU
+autoconf configuration utility.  To build with this configure script,
+type
+
+      rm -f Makefile
+      ./configure
+      make clean all
+
+If something goes wrong, move on to:
+
+
+Building without "configure"
+============================
+
+The file Makefile.noconfig is a complete Makefile for building without
+using the configure utility.  Edit the definitions in the Makefile
+carefully according to the comments in the file, and then type
+
+      rm -f Makefile config.h
+      ln -s Makefile.noconfig Makefile
+      make clean all
+
+
+Installation
+============
+
+To install Rosegarden once you've built it, run the script
+"do-install" from this directory.
+
+Alternatively, if you'd rather install by hand, carry out the
+following.  (The final item here is something that might need doing
+even if you've installed with do-install.)
+
+  * move or copy the three executables ./bin/rosegarden, ./bin/editor
+    and ./bin/sequencer to a suitable binaries directory (renaming
+    them if you like -- you don't _have_ to call the editor "editor",
+    though if I were you I'd call it that but put it in a Rosegarden-
+    specific directory);
+
+  * move or copy the two help files ./common/help/rosehelp.info and
+    ./common/help/rosehelp.hnx into a directory you consider suitable for
+    help files (they must be both in the same directory);
+
+  * if desired, place the sample Rosegarden editor files
+    ./common/music/*.rose in a suitable directory of your choosing;
+
+  * if you want to use Petal scripting, and have Tcl and TclMidi
+    installed on your machine and have successfully compiled the ./petal
+    directory, then make a directory called .rosepetal-filters in your
+    home directory and copy the sample files ./petal/harmonizer.tcl and
+    ./petal/pattern.tcl into it;
+
+  * if using the OSS MIDI driver, copy the default synth-patch files
+    ./common/synth-patches/std.sb and ./common/synth-patches/drums.sb
+    to a suitable directory;
+
+  * modify the resource file ./Rosegarden to indicate the locations of
+    the executable files, patch files and help files, and copy it to an
+    X defaults directory (/usr/lib/X11/app-defaults, your home directory,
+    somewhere like that).  Rosegarden will refuse to run at all if this
+    file has not been placed in one of the standard X defaults file
+    locations.  You may also have to modify the colours and fonts defined
+    in ./Rosegarden if the supplied ones are not available on your system.
+
+

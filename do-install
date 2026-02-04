@@ -1,0 +1,68 @@
+#!/bin/sh
+
+BINDIR=/usr/local/bin
+LIBDIR=/usr/local/lib
+
+install="sh ./install-sh"
+
+if [ ! -f ./bin/rosegarden ]; then
+  echo "You're supposed to build it first..."
+  exit 1
+fi
+
+echo
+echo Rosegarden 2.1 basic install script
+echo
+echo 'Enter directory for the main rosegarden executable ['$BINDIR']'
+read newbin
+if [ t"$newbin" != t ]; then BINDIR="$newbin"; fi
+echo 'Enter directory to contain the rosegarden lib directory ['$LIBDIR']'
+read newlib
+if [ t"$newlib" != t ]; then LIBDIR="$newlib"; fi
+echo
+echo Thanks
+echo
+
+ROSELIBDIR=$LIBDIR/rosegarden
+
+( set -x
+
+$install -d $BINDIR
+$install -s -c ./bin/rosegarden $BINDIR
+
+$install -d $ROSELIBDIR/bin
+$install -s -c ./bin/sequencer  $ROSELIBDIR/bin
+$install -s -c ./bin/editor     $ROSELIBDIR/bin
+
+$install -d $ROSELIBDIR/example
+$install -c -m 644 ./common/music/glazunov.rose $ROSELIBDIR/example
+
+$install -d $ROSELIBDIR/synth-patches
+$install -c -m 644 ./common/synth-patches/std.sb   $ROSELIBDIR/synth-patches
+$install -c -m 644 ./common/synth-patches/drums.sb $ROSELIBDIR/synth-patches
+
+$install -d $ROSELIBDIR/help
+$install -c -m 644 ./common/help/rosehelp.info $ROSELIBDIR/help
+$install -c -m 644 ./common/help/rosehelp.hnx  $ROSELIBDIR/help
+
+$install -d $ROSELIBDIR/petal
+test -f ./petal/Petal.so && $install -m 644 ./petal/Petal.so $ROSELIBDIR/petal
+$install -c ./petal/Petal.tcl $ROSELIBDIR/petal
+$install -c ./petal/petaleditor/PetalEditor.tcl $ROSELIBDIR/petal
+$install -c ./petal/petalmidi/PetalMidi.tcl $ROSELIBDIR/petal
+
+( cd $ROSELIBDIR/petal ; echo "pkg_mkIndex . Petal.so *.tcl" | tclsh )
+
+$install -d $ROSELIBDIR/rosepetal-filters
+$install -c ./petal/harmonizer.tcl $ROSELIBDIR/rosepetal-filters
+$install -c ./petal/pattern.tcl $ROSELIBDIR/rosepetal-filters
+
+test -d $HOME/.. || exit 0  # not set
+test -f $HOME/Rosegarden && mv $HOME/Rosegarden $HOME/Rosegarden.SAVED
+$install -c -m 644 Rosegarden $HOME
+
+ )
+
+echo
+echo Done
+echo
