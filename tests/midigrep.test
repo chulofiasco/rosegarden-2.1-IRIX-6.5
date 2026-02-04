@@ -1,0 +1,698 @@
+#!../tclmidi
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 NoteOff 0 0}
+midiput $mf 0 {0 NoteOff 0 1}
+midiput $mf 0 {0 NoteOff 1 0}
+midiput $mf 0 {0 NoteOff 1 1}
+midiput $mf 0 {0 Note 0 0 0 1}
+midiput $mf 0 {1 NoteOff 0 0}
+midiput $mf 0 {1 NoteOff 0 1}
+midiput $mf 0 {1 NoteOff 1 0}
+midiput $mf 0 {1 NoteOff 1 1}
+if {[llength [midigrep $mf 0 {* NoteOff * *}]] != 8} {
+	puts "midigrep failed to find 8 NoteOff events"
+}
+if {[llength [midigrep $mf 0 {0 NoteOff * *}]] != 4} {
+	puts "midigrep failed to find 4 NoteOff events at time 0"
+}
+if {[llength [midigrep $mf 0 {* NoteOff 0 *}]] != 4} {
+	puts "midigrep failed to find 4 NoteOff events on channel 0"
+}
+if {[llength [midigrep $mf 0 {* NoteOff * 0}]] != 4} {
+	puts "midigrep failed to find 4 NoteOff events with pitch 0"
+}
+midifree $mf
+puts "NoteOff ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 NoteOn 0 0 0}
+midiput $mf 0 {0 NoteOn 0 0 1}
+midiput $mf 0 {0 NoteOn 0 1 0}
+midiput $mf 0 {0 NoteOn 0 1 1}
+midiput $mf 0 {0 NoteOn 1 0 0}
+midiput $mf 0 {0 NoteOn 1 0 1}
+midiput $mf 0 {0 NoteOn 1 1 0}
+midiput $mf 0 {0 NoteOn 1 1 1}
+midiput $mf 0 {0 Note 0 0 0 1}
+midiput $mf 0 {1 NoteOn 0 0 0}
+midiput $mf 0 {1 NoteOn 0 0 1}
+midiput $mf 0 {1 NoteOn 0 1 0}
+midiput $mf 0 {1 NoteOn 0 1 1}
+midiput $mf 0 {1 NoteOn 1 0 0}
+midiput $mf 0 {1 NoteOn 1 0 1}
+midiput $mf 0 {1 NoteOn 1 1 0}
+midiput $mf 0 {1 NoteOn 1 1 1}
+if {[llength [midigrep $mf 0 {* NoteOn * * *}]] != 16} {
+	puts "midigrep failed to find 16 NoteOn events"
+}
+if {[llength [midigrep $mf 0 {0 NoteOn * * *}]] != 8} {
+	puts "midigrep failed to find 8 NoteOn events at time 0"
+}
+if {[llength [midigrep $mf 0 {* NoteOn 0 * *}]] != 8} {
+	puts "midigrep failed to find 8 NoteOn events on channel 0"
+}
+if {[llength [midigrep $mf 0 {* NoteOn * 0 *}]] != 8} {
+	puts "midigrep failed to find 8 NoteOn events for pitch 0"
+}
+if {[llength [midigrep $mf 0 {* NoteOn * * 0}]] != 8} {
+	puts "midigrep failed to find 8 NoteOn events with velocity 0"
+}
+midifree $mf
+puts "NoteOn ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 Note 0 0 1 1}
+midiput $mf 0 {0 Note 0 1 1 2}
+midiput $mf 0 {0 Note 0 2 2 1}
+midiput $mf 0 {0 Note 0 3 2 2}
+midiput $mf 0 {0 Note 1 0 1 1}
+midiput $mf 0 {0 Note 1 1 1 2}
+midiput $mf 0 {0 Note 1 2 2 1}
+midiput $mf 0 {0 Note 1 3 2 2}
+midiput $mf 0 {0 NoteOn 0 1 0}
+midiput $mf 0 {1 Note 0 0 1 1}
+midiput $mf 0 {1 Note 0 1 1 2}
+midiput $mf 0 {1 Note 0 2 2 1}
+midiput $mf 0 {1 Note 0 3 2 2}
+midiput $mf 0 {1 Note 1 0 1 1}
+midiput $mf 0 {1 Note 1 1 1 2}
+midiput $mf 0 {1 Note 1 2 2 1}
+midiput $mf 0 {1 Note 1 3 2 2}
+midiput $mf 0 {1 NoteOff 0 0}
+if {[llength [midigrep $mf 0 {* Note * * * *}]] != 16} {
+	puts "midigrep failed to find 16 Note events"
+	puts "[midigrep $mf 0 {* Note * * * *}]"
+}
+if {[llength [midigrep $mf 0 {0 Note * * * *}]] != 8} {
+	puts "midigrep failed to find 8 Note events at time 0"
+	puts "[midigrep $mf 0 {0 Note * * * *}]"
+}
+if {[llength [midigrep $mf 0 {* Note 0 * * *}]] != 8} {
+	puts "midigrep failed to find 8 Note events on channel 0"
+	puts "[midigrep $mf 0 {* Note 0 * * *}]"
+}
+if {[llength [midigrep $mf 0 {* Note * 0 * *}]] != 4} {
+	puts "midigrep failed to find 4 Note events for pitch 0"
+	puts "[midigrep $mf 0 {* Note * 0 * *}]"
+}
+if {[llength [midigrep $mf 0 {* Note * * 1 *}]] != 8} {
+	puts "midigrep failed to find 8 Note events with velocity 1"
+	puts "[midigrep $mf 0 {* Note * * 1 *}]"
+}
+if {[llength [midigrep $mf 0 {* Note * * * 1}]] != 8} {
+	puts "midigrep failed to find 8 Note events with duration 1"
+	puts "[midigrep $mf 0 {* Note * * * 1}]"
+}
+midifree $mf
+puts "Note ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 KeyPressure 0 0 0}
+midiput $mf 0 {0 KeyPressure 0 0 1}
+midiput $mf 0 {0 KeyPressure 0 1 0}
+midiput $mf 0 {0 KeyPressure 0 1 1}
+midiput $mf 0 {0 KeyPressure 1 0 0}
+midiput $mf 0 {0 KeyPressure 1 0 1}
+midiput $mf 0 {0 KeyPressure 1 1 0}
+midiput $mf 0 {0 KeyPressure 1 1 1}
+midiput $mf 0 {1 KeyPressure 0 0 0}
+midiput $mf 0 {1 KeyPressure 0 0 1}
+midiput $mf 0 {1 KeyPressure 0 1 0}
+midiput $mf 0 {1 KeyPressure 0 1 1}
+midiput $mf 0 {1 KeyPressure 1 0 0}
+midiput $mf 0 {1 KeyPressure 1 0 1}
+midiput $mf 0 {1 KeyPressure 1 1 0}
+midiput $mf 0 {1 KeyPressure 1 1 1}
+if {[llength [midigrep $mf 0 {* KeyPressure * * *}]] != 16} {
+	puts "midigrep failed to find 16 KeyPressure events"
+}
+if {[llength [midigrep $mf 0 {0 KeyPressure * * *}]] != 8} {
+	puts "midigrep failed to find 8 KeyPressure events at time 0"
+}
+if {[llength [midigrep $mf 0 {* KeyPressure 0 * *}]] != 8} {
+	puts "midigrep failed to find 8 KeyPressure events on channel 0"
+}
+if {[llength [midigrep $mf 0 {* KeyPressure * 0 *}]] != 8} {
+	puts "midigrep failed to find 8 KeyPressure events for pitch 0"
+}
+if {[llength [midigrep $mf 0 {* KeyPressure * * 0}]] != 8} {
+	puts "midigrep failed to find 8 KeyPressure events with pressure 0"
+}
+midifree $mf
+puts "KeyPressure ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 Parameter 0 0 0}
+midiput $mf 0 {0 Parameter 0 0 1}
+midiput $mf 0 {0 Parameter 0 1 0}
+midiput $mf 0 {0 Parameter 0 1 1}
+midiput $mf 0 {0 Parameter 1 0 0}
+midiput $mf 0 {0 Parameter 1 0 1}
+midiput $mf 0 {0 Parameter 1 1 0}
+midiput $mf 0 {0 Parameter 1 1 1}
+midiput $mf 0 {1 Parameter 0 0 0}
+midiput $mf 0 {1 Parameter 0 0 1}
+midiput $mf 0 {1 Parameter 0 1 0}
+midiput $mf 0 {1 Parameter 0 1 1}
+midiput $mf 0 {1 Parameter 1 0 0}
+midiput $mf 0 {1 Parameter 1 0 1}
+midiput $mf 0 {1 Parameter 1 1 0}
+midiput $mf 0 {1 Parameter 1 1 1}
+if {[llength [midigrep $mf 0 {* Parameter * * *}]] != 16} {
+	puts "midigrep failed to find 16 Parameter events"
+}
+if {[llength [midigrep $mf 0 {0 Parameter * * *}]] != 8} {
+	puts "midigrep failed to find 8 Parameter events at time 0"
+}
+if {[llength [midigrep $mf 0 {* Parameter 0 * *}]] != 8} {
+	puts "midigrep failed to find 8 Parameter events on channel 0"
+}
+if {[llength [midigrep $mf 0 {* Parameter * 0 *}]] != 8} {
+	puts "midigrep failed to find 8 Parameter events for parameter 0"
+}
+if {[llength [midigrep $mf 0 {* Parameter * * 0}]] != 8} {
+	puts "midigrep failed to find 8 Parameter events with value 0"
+}
+midifree $mf
+puts "Parameter ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 Program 0 0}
+midiput $mf 0 {0 Program 0 1}
+midiput $mf 0 {0 Program 1 0}
+midiput $mf 0 {0 Program 1 1}
+midiput $mf 0 {1 Program 0 0}
+midiput $mf 0 {1 Program 0 1}
+midiput $mf 0 {1 Program 1 0}
+midiput $mf 0 {1 Program 1 1}
+if {[llength [midigrep $mf 0 {* Program * *}]] != 8} {
+	puts "midigrep failed to find 8 Program events"
+}
+if {[llength [midigrep $mf 0 {0 Program * *}]] != 4} {
+	puts "midigrep failed to find 4 Program events at time 0"
+}
+if {[llength [midigrep $mf 0 {* Program 0 *}]] != 4} {
+	puts "midigrep failed to find 4 Program events on channel 0"
+}
+if {[llength [midigrep $mf 0 {* Program * 0}]] != 4} {
+	puts "midigrep failed to find 4 Program events with program 0"
+}
+midifree $mf
+puts "Program ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 ChannelPressure 0 0}
+midiput $mf 0 {0 ChannelPressure 0 1}
+midiput $mf 0 {0 ChannelPressure 1 0}
+midiput $mf 0 {0 ChannelPressure 1 1}
+midiput $mf 0 {1 ChannelPressure 0 0}
+midiput $mf 0 {1 ChannelPressure 0 1}
+midiput $mf 0 {1 ChannelPressure 1 0}
+midiput $mf 0 {1 ChannelPressure 1 1}
+if {[llength [midigrep $mf 0 {* ChannelPressure * *}]] != 8} {
+	puts "midigrep failed to find 8 ChannelPressure events"
+}
+if {[llength [midigrep $mf 0 {0 ChannelPressure * *}]] != 4} {
+	puts "midigrep failed to find 4 ChannelPressure events at time 0"
+}
+if {[llength [midigrep $mf 0 {* ChannelPressure 0 *}]] != 4} {
+	puts "midigrep failed to find 4 ChannelPressure events on channel 0"
+}
+if {[llength [midigrep $mf 0 {* ChannelPressure * 0}]] != 4} {
+	puts "midigrep failed to find 4 ChannelPressure events with pressure 0"
+}
+midifree $mf
+puts "ChannelPressure ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 PitchWheel 0 0}
+midiput $mf 0 {0 PitchWheel 0 1}
+midiput $mf 0 {0 PitchWheel 1 0}
+midiput $mf 0 {0 PitchWheel 1 1}
+midiput $mf 0 {1 PitchWheel 0 0}
+midiput $mf 0 {1 PitchWheel 0 1}
+midiput $mf 0 {1 PitchWheel 1 0}
+midiput $mf 0 {1 PitchWheel 1 1}
+if {[llength [midigrep $mf 0 {* PitchWheel * *}]] != 8} {
+	puts "midigrep failed to find 8 PitchWheel events"
+}
+if {[llength [midigrep $mf 0 {0 PitchWheel * *}]] != 4} {
+	puts "midigrep failed to find 4 PitchWheel events at time 0"
+}
+if {[llength [midigrep $mf 0 {* PitchWheel 0 *}]] != 4} {
+	puts "midigrep failed to find 4 PitchWheel events on channel 0"
+}
+if {[llength [midigrep $mf 0 {* PitchWheel * 0}]] != 4} {
+	puts "midigrep failed to find 4 PitchWheel events with PW setting 0"
+}
+midifree $mf
+puts "PitchWheel ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 SystemExclusive {0x00 0x01}}
+midiput $mf 0 {0 SystemExclusive {0x01 0x02}}
+midiput $mf 0 {1 SystemExclusive {0x00 0x01}}
+midiput $mf 0 {1 SystemExclusive {0x01 0x02}}
+if {[llength [midigrep $mf 0 {* SystemExclusive *}]] != 4} {
+	puts "midigrep failed to find 4 SystemExclusive events"
+}
+if {[llength [midigrep $mf 0 {0 SystemExclusive *}]] != 2} {
+	puts "midigrep failed to find 2 SystemExclusive events at time 0"
+}
+if {[llength [midigrep $mf 0 {* SystemExclusive {0x00 0x01}}]] != 2} {
+	puts "midigrep failed to find 2 SystemExclusive events with data {0, 1}"
+}
+midifree $mf
+puts "SystemExclusive ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaSequenceNumber 0}
+midiput $mf 0 {0 MetaSequenceNumber 1}
+midiput $mf 0 {1 MetaSequenceNumber 0}
+midiput $mf 0 {1 MetaSequenceNumber 1}
+if {[llength [midigrep $mf 0 {* MetaSequenceNumber *}]] != 4} {
+	puts "midigrep failed to find 4 MetaSequenceNumber events"
+}
+if {[llength [midigrep $mf 0 {0 MetaSequenceNumber *}]] != 2} {
+	puts "midigrep failed to find 2 MetaSequenceNumber events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaSequenceNumber 0}]] != 2} {
+	puts "midigrep failed to find 2 MetaSequenceNumber events with num 0"
+}
+midifree $mf
+puts "MetaSequenceNumber ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaText "MetaText"}
+midiput $mf 0 {0 MetaText "OtherText"}
+midiput $mf 0 {1 MetaText "MetaText"}
+midiput $mf 0 {1 MetaText "OtherText"}
+if {[llength [midigrep $mf 0 {* MetaText *}]] != 4} {
+	puts "midigrep failed to find 4 MetaText events"
+}
+if {[llength [midigrep $mf 0 {0 MetaText *}]] != 2} {
+	puts "midigrep failed to find 2 MetaText events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaText "MetaText"}]] != 2} {
+	puts "midigrep failed to find 2 MetaText events with text \"MetaText\""
+}
+midifree $mf
+puts "MetaText ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaCopyright "MetaCopyright"}
+midiput $mf 0 {0 MetaCopyright "OtherText"}
+midiput $mf 0 {1 MetaCopyright "MetaCopyright"}
+midiput $mf 0 {1 MetaCopyright "OtherText"}
+if {[llength [midigrep $mf 0 {* MetaCopyright *}]] != 4} {
+	puts "midigrep failed to find 4 MetaCopyright events"
+}
+if {[llength [midigrep $mf 0 {0 MetaCopyright *}]] != 2} {
+	puts "midigrep failed to find 2 MetaCopyright events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaCopyright "MetaCopyright"}]] != 2} {
+	puts "midigrep failed to find 2 MetaCopyright events with text \"MetaCopyright\""
+}
+midifree $mf
+puts "MetaCopyright ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaSequenceName "MetaSequenceName"}
+midiput $mf 0 {0 MetaSequenceName "OtherText"}
+midiput $mf 0 {1 MetaSequenceName "MetaSequenceName"}
+midiput $mf 0 {1 MetaSequenceName "OtherText"}
+if {[llength [midigrep $mf 0 {* MetaSequenceName *}]] != 4} {
+	puts "midigrep failed to find 4 MetaSequenceName events"
+}
+if {[llength [midigrep $mf 0 {0 MetaSequenceName *}]] != 2} {
+	puts "midigrep failed to find 2 MetaSequenceName events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaSequenceName "MetaSequenceName"}]] != 2} {
+	puts "midigrep failed to find 2 MetaSequenceName events with text \"MetaSequenceName\""
+}
+midifree $mf
+puts "MetaSequenceName ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaInstrumentName "MetaInstrumentName"}
+midiput $mf 0 {0 MetaInstrumentName "OtherText"}
+midiput $mf 0 {1 MetaInstrumentName "MetaInstrumentName"}
+midiput $mf 0 {1 MetaInstrumentName "OtherText"}
+if {[llength [midigrep $mf 0 {* MetaInstrumentName *}]] != 4} {
+	puts "midigrep failed to find 4 MetaInstrumentName events"
+}
+if {[llength [midigrep $mf 0 {0 MetaInstrumentName *}]] != 2} {
+	puts "midigrep failed to find 2 MetaInstrumentName events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaInstrumentName "MetaInstrumentName"}]] != 2} {
+	puts "midigrep failed to find 2 MetaInstrumentName events with text \"MetaInstrumentName\""
+}
+midifree $mf
+puts "MetaInstrumentName ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaLyric "MetaLyric"}
+midiput $mf 0 {0 MetaLyric "OtherText"}
+midiput $mf 0 {1 MetaLyric "MetaLyric"}
+midiput $mf 0 {1 MetaLyric "OtherText"}
+if {[llength [midigrep $mf 0 {* MetaLyric *}]] != 4} {
+	puts "midigrep failed to find 4 MetaLyric events"
+}
+if {[llength [midigrep $mf 0 {0 MetaLyric *}]] != 2} {
+	puts "midigrep failed to find 2 MetaLyric events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaLyric "MetaLyric"}]] != 2} {
+	puts "midigrep failed to find 2 MetaLyric events with text \"MetaLyric\""
+}
+midifree $mf
+puts "MetaLyric ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaMarker "MetaMarker"}
+midiput $mf 0 {0 MetaMarker "OtherText"}
+midiput $mf 0 {1 MetaMarker "MetaMarker"}
+midiput $mf 0 {1 MetaMarker "OtherText"}
+if {[llength [midigrep $mf 0 {* MetaMarker *}]] != 4} {
+	puts "midigrep failed to find 4 MetaMarker events"
+}
+if {[llength [midigrep $mf 0 {0 MetaMarker *}]] != 2} {
+	puts "midigrep failed to find 2 MetaMarker events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaMarker "MetaMarker"}]] != 2} {
+	puts "midigrep failed to find 2 MetaMarker events with text \"MetaMarker\""
+}
+midifree $mf
+puts "MetaMarker ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaCue "MetaCue"}
+midiput $mf 0 {0 MetaCue "OtherText"}
+midiput $mf 0 {1 MetaCue "MetaCue"}
+midiput $mf 0 {1 MetaCue "OtherText"}
+if {[llength [midigrep $mf 0 {* MetaCue *}]] != 4} {
+	puts "midigrep failed to find 4 MetaCue events"
+}
+if {[llength [midigrep $mf 0 {0 MetaCue *}]] != 2} {
+	puts "midigrep failed to find 2 MetaCue events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaCue "MetaCue"}]] != 2} {
+	puts "midigrep failed to find 2 MetaCue events with text \"MetaCue\""
+}
+midifree $mf
+puts "MetaCue ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaChannelPrefix {0x00 0x01}}
+midiput $mf 0 {0 MetaChannelPrefix {0x01 0x02}}
+midiput $mf 0 {1 MetaChannelPrefix {0x00 0x01}}
+midiput $mf 0 {1 MetaChannelPrefix {0x01 0x02}}
+if {[llength [midigrep $mf 0 {* MetaChannelPrefix *}]] != 4} {
+	puts "midigrep failed to find 4 MetaChannelPrefix events"
+}
+if {[llength [midigrep $mf 0 {0 MetaChannelPrefix *}]] != 2} {
+	puts "midigrep failed to find 2 MetaChannelPrefix events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaChannelPrefix {0x00 0x01}}]] != 2} {
+	puts "midigrep failed to find 2 MetaCopyright events with data 0, 1"
+}
+midifree $mf
+puts "MetaChannelPrefix ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaPortNumber 0}
+midiput $mf 0 {0 MetaPortNumber 1}
+midiput $mf 0 {1 MetaPortNumber 0}
+midiput $mf 0 {1 MetaPortNumber 1}
+if {[llength [midigrep $mf 0 {* MetaPortNumber *}]] != 4} {
+	puts "midigrep failed to find 4 MetaPortNumber events"
+}
+if {[llength [midigrep $mf 0 {0 MetaPortNumber *}]] != 2} {
+	puts "midigrep failed to find 2 MetaPortNumber events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaPortNumber 0}]] != 2} {
+	puts "midigrep failed to find 2 MetaPortNumber events with port 0"
+}
+midifree $mf
+puts "MetaPortNumber ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaTempo 0}
+midiput $mf 0 {0 MetaTempo 1}
+midiput $mf 0 {1 MetaTempo 0}
+midiput $mf 0 {1 MetaTempo 1}
+if {[llength [midigrep $mf 0 {* MetaTempo *}]] != 4} {
+	puts "midigrep failed to find 4 MetaTempo events"
+}
+if {[llength [midigrep $mf 0 {0 MetaTempo *}]] != 2} {
+	puts "midigrep failed to find 2 MetaTempo events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaTempo 0}]] != 2} {
+	puts "midigrep failed to find 2 MetaTempo events with tempo 0"
+	puts "[midigrep $mf 0 {* MetaTempo 0}]"
+}
+midifree $mf
+puts "metaTempo ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaSMPTE 0 0 0 0 0}
+midiput $mf 0 {0 MetaSMPTE 0 0 0 0 1}
+midiput $mf 0 {0 MetaSMPTE 0 0 0 1 0}
+midiput $mf 0 {0 MetaSMPTE 0 0 0 1 1}
+midiput $mf 0 {0 MetaSMPTE 0 0 1 0 0}
+midiput $mf 0 {0 MetaSMPTE 0 0 1 0 1}
+midiput $mf 0 {0 MetaSMPTE 0 0 1 1 0}
+midiput $mf 0 {0 MetaSMPTE 0 0 1 1 1}
+midiput $mf 0 {0 MetaSMPTE 0 1 0 0 0}
+midiput $mf 0 {0 MetaSMPTE 0 1 0 0 1}
+midiput $mf 0 {0 MetaSMPTE 0 1 0 1 0}
+midiput $mf 0 {0 MetaSMPTE 0 1 0 1 1}
+midiput $mf 0 {0 MetaSMPTE 0 1 1 0 0}
+midiput $mf 0 {0 MetaSMPTE 0 1 1 0 1}
+midiput $mf 0 {0 MetaSMPTE 0 1 1 1 0}
+midiput $mf 0 {0 MetaSMPTE 0 1 1 1 1}
+midiput $mf 0 {0 MetaSMPTE 1 0 0 0 0}
+midiput $mf 0 {0 MetaSMPTE 1 0 0 0 1}
+midiput $mf 0 {0 MetaSMPTE 1 0 0 1 0}
+midiput $mf 0 {0 MetaSMPTE 1 0 0 1 1}
+midiput $mf 0 {0 MetaSMPTE 1 0 1 0 0}
+midiput $mf 0 {0 MetaSMPTE 1 0 1 0 1}
+midiput $mf 0 {0 MetaSMPTE 1 0 1 1 0}
+midiput $mf 0 {0 MetaSMPTE 1 0 1 1 1}
+midiput $mf 0 {0 MetaSMPTE 1 1 0 0 0}
+midiput $mf 0 {0 MetaSMPTE 1 1 0 0 1}
+midiput $mf 0 {0 MetaSMPTE 1 1 0 1 0}
+midiput $mf 0 {0 MetaSMPTE 1 1 0 1 1}
+midiput $mf 0 {0 MetaSMPTE 1 1 1 0 0}
+midiput $mf 0 {0 MetaSMPTE 1 1 1 0 1}
+midiput $mf 0 {0 MetaSMPTE 1 1 1 1 0}
+midiput $mf 0 {0 MetaSMPTE 1 1 1 1 1}
+midiput $mf 0 {1 MetaSMPTE 0 0 0 0 0}
+midiput $mf 0 {1 MetaSMPTE 0 0 0 0 1}
+midiput $mf 0 {1 MetaSMPTE 0 0 0 1 0}
+midiput $mf 0 {1 MetaSMPTE 0 0 0 1 1}
+midiput $mf 0 {1 MetaSMPTE 0 0 1 0 0}
+midiput $mf 0 {1 MetaSMPTE 0 0 1 0 1}
+midiput $mf 0 {1 MetaSMPTE 0 0 1 1 0}
+midiput $mf 0 {1 MetaSMPTE 0 0 1 1 1}
+midiput $mf 0 {1 MetaSMPTE 0 1 0 0 0}
+midiput $mf 0 {1 MetaSMPTE 0 1 0 0 1}
+midiput $mf 0 {1 MetaSMPTE 0 1 0 1 0}
+midiput $mf 0 {1 MetaSMPTE 0 1 0 1 1}
+midiput $mf 0 {1 MetaSMPTE 0 1 1 0 0}
+midiput $mf 0 {1 MetaSMPTE 0 1 1 0 1}
+midiput $mf 0 {1 MetaSMPTE 0 1 1 1 0}
+midiput $mf 0 {1 MetaSMPTE 0 1 1 1 1}
+midiput $mf 0 {1 MetaSMPTE 1 0 0 0 0}
+midiput $mf 0 {1 MetaSMPTE 1 0 0 0 1}
+midiput $mf 0 {1 MetaSMPTE 1 0 0 1 0}
+midiput $mf 0 {1 MetaSMPTE 1 0 0 1 1}
+midiput $mf 0 {1 MetaSMPTE 1 0 1 0 0}
+midiput $mf 0 {1 MetaSMPTE 1 0 1 0 1}
+midiput $mf 0 {1 MetaSMPTE 1 0 1 1 0}
+midiput $mf 0 {1 MetaSMPTE 1 0 1 1 1}
+midiput $mf 0 {1 MetaSMPTE 1 1 0 0 0}
+midiput $mf 0 {1 MetaSMPTE 1 1 0 0 1}
+midiput $mf 0 {1 MetaSMPTE 1 1 0 1 0}
+midiput $mf 0 {1 MetaSMPTE 1 1 0 1 1}
+midiput $mf 0 {1 MetaSMPTE 1 1 1 0 0}
+midiput $mf 0 {1 MetaSMPTE 1 1 1 0 1}
+midiput $mf 0 {1 MetaSMPTE 1 1 1 1 0}
+midiput $mf 0 {1 MetaSMPTE 1 1 1 1 1}
+if {[llength [midigrep $mf 0 {* MetaSMPTE * * * * *}]] != 64} {
+	puts "midigrep failed to find 64 MetaSMPTE events"
+}
+if {[llength [midigrep $mf 0 {0 MetaSMPTE * * * * *}]] != 32} {
+	puts "midigrep failed to find 32 MetaSMPTE events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaSMPTE 0 * * * *}]] != 32} {
+	puts "midigrep failed to find 32 MetaSMPTE events with hour 0"
+}
+if {[llength [midigrep $mf 0 {* MetaSMPTE * 0 * * *}]] != 32} {
+	puts "midigrep failed to find 32 MetaSMPTE events with minute 0"
+}
+if {[llength [midigrep $mf 0 {* MetaSMPTE * * 0 * *}]] != 32} {
+	puts "midigrep failed to find 32 MetaSMPTE events with second 0"
+}
+if {[llength [midigrep $mf 0 {* MetaSMPTE * * * 0 *}]] != 32} {
+	puts "midigrep failed to find 32 MetaSMPTE events with frame 0"
+}
+if {[llength [midigrep $mf 0 {* MetaSMPTE * * * * 0}]] != 32} {
+	puts "midigrep failed to find 32 MetaSMPTE events with fractional frame 0"
+}
+midifree $mf
+puts "MetaSMPTE ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaTime 4 4 1 1}
+midiput $mf 0 {0 MetaTime 4 4 1 2}
+midiput $mf 0 {0 MetaTime 4 4 2 1}
+midiput $mf 0 {0 MetaTime 4 4 2 2}
+midiput $mf 0 {0 MetaTime 4 8 1 1}
+midiput $mf 0 {0 MetaTime 4 8 1 2}
+midiput $mf 0 {0 MetaTime 4 8 2 1}
+midiput $mf 0 {0 MetaTime 4 8 2 2}
+midiput $mf 0 {0 MetaTime 3 4 1 1}
+midiput $mf 0 {0 MetaTime 3 4 1 2}
+midiput $mf 0 {0 MetaTime 3 4 2 1}
+midiput $mf 0 {0 MetaTime 3 4 2 2}
+midiput $mf 0 {0 MetaTime 3 8 1 1}
+midiput $mf 0 {0 MetaTime 3 8 1 2}
+midiput $mf 0 {0 MetaTime 3 8 2 1}
+midiput $mf 0 {0 MetaTime 3 8 2 2}
+midiput $mf 0 {1 MetaTime 4 4 1 1}
+midiput $mf 0 {1 MetaTime 4 4 1 2}
+midiput $mf 0 {1 MetaTime 4 4 2 1}
+midiput $mf 0 {1 MetaTime 4 4 2 2}
+midiput $mf 0 {1 MetaTime 4 8 1 1}
+midiput $mf 0 {1 MetaTime 4 8 1 2}
+midiput $mf 0 {1 MetaTime 4 8 2 1}
+midiput $mf 0 {1 MetaTime 4 8 2 2}
+midiput $mf 0 {1 MetaTime 3 4 1 1}
+midiput $mf 0 {1 MetaTime 3 4 1 2}
+midiput $mf 0 {1 MetaTime 3 4 2 1}
+midiput $mf 0 {1 MetaTime 3 4 2 2}
+midiput $mf 0 {1 MetaTime 3 8 1 1}
+midiput $mf 0 {1 MetaTime 3 8 1 2}
+midiput $mf 0 {1 MetaTime 3 8 2 1}
+midiput $mf 0 {1 MetaTime 3 8 2 2}
+if {[llength [midigrep $mf 0 {* MetaTime * * * *}]] != 32} {
+	puts "midigrep failed to find 32 MetaTime events"
+}
+if {[llength [midigrep $mf 0 {0 MetaTime * * * *}]] != 16} {
+	puts "midigrep failed to find 16 MetaTime events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaTime 4 * * *}]] != 16} {
+	puts "midigrep failed to find 16 MetaTime events with num 4"
+}
+if {[llength [midigrep $mf 0 {* MetaTime * 4 * *}]] != 16} {
+	puts "midigrep failed to find 16 MetaTime events with denom 4"
+}
+if {[llength [midigrep $mf 0 {* MetaTime * * 1 *}]] != 16} {
+	puts "midigrep failed to find 16 MetaTime events with clocks 1"
+}
+if {[llength [midigrep $mf 0 {* MetaTime * * * 1}]] != 16} {
+	puts "midigrep failed to find 16 MetaTime events with 32nds 1"
+}
+midifree $mf
+puts "MetaTime ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaKey C minor}
+midiput $mf 0 {0 MetaKey C major}
+midiput $mf 0 {0 MetaKey D minor}
+midiput $mf 0 {0 MetaKey D major}
+midiput $mf 0 {1 MetaKey C minor}
+midiput $mf 0 {1 MetaKey C major}
+midiput $mf 0 {1 MetaKey D minor}
+midiput $mf 0 {1 MetaKey D major}
+if {[llength [midigrep $mf 0 {* MetaKey * *}]] != 8} {
+	puts "midigrep failed to find 8 MetaKey events"
+}
+if {[llength [midigrep $mf 0 {0 MetaKey * *}]] != 4} {
+	puts "midigrep failed to find 4 MetaKey events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaKey C *}]] != 4} {
+	puts "midigrep failed to find 4 MetaKey events with key C"
+}
+if {[llength [midigrep $mf 0 {* MetaKey * minor}]] != 4} {
+	puts "midigrep failed to find 4 MetaKey events with mode minor"
+}
+midifree $mf
+puts "MetaKey ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaSequencerSpecific {0x00 0x01}}
+midiput $mf 0 {0 MetaSequencerSpecific {0x01 0x02}}
+midiput $mf 0 {1 MetaSequencerSpecific {0x00 0x01}}
+midiput $mf 0 {1 MetaSequencerSpecific {0x01 0x02}}
+if {[llength [midigrep $mf 0 {* MetaSequencerSpecific *}]] != 4} {
+	puts "midigrep failed to find 4 MetaSequencerSpecific events"
+}
+if {[llength [midigrep $mf 0 {0 MetaSequencerSpecific *}]] != 2} {
+	puts "midigrep failed to find 2 MetaSequencerSpecific events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaSequencerSpecific {0x00 0x01}}]] != 2} {
+	puts "midigrep failed to find 2 MetaSequencerSpecific events with data 0, 1"
+}
+midifree $mf
+puts "MetaSequencerSpecific ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaUnknown 0 {0x00 0x01}}
+midiput $mf 0 {0 MetaUnknown 0 {0x01 0x02}}
+midiput $mf 0 {0 MetaUnknown 1 {0x00 0x01}}
+midiput $mf 0 {0 MetaUnknown 1 {0x01 0x02}}
+midiput $mf 0 {1 MetaUnknown 0 {0x00 0x01}}
+midiput $mf 0 {1 MetaUnknown 0 {0x01 0x02}}
+midiput $mf 0 {1 MetaUnknown 1 {0x00 0x01}}
+midiput $mf 0 {1 MetaUnknown 1 {0x01 0x02}}
+if {[llength [midigrep $mf 0 {* MetaUnknown * *}]] != 8} {
+	puts "midigrep failed to find 8 MetaUnknown events"
+}
+if {[llength [midigrep $mf 0 {0 MetaUnknown * *}]] != 4} {
+	puts "midigrep failed to find 4 MetaUnknown events at time 0"
+}
+if {[llength [midigrep $mf 0 {* MetaUnknown 0 *}]] != 4} {
+	puts "midigrep failed to find 4 MetaUnknown events with type 0"
+}
+if {[llength [midigrep $mf 0 {* MetaUnknown * {0x00 0x01}}]] != 4} {
+	puts "midigrep failed to find 4 MetaUnknown events with data 0, 1"
+}
+midifree $mf
+puts "MetaUnknown ok"
+
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 MetaEndOfTrack}
+if {[llength [midigrep $mf 0 {* MetaEndOfTrack}]] != 1} {
+	puts "midigrep failed to find 1 MetaEndOfTrack event"
+}
+midifree $mf
+puts "MetaEndOfTrack ok"
+
+puts "Midigrep test successful"

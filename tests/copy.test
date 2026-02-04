@@ -1,0 +1,11 @@
+#!../tclmidi
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 NoteOff 0 1}
+midiput $mf 0 {4 Note 0 1 2 1}
+midiput $mf 0 {5 KeyPressure 0 1 2}
+
+midicopy "$mf 0" 10 "$mf 0" 0 10
+
+midirewind $mf
+while {[set event [midiget $mf 0 next]] != "EOT"} {puts stdout $event}

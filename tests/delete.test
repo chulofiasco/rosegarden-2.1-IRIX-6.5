@@ -1,0 +1,61 @@
+#!../tclmidi
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 NoteOff 0 1}
+midiput $mf 0 {0 NoteOff 0 1 2}
+midiput $mf 0 {0 NoteOn 0 1 2}
+midiput $mf 0 {0 Note 0 1 2 1}
+midiput $mf 0 {0 KeyPressure 0 1 2}
+midiput $mf 0 {6 Parameter 0 1 2}
+midiput $mf 0 {7 Program 0 1}
+midiput $mf 0 {8 ChannelPressure 0 1}
+midiput $mf 0 {9 PitchWheel 0 1}
+midiput $mf 0 {10 SystemExclusive {0x01 0x02 0x03}}
+midiput $mf 0 {11 MetaSequenceNumber 1}
+midiput $mf 0 {12 MetaText "MetaText"}
+midiput $mf 0 {13 MetaCopyright "MetaCopyright"}
+midiput $mf 0 {14 MetaSequenceName "MetaSequenceName"}
+midiput $mf 0 {15 MetaInstrumentName "MetaInstrumentName"}
+midiput $mf 0 {16 MetaLyric "MetaLyric"}
+midiput $mf 0 {17 MetaMarker "MetaMarker"}
+midiput $mf 0 {18 MetaCue "MetaCue"}
+midiput $mf 0 {19 MetaChannelPrefix {0x01 0x02 0x03}}
+midiput $mf 0 {20 MetaEndOfTrack}
+midiput $mf 0 {21 MetaTempo 100}
+midiput $mf 0 {22 MetaSMPTE 1 2 3 4 5}
+midiput $mf 0 {23 MetaTime 3 4 24 8}
+midiput $mf 0 {24 MetaKey "E flat" minor}
+midiput $mf 0 {25 MetaSequencerSpecific {0x01 0x02 0x03}}
+midiput $mf 0 {26 MetaUnknown 0x60 {0x01 0x02 0x03}}
+
+#mididelete $mf 0 {0 NoteOff 0 1}
+#mididelete $mf 0 {0 NoteOff 0 1 2}
+mididelete $mf 0 {0 NoteOn 0 1 2}
+#mididelete $mf 0 {0 Note 0 1 2 1}
+#mididelete $mf 0 {0 KeyPressure 0 1 2}
+#mididelete $mf 0 {6 Parameter 0 1 2}
+#mididelete $mf 0 {7 Program 0 1}
+#mididelete $mf 0 {8 ChannelPressure 0 1}
+#mididelete $mf 0 {9 PitchWheel 0 1}
+#mididelete $mf 0 {10 SystemExclusive {0x01 0x02 0x03}}
+#mididelete $mf 0 {11 MetaSequenceNumber 1}
+#mididelete $mf 0 {12 MetaText "MetaText"}
+#mididelete $mf 0 {13 MetaCopyright "MetaCopyright"}
+#mididelete $mf 0 {14 MetaSequenceName "MetaSequenceName"}
+#mididelete $mf 0 {15 MetaInstrumentName "MetaInstrumentName"}
+#mididelete $mf 0 {16 MetaLyric "MetaLyric"}
+#mididelete $mf 0 {17 MetaMarker "MetaMarker"}
+#mididelete $mf 0 {18 MetaCue "MetaCue"}
+#mididelete $mf 0 {19 MetaChannelPrefix {0x01 0x02 0x03}}
+#mididelete $mf 0 {20 MetaEndOfTrack}
+#mididelete $mf 0 {21 MetaTempo 100}
+#mididelete $mf 0 {22 MetaSMPTE 1 2 3 4 5}
+#mididelete $mf 0 {23 MetaTime 3 4 24 8}
+#mididelete $mf 0 {24 MetaKey "E flat" minor}
+#mididelete $mf 0 {25 MetaSequencerSpecific {0x01 0x02 0x03}}
+#mididelete $mf 0 {26 MetaUnknown 0x60 {0x01 0x02 0x03}}
+
+midirewind $mf
+while {[set event [midiget $mf 0 next]] != "EOT"} {
+	puts stdout $event
+}

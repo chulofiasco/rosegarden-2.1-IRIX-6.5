@@ -1,0 +1,18 @@
+#!../tclmidi
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 NoteOff 0 1}
+# This next event sticks into the move range
+midiput $mf 0 {1 Note 0 1 2 5}
+midiput $mf 0 {4 Note 0 1 2 1}
+midiput $mf 0 {5 KeyPressure 1 1 2}
+# This next event sticks out of the move range
+midiput $mf 0 {6 Note 1 1 2 10}
+# notes in the dest range
+midiput $mf 0 {10 Note 0 1 2 5}
+midiput $mf 0 {15 Note 0 1 2 5}
+
+midimove "$mf 0" 10 "$mf 0" 5 10
+
+midirewind $mf
+while {[set event [midiget $mf 0 next]] != "EOT"} {puts stdout $event}

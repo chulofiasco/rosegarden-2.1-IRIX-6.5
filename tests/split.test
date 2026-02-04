@@ -1,0 +1,42 @@
+#!../tclmidi
+set mf [midimake]
+midiconfig $mf {tracks 1}
+midiput $mf 0 {0 NoteOff 0 1}
+midiput $mf 0 {1 NoteOff 0 1 2}
+midiput $mf 0 {3 NoteOn 0 1 2}
+midiput $mf 0 {4 Note 0 1 2 1}
+midiput $mf 0 {5 KeyPressure 0 1 2}
+midiput $mf 0 {6 Parameter 0 1 2}
+midiput $mf 0 {7 Program 0 1}
+midiput $mf 0 {8 ChannelPressure 0 1}
+midiput $mf 0 {9 PitchWheel 0 1}
+midiput $mf 0 {10 SystemExclusive {0x01 0x02 0x03}}
+midiput $mf 0 {11 MetaSequenceNumber 1}
+midiput $mf 0 {12 MetaText "MetaText"}
+midiput $mf 0 {13 MetaCopyright "MetaCopyright"}
+midiput $mf 0 {14 MetaSequenceName "MetaSequenceName"}
+midiput $mf 0 {15 MetaInstrumentName "MetaInstrumentName"}
+midiput $mf 0 {16 MetaLyric "MetaLyric"}
+midiput $mf 0 {17 MetaMarker "MetaMarker"}
+midiput $mf 0 {18 MetaCue "MetaCue"}
+midiput $mf 0 {19 MetaChannelPrefix {0x01 0x02 0x03}}
+midiput $mf 0 {20 MetaEndOfTrack}
+midiput $mf 0 {21 MetaTempo 100}
+midiput $mf 0 {22 MetaSMPTE 1 2 3 4 5}
+midiput $mf 0 {23 MetaTime 3 4 24 8}
+midiput $mf 0 {24 MetaKey "E flat" minor}
+midiput $mf 0 {25 MetaSequencerSpecific {0x01 0x02 0x03}}
+midiput $mf 0 {26 MetaUnknown 0x60 {0x01 0x02 0x03}}
+
+set mfmeta [midimake]
+midiconfig $mfmeta {tracks 1}
+set mfnormal [midimake]
+midiconfig $mfnormal {tracks 1} {division 480}
+
+midisplit "$mf 0" "$mfmeta 0" "$mfnormal 0"
+midirewind $mfmeta
+midirewind $mfnormal
+while {[set e [midiget $mfmeta 0 next]] != "EOT"} {puts stdout $e}
+puts stdout ""
+while {[set e [midiget $mfnormal 0 next]] != "EOT"} {puts stdout $e}
+
