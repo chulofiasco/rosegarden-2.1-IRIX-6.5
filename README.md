@@ -1,6 +1,6 @@
 
-Rosegarden 2.1
-==============
+Rosegarden 2.1 for IRIX 6.5
+============================
 
 This is the Rosegarden Editor and Sequencer suite, release 2.1, 
 tweaked for IRIX 6.5.
