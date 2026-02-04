@@ -7,8 +7,6 @@ This is the Rosegarden Editor and Sequencer suite, release 2.1.
 See COPYRIGHT for information about copyrights, and COPYING for
 information about redistribution and (the lack of) warranty.
 
-See INSTALL for details of how to install this distribution.
-
 
 Support
 =======
@@ -21,11 +19,21 @@ of successful or unsuccessful ports to other machines, or constructive
 criticism, please email them to me.  (I don't particularly want to
 hear about installation problems, but if you're really desperate, go
 ahead and ask.)  A better idea, for some sorts of problems, ideas or
-comments, may be to join and consult the Rosegarden mailing list: send
-an email to the administrator at rosegarden-request@maths.bath.ac.uk
-asking to be added.
+comments, may be to join the Silicon Graphics User Group on Discord, as 
+we have an engaging group of users who can lend support.
+
+Installation
+============
+
+Use IRIX inst to install the tardist.
+
+Set your TCLLIBPATH to "/usr/local/lib/tclmidi /usr/local/lib/rosegarden/petal"
+
+Rosegarden main binary is in /usr/local/bin.
+
+Have fun!
 
 
-Chris Cannam, cannam@zands.com
-October 1997
+@chulofiasco
+Silicon Graphics User Group
 
