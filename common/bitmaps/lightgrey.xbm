@@ -1,0 +1,4 @@
+#define lightgrey_width 4
+#define lightgrey_height 4
+static char lightgrey_bits[] = {
+   0x01, 0x00, 0x04, 0x00};

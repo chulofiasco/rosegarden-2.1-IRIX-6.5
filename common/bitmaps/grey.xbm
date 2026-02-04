@@ -1,0 +1,4 @@
+#define grey_width 4
+#define grey_height 2
+static char grey_bits[] = {
+   0x08, 0x02};
