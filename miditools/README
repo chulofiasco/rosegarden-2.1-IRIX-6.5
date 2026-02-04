@@ -1,0 +1,35 @@
+# MIDI Utility Tools
+
+This directory contains three MIDI utility programs for IRIX 6.5:
+
+## dump-midi-events
+Dumps all events from a Standard MIDI File to stdout.
+
+Usage: dump-midi-events <midifile.mid>
+
+## test-midi-devices
+Tests MIDI device detection and enumeration on the system.
+
+Usage: test-midi-devices
+
+## test-midi-timing
+Tests MIDI timing and synchronization capabilities.
+
+Usage: test-midi-timing
+
+## Building
+
+These tools are built automatically as part of the main Rosegarden build:
+
+    gmake midi-tools
+
+Or build individually from this directory:
+
+    gmake dump-midi-events
+    gmake test-midi-devices
+    gmake test-midi-timing
+
+## Installation
+
+These tools are installed to /usr/local/lib/rosegarden/miditools/ as part
+of the distribution tarball or do-install script.
