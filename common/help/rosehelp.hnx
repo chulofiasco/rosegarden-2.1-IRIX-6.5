@@ -1,0 +1,4570 @@
+182521
+
+ at
+"Bar - Repeat at" " " 2
+
+ by
+"Track - Filter By" " " 3
+"Track - Split By" " " 2
+
+ change
+"Track - Change" " " 2
+
+ clear
+"Text - Clear" " " 3
+
+ create
+"Chord - Create" " " 2
+
+ edit
+"Editor Edit" " menu" 9
+"Sequencer Edit" " menu" 6
+
+ export
+"Editor File - Export" " " 4
+
+ file
+"Sequencer File" " menu" 15
+"Editor File" " menu" 12
+
+ filter
+"Track - Filter" " " 3
+
+ insert
+"Event - Insert" " " 7
+
+ label
+"Chord - Label" " " 4
+
+ remove
+"Bar - Remove" " " 2
+
+ repeat
+"Bar - Repeat" " " 2
+
+ rosegarden
+"The Rosegarden" " " 4
+
+ select
+"Editor Edit - Select" " " 2
+
+ set
+"Midi - Set" " " 2
+
+ show
+"Track - Show" " " 2
+
+ split
+"Track - Split" " " 2
+
+ system
+"Midi - System" " " 2
+
+ the
+"Using the" " " 2
+
+ this
+"Editor Edit - Select this" " " 2
+
+11th
+"Chord - Create by Name" " " 2
+
+13th
+"Chord - Create by Name" " " 3
+
+5th
+"Chord - Create by Name" " " 2
+
+8ve
+"Chord - Edit Chord" " " 2
+
+9th
+"Chord - Create by Name" " " 2
+
+about
+"Petal" " section" 2
+"The Rosegarden Top Box" " introduction" 2
+"Using help" " procedure" 2
+
+above
+"Adding text" " procedure" 3
+"Text" " menu" 2
+"Text - Add Text options" " " 2
+"Track - Filter By Pitch" " " 2
+
+accept
+"Petal C commands" " introduction" 2
+
+accidental
+"Using the Palette" " procedure" 3
+
+accidentals
+"Considerations in inserting notes" " procedure" 2
+
+acquire
+"Bar - Double Bar" " " 2
+
+activate
+"Sequencer" " section" 2
+
+active
+"Playback Status" " function" 2
+
+actually
+"Petal C commands" " introduction" 2
+"Petal Data Types" " introduction" 2
+
+add
+"Adding text" " procedure" 4
+"Editor" " section" 4
+"Operations on staffs" " procedure" 3
+"Bar - Key Signature" " " 2
+"Chord - Edit Chord" " " 2
+
+adding
+"Text" " menu" 3
+"Adding text" " procedure" 2
+"Converting Rosegarden 2.0 files" " " 2
+"Editor" " section" 2
+"Stave - Add Staff" " " 2
+"Using the editing cursor" " procedure" 2
+
+addition
+"Midi - MIDI Setup" " " 2
+
+adjacent
+"Group - Tie" " " 2
+
+affect
+"Marking chords" " procedure" 3
+"Using the editing cursor" " procedure" 2
+
+after
+"Bar - Double Bar" " " 2
+"Considerations in inserting notes" " procedure" 2
+
+aftertouch
+"Sequencer" " section" 2
+
+all
+"Chords" " procedure" 6
+"Sequencer" " section" 6
+"Chord - Pitch Search and Replace" " " 4
+"Petal C commands" " introduction" 4
+"Basic concepts of Petal" " procedure" 3
+"Adding text" " procedure" 2
+"Bar - Double Bar" " " 2
+"Bar - Time Signature" " " 2
+"Changing bar properties" " procedure" 2
+"Displaying a track" " procedure" 2
+"Editing with the Event List" " procedure" 2
+"Editor" " section" 2
+"Editor File - Export MIDI" " " 2
+"File Boxes" " concept" 2
+"Grouping" " procedure" 2
+"Organising recorded data" " procedure" 2
+"Toolbars" " introduction" 2
+"Track - Activate All Tracks" " " 2
+"Track - Change All to Device" " " 2
+"Track - Mute All Tracks" " " 2
+"Track - Quantize" " " 2
+
+allows
+"Organising recorded data" " procedure" 3
+"Event - Insert Text Event" " " 2
+"Group - Tuplet" " " 2
+"Tempos and times" " procedure" 2
+
+along
+"Moving around" " procedure" 2
+
+already
+"Sequencing a piece of music" " procedure" 2
+
+also
+"The Rosegarden Top Box" " introduction" 4
+"Bar - Double Bar" " " 3
+"Editor File" " menu" 3
+"Adding text" " procedure" 2
+"Bar - Key Signature" " " 2
+"Editing and using the clipboard" " procedure" 2
+"Editor File - Export MusicTeX" " " 2
+"Editor Filter" " menu" 2
+"Exporting MusicTeX files" " procedure" 2
+"Group - Tuplet" " " 2
+"Grouping" " procedure" 2
+"Inserting notes and signs" " procedure" 2
+"Organising recorded data" " procedure" 2
+"Petal C commands" " introduction" 2
+"Sequencer Filter" " menu" 2
+
+alt
+"Inserting notes and signs" " procedure" 3
+
+altered
+"Chord - Create by Name" " " 4
+
+although
+"Organising recorded data" " procedure" 2
+
+always
+"Bar - Double Bar" " " 2
+"Chord - Create by Name" " " 2
+"Chords" " procedure" 2
+
+amount
+"Moving around" " procedure" 2
+
+an
+"Petal Data Types" " introduction" 7
+"Using the editing cursor" " procedure" 5
+"Chord - Create by Name" " " 4
+"Editor" " section" 4
+"Editor File" " menu" 4
+"Considerations in inserting notes" " procedure" 3
+"Displaying a track" " procedure" 3
+"Editing with the Event List" " procedure" 3
+"Editor File - Open" " " 3
+"Opening an editor file" " procedure" 3
+"Bar - Key Signature" " " 2
+"Chord - Pitch Search and Replace" " " 2
+"Editing and using the clipboard" " procedure" 2
+"Editor Edit - Undo" " " 2
+"Editor File - Save" " " 2
+"Editor File - Save As" " " 2
+"Group" " menu" 2
+"Inserting notes and signs" " procedure" 2
+"Marking chords" " procedure" 2
+"Midi - MIDI Setup" " " 2
+"Organising recorded data" " procedure" 2
+"Text" " menu" 2
+
+any
+"Chords" " procedure" 4
+"Considerations in inserting notes" " procedure" 3
+"Group - Break Group" " " 3
+"Marking chords" " procedure" 3
+"Arguments" " procedure" 2
+"Bar - Key Signature" " " 2
+"Basic concepts of Petal" " procedure" 2
+"Changing bar properties" " procedure" 2
+"Editor Edit - Undo" " " 2
+"Editor File - Export MIDI" " " 2
+"Editor Filter" " menu" 2
+"Editor Filter - Apply Petal Filter" " " 2
+"Group - Tuplet" " " 2
+"Marks" " menu" 2
+"Recording MIDI data" " procedure" 2
+"Saving an editor file" " procedure" 2
+"Sequencer Filter" " menu" 2
+"Sequencer Filter - Apply Petal Filter" " " 2
+"Stave - Assign MIDI Patch" " " 2
+"Tempos and times" " procedure" 2
+
+appear
+"Converting Rosegarden 2.0 files" " " 2
+
+apply
+"Editor Filter" " menu" 4
+"Sequencer Filter" " menu" 4
+"About the Apply Filter functions" " procedure" 2
+"Editor" " section" 2
+"Editor Filter - Apply Petal Filter" " " 2
+"Petal" " section" 2
+"Sequencer" " section" 2
+"Sequencer Filter - Apply Petal Filter" " " 2
+"Starting a new piece of music" " procedure" 2
+"Testing a filter" " procedure" 2
+
+are
+"Petal C commands" " introduction" 7
+"Organising recorded data" " procedure" 6
+"Petal Data Types" " introduction" 6
+"Track - Show Piano Roll" " " 5
+"Basic concepts of Petal" " procedure" 4
+"Chords" " procedure" 4
+"File Boxes" " concept" 4
+"Help organisation" " concept" 4
+"The Rosegarden Top Box" " introduction" 4
+"Toolbars" " introduction" 4
+"Adding text" " procedure" 3
+"Converting Rosegarden 2.0 files" " " 3
+"Editing and using the clipboard" " procedure" 3
+"Event - Insert Controller Change" " " 3
+"Importing MIDI files" " procedure" 3
+"Petal Pre-defined Variables" " introduction" 3
+"Petal questions and bug reports" " procedure" 3
+"Text" " menu" 3
+"Using the Palette" " procedure" 3
+"Using the editing cursor" " procedure" 3
+"Arguments" " procedure" 2
+"Bar - Double Bar" " " 2
+"Bar - Key Signature" " " 2
+"Changing bar properties" " procedure" 2
+"Chord - Guess Chord Names" " " 2
+"Displaying a track" " procedure" 2
+"Editing with the Event List" " procedure" 2
+"Event - Insert Note" " " 2
+"Event - Insert Text Event" " " 2
+"Group" " menu" 2
+"Group - Invert" " " 2
+"Group - Retrograde" " " 2
+"Group - Transpose" " " 2
+"Group - Tuplet" " " 2
+"Midi - MIDI Setup" " " 2
+"Moving around" " procedure" 2
+"Petal Tcl commands" " introduction" 2
+"Playing a MIDI file" " procedure" 2
+"Stave" " menu" 2
+"Text - Add Text options" " " 2
+"Track - Change Channel" " " 2
+"Track - Filter By Event" " " 2
+"Track - Split By Channel" " " 2
+"Using help" " procedure" 2
+"What is Petal?" " " 2
+
+area
+"Using the editing cursor" " procedure" 7
+"Marking chords" " procedure" 5
+"Chord - Create Chord" " " 3
+"Editing and using the clipboard" " procedure" 3
+"Group - Auto Beam" " " 3
+"Group - Invert" " " 3
+"Group - Retrograde" " " 3
+"Group - Transpose" " " 3
+"Grouping" " procedure" 3
+"Marks" " menu" 3
+"Sequencer Edit - Copy" " " 3
+"Chord - Pitch Search and Replace" " " 2
+"Sequencer Edit - Cut" " " 2
+"Sequencer Edit - Delete" " " 2
+
+argument
+"Basic concepts of Petal" " procedure" 6
+"Arguments" " procedure" 4
+"Petal C commands" " introduction" 2
+
+arguments
+"Arguments" " procedure" 2
+"Petal" " section" 2
+"Petal C commands" " introduction" 2
+
+around
+"Moving around" " procedure" 3
+"Editor" " section" 2
+"Using the editing cursor" " procedure" 2
+
+arrow
+"Chord - Edit Chord" " " 3
+
+assign
+"Editor" " section" 2
+"Stave - Show MIDI Patches" " " 2
+
+associated
+"Saving an editor file" " procedure" 4
+"Bar - Double Bar" " " 2
+
+at
+"Changing bar properties" " procedure" 8
+"Bar - End Bar Here" " " 7
+"Bar - Double Bar" " " 5
+"Using help" " procedure" 5
+"Editing and using the clipboard" " procedure" 4
+"Editor" " section" 4
+"Moving around" " procedure" 3
+"Petal Tcl commands" " introduction" 3
+"Bar" " menu" 2
+"Bar - Repeat at End" " " 2
+"Bar - Repeat at Start" " " 2
+"Chords" " procedure" 2
+"Converting Rosegarden 2.0 files" " " 2
+"Editor Edit - Undo" " " 2
+"Group - Tuplet" " " 2
+"Help organisation" " concept" 2
+"Midi - MIDI Setup" " " 2
+"Operations on staffs" " procedure" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Requirements and building" " procedure" 2
+"Toolbars" " introduction" 2
+"Using the Palette" " procedure" 2
+
+attempt
+"Midi - MIDI Setup" " " 2
+
+auto
+"Editor" " section" 2
+"Grouping" " procedure" 2
+
+autolines
+"Editor File - Export MusicTeX" " " 2
+
+available
+"Help organisation" " concept" 2
+"Importing MIDI files" " procedure" 2
+
+b
+"Chord - Create by Name" " " 2
+
+back
+"Sequencer File - Rewind" " " 3
+"Playing a MIDI file" " procedure" 2
+
+backup
+"File Boxes" " concept" 2
+
+bar
+"Editor" " section" 34
+"Changing bar properties" " procedure" 30
+"Tempos and times" " procedure" 29
+"Bar" " menu" 23
+"Bar - Double Bar" " " 19
+"Bar - End Bar Here" " " 14
+"Bar - Label" " " 9
+"Bar - Repeat at End" " " 9
+"Bar - Repeat at Start" " " 9
+"Moving around" " procedure" 7
+"Bar - Plain" " " 6
+"Inserting notes and signs" " procedure" 6
+"Using the editing cursor" " procedure" 5
+"Adding text" " procedure" 4
+"Bar - Metronome" " " 4
+"Bar - Remove Label" " " 4
+"Bar - Remove Metronome" " " 4
+"Bar - Time Signature" " " 4
+"Starting a new piece of music" " procedure" 4
+"Bar - Key Signature" " " 3
+"Considerations in inserting notes" " procedure" 3
+"Text" " menu" 3
+"Text - Clear Bar" " " 3
+"Editor Edit - Select this Bar" " " 2
+"Stave" " menu" 2
+
+barline
+"Bar - End Bar Here" " " 3
+
+bars
+"Changing bar properties" " procedure" 2
+
+based
+"Chords" " procedure" 2
+
+basic
+"Chords" " procedure" 2
+"Editor File" " menu" 2
+"Group - Tuplet" " " 2
+"Petal" " section" 2
+
+bass
+"Chord - Create by Name" " " 3
+
+beam
+"Grouping" " procedure" 6
+"Editor" " section" 4
+"Group - Beam" " " 2
+"Group - Break Group" " " 2
+"Importing MIDI files" " procedure" 2
+
+beamed
+"Grouping" " procedure" 4
+"Group - Auto Beam" " " 2
+"Importing MIDI files" " procedure" 2
+
+beaming
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+because
+"Editor File - Export PMX" " " 2
+
+becomes
+"Moving around" " procedure" 2
+
+been
+"Opening an editor file" " procedure" 3
+"Editing and using the clipboard" " procedure" 2
+"Editor File" " menu" 2
+"Importing MIDI files" " procedure" 2
+"Petal C commands" " introduction" 2
+"Saving a MIDI file" " procedure" 2
+"Sequencer File - Exit" " " 2
+"The Rosegarden Top Box" " introduction" 2
+"Using the editing cursor" " procedure" 2
+
+before
+"Editing with the Event List" " procedure" 4
+"Bar - Double Bar" " " 2
+"Importing MIDI files" " procedure" 2
+"Operations on staffs" " procedure" 2
+
+beginning
+"Changing bar properties" " procedure" 2
+
+being
+"File Boxes" " concept" 3
+"Petal C commands" " introduction" 2
+
+below
+"Adding text" " procedure" 4
+"Converting Rosegarden 2.0 files" " " 3
+"Petal C commands" " introduction" 3
+"Basic concepts of Petal" " procedure" 2
+"File Boxes" " concept" 2
+"Track - Filter By Pitch" " " 2
+
+best
+"Editor File - Export PMX" " " 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+both
+"Petal Data Types" " introduction" 3
+"Basic concepts of Petal" " procedure" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+bottom
+"Moving around" " procedure" 3
+
+box
+"The Rosegarden Top Box" " introduction" 10
+"File Boxes" " concept" 7
+"Editing with the Event List" " procedure" 3
+"Bar - Key Signature" " " 2
+"Editor File - Sequence" " " 2
+"Group - Tuplet" " " 2
+"Midi - MIDI Setup" " " 2
+"Operations on staffs" " procedure" 2
+"Rosegarden" " section" 2
+"Sequencing a piece of music" " procedure" 2
+"Track - Filter By Event" " " 2
+"Track Counter" " function" 2
+
+boxes
+"File Boxes" " concept" 3
+"Track - Show Piano Roll" " " 3
+"Editor File - Open" " " 2
+"Editor File - Save As" " " 2
+"Exporting MIDI files" " procedure" 2
+"Exporting MusicTeX files" " procedure" 2
+"Importing MIDI files" " procedure" 2
+"Opening an editor file" " procedure" 2
+"Rosegarden" " section" 2
+"Saving an editor file" " procedure" 2
+
+bracket
+"Editor" " section" 2
+"Editor File - Export MIDI" " " 2
+"Stave - Unbracket" " " 2
+
+break
+"Editor" " section" 4
+"Chord - Create Chord" " " 2
+"Group - Auto Beam" " " 2
+"Grouping" " procedure" 2
+
+bring
+"Displaying a track" " procedure" 2
+
+buffer
+"Saving an editor file" " procedure" 7
+"Opening an editor file" " procedure" 4
+"Editor Edit - Undo" " " 3
+"Exporting MIDI files" " procedure" 3
+"Editor Edit - Redo" " " 2
+"Editor File - Import MIDI" " " 2
+"Importing MIDI files" " procedure" 2
+"Midi - MIDI Setup" " " 2
+"Sequencing a piece of music" " procedure" 2
+
+buffers
+"Editor File" " menu" 3
+
+bug
+"Petal" " section" 2
+"Petal questions and bug reports" " procedure" 2
+
+building
+"Petal" " section" 2
+
+button
+"Using help" " procedure" 8
+"File Boxes" " concept" 6
+"Toolbars" " introduction" 6
+"The Rosegarden Top Box" " introduction" 5
+"Using the Palette" " procedure" 4
+"Using the editing cursor" " procedure" 4
+"Inserting notes and signs" " procedure" 3
+"Moving around" " procedure" 3
+"Help organisation" " concept" 2
+
+buttons
+"Chord - Edit Chord" " " 8
+"Toolbars" " introduction" 5
+"The Rosegarden Top Box" " introduction" 4
+"Using the Palette" " procedure" 4
+"Moving around" " procedure" 3
+"Using help" " procedure" 3
+"Inserting notes and signs" " procedure" 2
+"Track - Quantize" " " 2
+
+c
+"Petal C commands" " introduction" 5
+"Chord - Create by Name" " " 4
+"Event - Insert Note" " " 2
+"Petal" " section" 2
+"Track - Filter By Pitch" " " 2
+
+c13
+"Chord - Create by Name" " " 2
+
+c7
+"Chord - Create by Name" " " 2
+
+call
+"Displaying a track" " procedure" 3
+
+called
+"Basic concepts of Petal" " procedure" 2
+"Editing with the Event List" " procedure" 2
+"The Rosegarden Top Box" " introduction" 2
+
+cancel
+"File Boxes" " concept" 2
+
+cause
+"Considerations in inserting notes" " procedure" 2
+
+change
+"Sequencer" " section" 10
+"Stave - Assign MIDI Patch" " " 3
+"Track - Change Channel" " " 3
+"Basic concepts of Petal" " procedure" 2
+"Considerations in inserting notes" " procedure" 2
+"Editor Edit - Redo" " " 2
+"Editor Edit - Undo" " " 2
+"Event - Insert Controller Change" " " 2
+"Event - Insert Program Change" " " 2
+"Midi - Set Initial Patches" " " 2
+"Organising recorded data" " procedure" 2
+"Petal Data Types" " introduction" 2
+"Petal Tcl commands" " introduction" 2
+"Playing a MIDI file" " procedure" 2
+"Starting a new piece of music" " procedure" 2
+
+changes
+"Editor Edit - Undo" " " 3
+"Chord - Edit Chord" " " 2
+"Editor Edit - Redo" " " 2
+"Petal Tcl commands" " introduction" 2
+"Stave" " menu" 2
+
+changing
+"Tempos and times" " procedure" 3
+"Bar" " menu" 2
+"Changing bar properties" " procedure" 2
+"Editor" " section" 2
+"Starting a new piece of music" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+channel
+"Organising recorded data" " procedure" 6
+"Sequencer" " section" 6
+"Track - Change Channel" " " 5
+"Track - Split By Channel" " " 4
+"Playing a MIDI file" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Track - Filter By Channel" " " 3
+"Event - Insert Note" " " 2
+"Recording MIDI data" " procedure" 2
+
+channels
+"Midi - Set Initial Patches" " " 2
+
+check
+"Midi - MIDI Setup" " " 2
+"Playing a MIDI file" " procedure" 2
+
+choice
+"Group - Tuplet" " " 2
+
+choose
+"File Boxes" " concept" 2
+"Stave - Assign MIDI Patch" " " 2
+
+chord
+"Chords" " procedure" 48
+"Editor" " section" 34
+"Chord - Pitch Search and Replace" " " 17
+"Chord - Create by Name" " " 16
+"Chord - Edit Chord" " " 16
+"Chord" " menu" 14
+"Chord - Create Chord" " " 11
+"Chord - Clear Chord Names" " " 10
+"Chord - Label Named Chords Only" " " 8
+"Chord - Break Chord" " " 7
+"Chord - Guess Chord Names" " " 6
+"Chord - Label All Chords" " " 5
+"Chord - Label Chords and Notes" " " 5
+"Chord - Label No Chords" " " 4
+
+chords
+"Chords" " procedure" 20
+"Editor" " section" 12
+"Marking chords" " procedure" 7
+"Chord" " menu" 4
+"Chord - Create by Name" " " 4
+"Chord - Guess Chord Names" " " 4
+"Chord - Label Named Chords Only" " " 4
+"Chord - Label No Chords" " " 4
+"Marks" " menu" 4
+"Basic concepts of Petal" " procedure" 3
+"Chord - Label All Chords" " " 3
+"Chord - Label Chords and Notes" " " 3
+"Chord - Pitch Search and Replace" " " 3
+"Group - Tie" " " 3
+"Chord - Break Chord" " " 2
+"Chord - Clear Chord Names" " " 2
+"Grouping" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+clear
+"Editor" " section" 8
+"Adding text" " procedure" 6
+"Chords" " procedure" 2
+
+clef
+"Starting a new piece of music" " procedure" 4
+
+click
+"Using help" " procedure" 3
+"Starting a new piece of music" " procedure" 2
+"Using the Palette" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+clicking
+"Chord - Edit Chord" " " 5
+"File Boxes" " concept" 5
+"Using the Palette" " procedure" 3
+"Using the editing cursor" " procedure" 3
+"Editing with the Event List" " procedure" 2
+
+clipboard
+"Editing and using the clipboard" " procedure" 13
+"Editor" " section" 4
+"Using the editing cursor" " procedure" 4
+"Editing with the Event List" " procedure" 3
+"Editor Edit" " menu" 3
+"Editor Edit - Copy" " " 2
+"Editor Edit - Cut" " " 2
+"Editor Edit - Paste" " " 2
+"Editor Edit - Show Clipboard" " " 2
+"Inserting notes and signs" " procedure" 2
+"Sequencer" " section" 2
+"Sequencer Edit - Copy" " " 2
+"Sequencer Edit - Cut" " " 2
+"Sequencer Edit - Show Clipboard" " " 2
+"Starting a new piece of music" " procedure" 2
+
+clone
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Sequencer" " section" 2
+
+close
+"Editor" " section" 2
+"Editor File" " menu" 2
+"Opening an editor file" " procedure" 2
+"Sequencer" " section" 2
+
+commands
+"Petal C commands" " introduction" 5
+"Petal" " section" 4
+
+common
+"Petal Tcl commands" " introduction" 2
+
+concept
+"Rosegarden" " section" 2
+
+concepts
+"Petal" " section" 2
+
+configured
+"Playing a MIDI file" " procedure" 2
+
+considerations
+"Inserting notes and signs" " procedure" 4
+"Editor" " section" 2
+
+contain
+"Grouping" " procedure" 2
+"Organising recorded data" " procedure" 2
+
+containing
+"Group - Tuplet" " " 2
+"The Rosegarden Top Box" " introduction" 2
+
+contains
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Changing bar properties" " procedure" 2
+"Chord - Pitch Search and Replace" " " 2
+"Editor File" " menu" 2
+"Group" " menu" 2
+"Importing MIDI files" " procedure" 2
+
+contents
+"Editing and using the clipboard" " procedure" 3
+"Editor Edit - Copy" " " 2
+"Editor Edit - Cut" " " 2
+"Group - Invert" " " 2
+"Group - Retrograde" " " 2
+"Group - Transpose" " " 2
+"Opening an editor file" " procedure" 2
+"Sequencer Edit - Copy" " " 2
+"Sequencer Edit - Cut" " " 2
+
+control
+"Inserting notes and signs" " procedure" 2
+
+controller
+"Event - Insert Controller Change" " " 5
+"Sequencer" " section" 2
+
+convert
+"Converting Rosegarden 2.0 files" " " 2
+
+converting
+"Editor" " section" 2
+
+copy
+"Editing with the Event List" " procedure" 4
+"Editing and using the clipboard" " procedure" 3
+"Editor" " section" 2
+"Sequencer" " section" 2
+
+correctly
+"Playing a MIDI file" " procedure" 2
+
+corresponds
+"Toolbars" " introduction" 2
+
+could
+"Editor Edit - Undo" " " 2
+
+counter
+"Sequencer File - Fast Forward" " " 5
+"Sequencer File - Rewind" " " 5
+"Track Counter" " function" 3
+"Midi - MIDI Setup" " " 2
+"Sequencer" " section" 2
+"Sequencer File - Skip to End" " " 2
+
+create
+"Chords" " procedure" 8
+"Editor" " section" 4
+"Chord - Create by Name" " " 2
+
+crescendo
+"Group - Crescendo" " " 4
+"Editor" " section" 2
+"Editor File - Export MIDI" " " 2
+"Grouping" " procedure" 2
+
+crotchet
+"Group - Tuplet" " " 2
+"Using the Palette" " procedure" 2
+
+csound
+"Generating Csound" " procedure" 5
+"Sequencer" " section" 4
+"Sequencer File - Export Csound" " " 4
+"Sequencer File" " menu" 2
+
+current
+"Bar - Time Signature" " " 2
+"Petal C commands" " introduction" 2
+"Track Counter" " function" 2
+"Using help" " procedure" 2
+
+current-file
+"File Boxes" " concept" 3
+
+cursor
+"Using the editing cursor" " procedure" 8
+"Editing and using the clipboard" " procedure" 5
+"Adding text" " procedure" 4
+"Group - Invert" " " 4
+"Group - Retrograde" " " 4
+"Group - Transpose" " " 4
+"Inserting notes and signs" " procedure" 4
+"Editor Edit - Select this Bar" " " 3
+"Editor Edit - Select this Staff" " " 3
+"Moving around" " procedure" 3
+"Using the Palette" " procedure" 3
+"Bar - Key Signature" " " 2
+"Bar - Metronome" " " 2
+"Bar - Remove Metronome" " " 2
+"Editing with the Event List" " procedure" 2
+"Editor" " section" 2
+"Grouping" " procedure" 2
+"Marking chords" " procedure" 2
+"Operations on staffs" " procedure" 2
+"Text" " menu" 2
+
+cut
+"Editing with the Event List" " procedure" 5
+"Editing and using the clipboard" " procedure" 2
+"Editor" " section" 2
+"Sequencer" " section" 2
+"Sequencer Edit - Cut" " " 2
+
+data
+"Recording MIDI data" " procedure" 6
+"Organising recorded data" " procedure" 5
+"Preparing a MIDI file for the Editor" " procedure" 5
+"Importing MIDI files" " procedure" 4
+"Sequencer" " section" 4
+"Sequencer File - Record" " " 4
+"About the Apply Filter functions" " procedure" 2
+"Basic concepts of Petal" " procedure" 2
+"Event - Insert Text Event" " " 2
+"Petal" " section" 2
+"Petal Data Types" " introduction" 2
+"Playback Status" " function" 2
+"Sequencer File" " menu" 2
+"Sequencer File - Stop" " " 2
+"Track" " menu" 2
+
+declaration
+"Editor File - Export MusicTeX" " " 4
+
+decrescendo
+"Group - Decrescendo" " " 4
+"Editor" " section" 2
+"Editor File - Export MIDI" " " 2
+"Grouping" " procedure" 2
+
+default
+"Midi - MIDI Setup" " " 3
+"Petal C commands" " introduction" 3
+"Group - Tuplet" " " 2
+"Starting a new piece of music" " procedure" 2
+
+delete
+"Editing with the Event List" " procedure" 4
+"Editor" " section" 4
+"Editing and using the clipboard" " procedure" 2
+"Operations on staffs" " procedure" 2
+"Sequencer" " section" 2
+"Starting a new piece of music" " procedure" 2
+
+deleting
+"Operations on staffs" " procedure" 2
+
+depending
+"Petal Tcl commands" " introduction" 2
+
+designated
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+determines
+"Arguments" " procedure" 2
+
+device
+"Midi - MIDI Setup" " " 7
+"Track - Change All to Device" " " 5
+"Sequencer" " section" 2
+
+dialog
+"Track - Change All to Device" " " 2
+
+dialogue
+"Editing with the Event List" " procedure" 4
+"Event - Modify Event" " " 2
+"Group - Tuplet" " " 2
+"Track - Filter By Event" " " 2
+
+different
+"Chord - Pitch Search and Replace" " " 2
+
+directories
+"Editor Filter" " menu" 2
+"File Boxes" " concept" 2
+"Sequencer Filter" " menu" 2
+
+directory
+"File Boxes" " concept" 5
+
+disc
+"Saving an editor file" " procedure" 2
+
+display
+"Chord - Edit Chord" " " 4
+"Moving around" " procedure" 3
+"Considerations in inserting notes" " procedure" 2
+"Displaying a track" " procedure" 2
+"Stave - Show MIDI Patches" " " 2
+"Using help" " procedure" 2
+"Viewing with the Piano Roll" " procedure" 2
+
+displayed
+"Displaying a track" " procedure" 4
+"Considerations in inserting notes" " procedure" 3
+
+displaying
+"Displaying a track" " procedure" 3
+"Sequencer" " section" 2
+"Track" " menu" 2
+
+displays
+"File Boxes" " concept" 2
+
+distance
+"Moving around" " procedure" 2
+
+dmedia
+"Midi - MIDI Setup" " " 2
+
+do
+"Editor Edit - Undo" " " 2
+"Importing MIDI files" " procedure" 2
+"Opening an editor file" " procedure" 2
+
+documentation
+"Editor Filter" " menu" 2
+"Sequencer Filter" " menu" 2
+
+don
+"Basic concepts of Petal" " procedure" 2
+
+dot
+"File Boxes" " concept" 4
+"Using the Palette" " procedure" 4
+
+dotted
+"Changing bar properties" " procedure" 2
+
+double
+"Bar - Double Bar" " " 11
+"Changing bar properties" " procedure" 8
+"Bar - Repeat at End" " " 3
+"Bar - Repeat at Start" " " 3
+"Displaying a track" " procedure" 3
+"Bar - End Bar Here" " " 2
+"Editor" " section" 2
+
+down
+"Chord - Edit Chord" " " 4
+"Using help" " procedure" 2
+
+driver
+"Midi - MIDI Setup" " " 2
+"Midi - Reset" " " 2
+"Midi - System Reset" " " 2
+
+dump
+"Testing a filter" " procedure" 2
+
+duplication
+"Basic concepts of Petal" " procedure" 3
+
+duration
+"Petal Tcl commands" " introduction" 5
+"Event - Insert Note" " " 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Track - Quantize" " " 2
+
+durations
+"Chord - Pitch Search and Replace" " " 3
+
+dynamic
+"Adding text" " procedure" 5
+"Converting Rosegarden 2.0 files" " " 5
+"Editor File - Export MIDI" " " 3
+"Text - Add Text options" " " 3
+"Editor" " section" 2
+"Grouping" " procedure" 2
+"Text - Dynamic" " " 2
+
+dynamics
+"Editor File - Export MIDI" " " 3
+
+e
+"Chord - Create by Name" " " 5
+
+each
+"Chords" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Chord - Pitch Search and Replace" " " 2
+"Editor File - Import MIDI" " " 2
+"Event - Modify Event" " " 2
+"Help organisation" " concept" 2
+"Stave - Show MIDI Patches" " " 2
+"Text - Add Text options" " " 2
+"Toolbars" " introduction" 2
+
+edit
+"Editor" " section" 22
+"Editing and using the clipboard" " procedure" 18
+"Sequencer" " section" 14
+"Editing with the Event List" " procedure" 9
+"Editor Edit - Redo" " " 5
+"Using the editing cursor" " procedure" 5
+"Editor Edit - Select this Bar" " " 4
+"Editor Edit - Select this Staff" " " 4
+"Inserting notes and signs" " procedure" 4
+"Chord - Pitch Search and Replace" " " 3
+"Editor Edit" " menu" 3
+"Editor Edit - Copy" " " 3
+"Editor Edit - Cut" " " 3
+"Editor Edit - Delete" " " 3
+"Editor Edit - Paste" " " 3
+"Editor Edit - Show Clipboard" " " 3
+"Editor Edit - Undo" " " 3
+"Sequencer Edit - Copy" " " 3
+"Sequencer Edit - Cut" " " 3
+"Sequencer Edit - Delete" " " 3
+"Sequencer Edit - Paste" " " 3
+"Sequencer Edit - Show Clipboard" " " 3
+"Sequencer Edit - Undo" " " 3
+"Chord - Create by Name" " " 2
+"Chord - Edit Chord" " " 2
+"Chords" " procedure" 2
+"Sequencer Edit" " menu" 2
+"Stave - Add Staff" " " 2
+
+editing
+"Using the editing cursor" " procedure" 9
+"Editing and using the clipboard" " procedure" 6
+"Inserting notes and signs" " procedure" 5
+"Editor" " section" 4
+"Using the Palette" " procedure" 4
+"Editor Edit" " menu" 3
+"Importing MIDI files" " procedure" 3
+"Moving around" " procedure" 3
+"Opening an editor file" " procedure" 3
+"Sequencer Edit" " menu" 3
+"Starting a new piece of music" " procedure" 3
+"Displaying a track" " procedure" 2
+"Editing" " " 2
+"Editor Edit - Select this Bar" " " 2
+"Editor Edit - Select this Staff" " " 2
+"Editor File" " menu" 2
+"Event" " menu" 2
+"Grouping" " procedure" 2
+"Marking chords" " procedure" 2
+"Recording MIDI data" " procedure" 2
+"Sequencer" " section" 2
+
+editor
+"Editor" " section" 82
+"Importing MIDI files" " procedure" 21
+"Editing and using the clipboard" " procedure" 19
+"Opening an editor file" " procedure" 16
+"Saving an editor file" " procedure" 16
+"The Rosegarden Top Box" " introduction" 13
+"Editor File" " menu" 11
+"Editor File - Import MIDI" " " 11
+"Editor File - Export MIDI" " " 9
+"Editor File - Save" " " 9
+"Exporting MIDI files" " procedure" 8
+"Basic concepts of Petal" " procedure" 7
+"Editor File - Export MusicTeX" " " 7
+"Editor File - Export OpusTeX" " " 7
+"Editor File - Export PMX" " " 7
+"Exporting MusicTeX files" " procedure" 7
+"Preparing a MIDI file for the Editor" " procedure" 6
+"Testing a filter" " procedure" 6
+"Adding text" " procedure" 5
+"Editor Edit - Redo" " " 5
+"Editor Edit - Undo" " " 5
+"Editor File - Open" " " 5
+"Editor File - Save As" " " 5
+"Editor Filter" " menu" 5
+"Sequencing a piece of music" " procedure" 5
+"Starting a new piece of music" " procedure" 5
+"Stave - Assign MIDI Patch" " " 5
+"Converting Rosegarden 2.0 files" " " 4
+"The Rosegarden Editor" " introduction" 4
+"About the Apply Filter functions" " procedure" 3
+"Editor Edit - Copy" " " 3
+"Editor Edit - Cut" " " 3
+"Editor Edit - Delete" " " 3
+"Editor Edit - Paste" " " 3
+"Editor Edit - Select this Bar" " " 3
+"Editor Edit - Select this Staff" " " 3
+"Editor Edit - Show Clipboard" " " 3
+"Editor File - Close" " " 3
+"Editor File - Exit" " " 3
+"Editor File - New" " " 3
+"Editor File - Sequence" " " 3
+"Editor Filter - Apply Petal Filter" " " 3
+"Petal Data Types" " introduction" 3
+"Sequencer File - Notate" " " 3
+"Stave - Add Staff" " " 3
+"Bar - Key Signature" " " 2
+"Bar - Metronome" " " 2
+"Bar - Time Signature" " " 2
+"Inserting notes and signs" " procedure" 2
+"Sequencer" " section" 2
+"Sequencer Filter" " menu" 2
+"Stave - Rename Staff" " " 2
+"Text" " menu" 2
+"Top" " " 2
+"Track" " menu" 2
+"Using the Palette" " procedure" 2
+
+either
+"Basic concepts of Petal" " procedure" 2
+
+empty
+"Editor" " section" 2
+
+end
+"Editor" " section" 6
+"Changing bar properties" " procedure" 5
+"Bar - End Bar Here" " " 3
+"Operations on staffs" " procedure" 3
+"Sequencer File - Skip to End" " " 3
+"Stave - Fill to End" " " 3
+"Bar - Repeat at End" " " 2
+"Playing a MIDI file" " procedure" 2
+"Sequencer" " section" 2
+
+enough
+"Midi - MIDI Setup" " " 2
+
+entered
+"Considerations in inserting notes" " procedure" 2
+
+entering
+"Using the editing cursor" " procedure" 2
+
+even
+"Chord - Pitch Search and Replace" " " 2
+"Editor File - Export OpusTeX" " " 2
+
+event
+"Editing with the Event List" " procedure" 35
+"Sequencer" " section" 30
+"Displaying a track" " procedure" 13
+"Event" " menu" 13
+"Event - Insert Text Event" " " 7
+"Event - Modify Event" " " 7
+"Track - Show Event List" " " 6
+"Event - Insert Controller Change" " " 5
+"Event - Insert Program Change" " " 5
+"Event - Insert Note" " " 4
+"Event - Insert Tempo Event" " " 4
+"Organising recorded data" " procedure" 4
+"Event - Insert Aftertouch" " " 3
+"Event - Insert Pitch Change" " " 3
+"Track - Filter By Event" " " 3
+"Recording MIDI data" " procedure" 2
+"Sequencer Edit" " menu" 2
+"Stave - Assign MIDI Patch" " " 2
+
+events
+"Organising recorded data" " procedure" 10
+"Editing with the Event List" " procedure" 9
+"Displaying a track" " procedure" 5
+"Track - Show Event List" " " 5
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Recording MIDI data" " procedure" 3
+"Track - Split By Channel" " " 3
+"Midi - MIDI Setup" " " 2
+"Midi - Set Initial Patches" " " 2
+"Petal Data Types" " introduction" 2
+"Playing a MIDI file" " procedure" 2
+"Track - Show Piano Roll" " " 2
+
+every
+"Chord - Label Chords and Notes" " " 2
+"Toolbars" " introduction" 2
+
+exactly
+"Midi - MIDI Setup" " " 2
+
+exclusive
+"Sequencer" " section" 2
+
+executable
+"Writing filters" " procedure" 2
+
+existing
+"Tempos and times" " procedure" 2
+
+exit
+"Editor" " section" 2
+"Sequencer" " section" 2
+"The Rosegarden Top Box" " introduction" 2
+
+exits
+"The Rosegarden Top Box" " introduction" 2
+
+expect
+"Midi - MIDI Setup" " " 3
+
+explicitly
+"Using the Palette" " procedure" 2
+
+export
+"Editor" " section" 8
+"Exporting MusicTeX files" " procedure" 6
+"Editor File - Export MusicTeX" " " 5
+"Editor File - Export OpusTeX" " " 5
+"Editor File - Export PMX" " " 5
+"Adding text" " procedure" 2
+"Bar - Key Signature" " " 2
+"Bar - Metronome" " " 2
+"Bar - Time Signature" " " 2
+"Exporting MIDI files" " procedure" 2
+"Generating Csound" " procedure" 2
+"Sequencer" " section" 2
+"Stave - Assign MIDI Patch" " " 2
+"Stave - Rename Staff" " " 2
+
+exporting
+"Editor" " section" 4
+"Editor File" " menu" 4
+"Editor File - Export MIDI" " " 2
+"Editor File - Export MusicTeX" " " 2
+"Exporting" " " 2
+"Printing a piece of music" " procedure" 2
+"Text" " menu" 2
+
+fairly
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+fast
+"Playing a MIDI file" " procedure" 2
+"Sequencer" " section" 2
+"Track Counter" " function" 2
+
+few
+"Chord - Create by Name" " " 2
+"Requirements and building" " procedure" 2
+
+fields
+"Event - Insert Text Event" " " 2
+
+file
+"Sequencer" " section" 42
+"Editor" " section" 30
+"Importing MIDI files" " procedure" 28
+"Saving an editor file" " procedure" 26
+"File Boxes" " concept" 23
+"Opening an editor file" " procedure" 21
+"Saving a MIDI file" " procedure" 14
+"Playing a MIDI file" " procedure" 13
+"Editor File" " menu" 12
+"Editor File - Import MIDI" " " 11
+"Editor File - Open" " " 11
+"Editor File - Export MIDI" " " 10
+"Editor File - Export MusicTeX" " " 10
+"Editor File - Save" " " 10
+"Editor File - Save As" " " 10
+"Exporting MIDI files" " procedure" 10
+"Exporting MusicTeX files" " procedure" 10
+"Converting Rosegarden 2.0 files" " " 8
+"Editor File - Export OpusTeX" " " 8
+"Editor File - Export PMX" " " 8
+"Preparing a MIDI file for the Editor" " procedure" 8
+"Sequencer File" " menu" 8
+"Sequencer File - Play" " " 8
+"Sequencer File - Save" " " 8
+"Loading a MIDI file" " procedure" 7
+"Sequencer File - Save As" " " 7
+"Sequencer File - Stop" " " 7
+"Adding text" " procedure" 6
+"Sequencer File - Open" " " 6
+"Stave - Assign MIDI Patch" " " 6
+"Track Counter" " function" 6
+"Sequencer File - Close" " " 5
+"Sequencer File - Play through Slave" " " 5
+"Sequencing a piece of music" " procedure" 5
+"Organising recorded data" " procedure" 4
+"Recording MIDI data" " procedure" 4
+"Sequencer File - Exit" " " 4
+"Sequencer File - Export Csound" " " 4
+"Sequencer File - Notate" " " 4
+"Sequencer File - Record" " " 4
+"Sequencer File - Skip to End" " " 4
+"Starting a new piece of music" " procedure" 4
+"Testing a filter" " procedure" 4
+"Editor File - Close" " " 3
+"Editor File - Exit" " " 3
+"Editor File - New" " " 3
+"Editor File - Sequence" " " 3
+"Generating Csound" " procedure" 3
+"Midi - File Info" " " 3
+"Playback Status" " function" 3
+"Sequencer File - Fast Forward" " " 3
+"Sequencer File - Return to Start" " " 3
+"Sequencer File - Rewind" " " 3
+"Stave - Rename Staff" " " 3
+"About the Apply Filter functions" " procedure" 2
+"Bar - Key Signature" " " 2
+"Bar - Metronome" " " 2
+"Bar - Time Signature" " " 2
+"Editor Filter" " menu" 2
+"Rosegarden" " section" 2
+"Sequencer Filter" " menu" 2
+"Text" " menu" 2
+"The Rosegarden Top Box" " introduction" 2
+"Track" " menu" 2
+
+filename
+"File Boxes" " concept" 2
+
+files
+"File Boxes" " concept" 16
+"Importing MIDI files" " procedure" 9
+"Editor" " section" 8
+"Editor File" " menu" 8
+"Editor File - Export MIDI" " " 6
+"Converting Rosegarden 2.0 files" " " 5
+"Exporting MIDI files" " procedure" 5
+"Editor File - Export MusicTeX" " " 3
+"Editor File - Open" " " 3
+"Exporting MusicTeX files" " procedure" 3
+"Organising recorded data" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Text" " menu" 3
+"Editor File - Import MIDI" " " 2
+"Group - Auto Beam" " " 2
+"Grouping" " procedure" 2
+"Printing a piece of music" " procedure" 2
+
+fill
+"Editor" " section" 2
+"Operations on staffs" " procedure" 2
+
+filter
+"Organising recorded data" " procedure" 14
+"Basic concepts of Petal" " procedure" 13
+"Editor Filter" " menu" 13
+"Sequencer Filter" " menu" 13
+"Sequencer" " section" 12
+"About the Apply Filter functions" " procedure" 8
+"Testing a filter" " procedure" 8
+"Editor" " section" 6
+"Editor Filter - Apply Petal Filter" " " 6
+"Sequencer Filter - Apply Petal Filter" " " 6
+"Petal Tcl commands" " introduction" 5
+"Petal" " section" 4
+"Preparing a MIDI file for the Editor" " procedure" 4
+"Recording MIDI data" " procedure" 4
+"Arguments" " procedure" 2
+"File Boxes" " concept" 2
+"Track - Filter By Pitch" " " 2
+"Track - Split By Pitch" " " 2
+
+filters
+"Basic concepts of Petal" " procedure" 4
+"Editor Filter" " menu" 3
+"Petal questions and bug reports" " procedure" 3
+"Sequencer Filter" " menu" 3
+"Petal" " section" 2
+
+find
+"Midi - MIDI Setup" " " 4
+
+first
+"Moving around" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Using the editing cursor" " procedure" 3
+"Group - Auto Beam" " " 2
+"Group - Invert" " " 2
+"Importing MIDI files" " procedure" 2
+"Stave - Add Staff" " " 2
+"Writing filters" " procedure" 2
+
+fixed
+"Bar - End Bar Here" " " 2
+
+flat
+"Considerations in inserting notes" " procedure" 2
+"Inserting notes and signs" " procedure" 2
+"Using the Palette" " procedure" 2
+
+follow
+"Using the Palette" " procedure" 2
+
+font
+"Adding text" " procedure" 4
+"Text - Add Text options" " " 2
+
+for
+"Importing MIDI files" " procedure" 15
+"Preparing a MIDI file for the Editor" " procedure" 9
+"Editing with the Event List" " procedure" 7
+"Group - Tuplet" " " 7
+"Organising recorded data" " procedure" 7
+"Editor File" " menu" 6
+"Chords" " procedure" 5
+"Considerations in inserting notes" " procedure" 5
+"File Boxes" " concept" 5
+"Using the Palette" " procedure" 5
+"Editing and using the clipboard" " procedure" 4
+"Editor File - Import MIDI" " " 4
+"Exporting MIDI files" " procedure" 4
+"Midi - MIDI Setup" " " 4
+"Petal Pre-defined Variables" " introduction" 4
+"Tempos and times" " procedure" 4
+"The Rosegarden Top Box" " introduction" 4
+"Adding text" " procedure" 3
+"Basic concepts of Petal" " procedure" 3
+"Changing bar properties" " procedure" 3
+"Chord" " menu" 3
+"Converting Rosegarden 2.0 files" " " 3
+"Displaying a track" " procedure" 3
+"Editor File - Export MIDI" " " 3
+"Exporting MusicTeX files" " procedure" 3
+"Grouping" " procedure" 3
+"Inserting notes and signs" " procedure" 3
+"Petal C commands" " introduction" 3
+"Testing a filter" " procedure" 3
+"Text" " menu" 3
+"Using help" " procedure" 3
+"Using the editing cursor" " procedure" 3
+"Bar" " menu" 2
+"Bar - Key Signature" " " 2
+"Bar - Label" " " 2
+"Chord - Pitch Search and Replace" " " 2
+"Editor Edit" " menu" 2
+"Editor File - Export PMX" " " 2
+"Editor File - Open" " " 2
+"Editor File - Save As" " " 2
+"Event - Insert Controller Change" " " 2
+"Help organisation" " concept" 2
+"Marking chords" " procedure" 2
+"Midi - Reset" " " 2
+"Midi - Set Initial Patches" " " 2
+"Midi - System Reset" " " 2
+"Moving around" " procedure" 2
+"Opening an editor file" " procedure" 2
+"Printing a piece of music" " procedure" 2
+"Recording MIDI data" " procedure" 2
+"Saving an editor file" " procedure" 2
+"Sequencer" " section" 2
+"Sequencer File" " menu" 2
+"Sequencer File - Play through Slave" " " 2
+"Sequencer Filter" " menu" 2
+"Stave" " menu" 2
+"Stave - Add Staff" " " 2
+"Stave - Assign MIDI Patch" " " 2
+"Text - Add Text options" " " 2
+"Track" " menu" 2
+"Track - Change All to Device" " " 2
+"Track - Filter By Channel" " " 2
+"Track - Split By Channel" " " 2
+
+form
+"Organising recorded data" " procedure" 2
+
+format
+"Editor File - Open" " " 3
+"Organising recorded data" " procedure" 3
+"Displaying a track" " procedure" 2
+"Editor File - Export MIDI" " " 2
+"Editor File - Export PMX" " " 2
+"Exporting MIDI files" " procedure" 2
+"Sequencer File - Export Csound" " " 2
+"The Rosegarden Help System" " introduction" 2
+
+forms
+"Importing MIDI files" " procedure" 2
+
+forward
+"Sequencer File - Fast Forward" " " 3
+"Track Counter" " function" 3
+"Playing a MIDI file" " procedure" 2
+"Sequencer" " section" 2
+
+found
+"Editor Filter" " menu" 2
+"Marking chords" " procedure" 2
+"Requirements and building" " procedure" 2
+"Sequencer Filter" " menu" 2
+
+four
+"Text - Add Text options" " " 3
+"Adding text" " procedure" 2
+"Chord - Edit Chord" " " 2
+"Group - Simple Tuplet" " " 2
+"Group - Tuplet" " " 2
+
+from
+"Basic concepts of Petal" " procedure" 7
+"Chord - Pitch Search and Replace" " " 4
+"Displaying a track" " procedure" 4
+"Midi - MIDI Setup" " " 4
+"Organising recorded data" " procedure" 4
+"The Rosegarden Top Box" " introduction" 4
+"Editing and using the clipboard" " procedure" 3
+"Editing with the Event List" " procedure" 3
+"Help organisation" " concept" 3
+"Adding text" " procedure" 2
+"Converting Rosegarden 2.0 files" " " 2
+"Editor Filter" " menu" 2
+"Group - Invert" " " 2
+"Importing MIDI files" " procedure" 2
+"Saving an editor file" " procedure" 2
+"Sequencer Edit - Copy" " " 2
+"Sequencer Edit - Cut" " " 2
+"Sequencer Edit - Delete" " " 2
+"Sequencer Filter" " menu" 2
+"Testing a filter" " procedure" 2
+"Toolbars" " introduction" 2
+"Track" " menu" 2
+"Track - Filter By Pitch" " " 2
+"Track - Show Event List" " " 2
+"Track - Transpose" " " 2
+
+function
+"Editor" " section" 71
+"Sequencer" " section" 56
+"Chords" " procedure" 6
+"Chord - Pitch Search and Replace" " " 5
+"Group - Simple Tuplet" " " 5
+"Bar - End Bar Here" " " 4
+"Chord - Create Chord" " " 4
+"Chord - Create by Name" " " 4
+"Chord - Guess Chord Names" " " 4
+"Editor Edit - Redo" " " 4
+"Group - Tuplet" " " 4
+"Grouping" " procedure" 4
+"Importing MIDI files" " procedure" 4
+"Midi - Set Initial Patches" " " 4
+"Sequencer File - Fast Forward" " " 4
+"Sequencer File - Rewind" " " 4
+"Stave - Add Staff" " " 4
+"Toolbars" " introduction" 4
+"Bar - Key Signature" " " 3
+"Chord - Clear Chord Names" " " 3
+"Chord - Label Named Chords Only" " " 3
+"Editor Edit - Select this Bar" " " 3
+"Editor Edit - Select this Staff" " " 3
+"Editor File - Export MusicTeX" " " 3
+"Editor File - Open" " " 3
+"Editor File - Sequence" " " 3
+"Event - Insert Tempo Event" " " 3
+"Group - Auto Beam" " " 3
+"Group - Crescendo" " " 3
+"Group - Decrescendo" " " 3
+"Group - Slur" " " 3
+"Group - Tie" " " 3
+"Midi - MIDI Setup" " " 3
+"Midi - Reset" " " 3
+"Midi - System Exclusive" " " 3
+"Midi - System Reset" " " 3
+"Saving an editor file" " procedure" 3
+"Sequencer Edit - Copy" " " 3
+"Sequencer Edit - Cut" " " 3
+"Sequencer Edit - Delete" " " 3
+"Sequencer Edit - Paste" " " 3
+"Sequencer Edit - Undo" " " 3
+"Sequencer File - Return to Start" " " 3
+"Sequencing a piece of music" " procedure" 3
+"Stave - Fill to End" " " 3
+"Stave - Show MIDI Patches" " " 3
+"Stave - Unbracket" " " 3
+"Testing a filter" " procedure" 3
+"Text - Add Text options" " " 3
+"Track - Quantize" " " 3
+"About the Apply Filter functions" " procedure" 2
+"Bar - Double Bar" " " 2
+"Bar - Label" " " 2
+"Bar - Metronome" " " 2
+"Bar - Plain" " " 2
+"Bar - Remove Label" " " 2
+"Bar - Remove Metronome" " " 2
+"Bar - Repeat at End" " " 2
+"Bar - Repeat at Start" " " 2
+"Bar - Time Signature" " " 2
+"Chord - Break Chord" " " 2
+"Chord - Edit Chord" " " 2
+"Chord - Label All Chords" " " 2
+"Chord - Label Chords and Notes" " " 2
+"Chord - Label No Chords" " " 2
+"Editor Edit - Copy" " " 2
+"Editor Edit - Cut" " " 2
+"Editor Edit - Delete" " " 2
+"Editor Edit - Paste" " " 2
+"Editor Edit - Show Clipboard" " " 2
+"Editor Edit - Undo" " " 2
+"Editor File - Close" " " 2
+"Editor File - Exit" " " 2
+"Editor File - Export MIDI" " " 2
+"Editor File - Export OpusTeX" " " 2
+"Editor File - Export PMX" " " 2
+"Editor File - Import MIDI" " " 2
+"Editor File - New" " " 2
+"Editor File - Save" " " 2
+"Editor File - Save As" " " 2
+"Editor Filter - Apply Petal Filter" " " 2
+"Event - Insert Aftertouch" " " 2
+"Event - Insert Controller Change" " " 2
+"Event - Insert Note" " " 2
+"Event - Insert Pitch Change" " " 2
+"Event - Insert Program Change" " " 2
+"Event - Insert Text Event" " " 2
+"Event - Modify Event" " " 2
+"File Boxes" " concept" 2
+"Group - Beam" " " 2
+"Group - Break Group" " " 2
+"Group - Invert" " " 2
+"Group - Remove Indication" " " 2
+"Group - Retrograde" " " 2
+"Group - Transpose" " " 2
+"Marking chords" " procedure" 2
+"Midi - File Info" " " 2
+"Midi - Set Timebase" " " 2
+"Operations on staffs" " procedure" 2
+"Sequencer Edit - Show Clipboard" " " 2
+"Sequencer File - Close" " " 2
+"Sequencer File - Exit" " " 2
+"Sequencer File - Export Csound" " " 2
+"Sequencer File - Notate" " " 2
+"Sequencer File - Open" " " 2
+"Sequencer File - Play" " " 2
+"Sequencer File - Play through Slave" " " 2
+"Sequencer File - Record" " " 2
+"Sequencer File - Save" " " 2
+"Sequencer File - Save As" " " 2
+"Sequencer File - Skip to End" " " 2
+"Sequencer File - Stop" " " 2
+"Sequencer Filter - Apply Petal Filter" " " 2
+"Stave - Assign MIDI Patch" " " 2
+"Stave - Bracket with Next" " " 2
+"Stave - Delete Staff" " " 2
+"Stave - Empty Staff" " " 2
+"Stave - Rename Staff" " " 2
+"Text - Clear Bar" " " 2
+"Text - Clear Group" " " 2
+"Text - Clear Staff" " " 2
+"Text - Dynamic" " " 2
+"Track - Activate All Tracks" " " 2
+"Track - Change All to Device" " " 2
+"Track - Change Channel" " " 2
+"Track - Clone" " " 2
+"Track - Filter By Channel" " " 2
+"Track - Filter By Event" " " 2
+"Track - Filter By Pitch" " " 2
+"Track - Merge" " " 2
+"Track - Mute All Tracks" " " 2
+"Track - Rename" " " 2
+"Track - Show Event List" " " 2
+"Track - Show Piano Roll" " " 2
+"Track - Split By Channel" " " 2
+"Track - Split By Pitch" " " 2
+"Track - Track Info" " " 2
+"Track - Transpose" " " 2
+"Track Counter" " function" 2
+
+functions
+"Text" " menu" 4
+"Changing bar properties" " procedure" 3
+"Editing and using the clipboard" " procedure" 3
+"Editing with the Event List" " procedure" 3
+"Editor File" " menu" 3
+"Group" " menu" 3
+"Grouping" " procedure" 3
+"Organising recorded data" " procedure" 3
+"Tempos and times" " procedure" 3
+"Toolbars" " introduction" 3
+"Adding text" " procedure" 2
+"Bar" " menu" 2
+"Chord" " menu" 2
+"Editor Edit" " menu" 2
+"Operations on staffs" " procedure" 2
+"Petal" " section" 2
+"Sequencer Edit" " menu" 2
+"Stave" " menu" 2
+"Text - Add Text options" " " 2
+"Using the editing cursor" " procedure" 2
+
+g
+"Chord - Create by Name" " " 4
+"Petal C commands" " introduction" 2
+
+general
+"Editing and using the clipboard" " procedure" 2
+
+generating
+"Sequencer" " section" 2
+"Sequencer File" " menu" 2
+"Sequencer File - Export Csound" " " 2
+
+given
+"Petal Tcl commands" " introduction" 4
+"Petal Data Types" " introduction" 2
+
+giving
+"Track Counter" " function" 2
+
+gnu
+"The Rosegarden Help System" " introduction" 2
+
+group
+"Editor" " section" 32
+"Grouping" " procedure" 26
+"Group - Tuplet" " " 18
+"Group" " menu" 15
+"Group - Simple Tuplet" " " 12
+"Group - Break Group" " " 8
+"Group - Auto Beam" " " 7
+"Group - Slur" " " 6
+"Group - Crescendo" " " 5
+"Group - Decrescendo" " " 5
+"Group - Tie" " " 5
+"Editor File - Export MIDI" " " 4
+"Group - Invert" " " 4
+"Group - Beam" " " 3
+"Group - Remove Indication" " " 3
+"Group - Retrograde" " " 3
+"Group - Transpose" " " 3
+"Adding text" " procedure" 2
+"Bar - Key Signature" " " 2
+"Chord - Pitch Search and Replace" " " 2
+
+grouped
+"Grouping" " procedure" 2
+"Toolbars" " introduction" 2
+
+grouping
+"Editor" " section" 2
+"Group" " menu" 2
+"Marking chords" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+groups
+"Grouping" " procedure" 6
+"Group - Tuplet" " " 5
+"Importing MIDI files" " procedure" 4
+
+guess
+"Chords" " procedure" 4
+"Chord - Clear Chord Names" " " 2
+"Chord - Label Named Chords Only" " " 2
+"Editor" " section" 2
+
+hand
+"Preparing a MIDI file for the Editor" " procedure" 4
+
+harmonizer
+"Basic concepts of Petal" " procedure" 3
+
+having
+"Changing bar properties" " procedure" 2
+"Operations on staffs" " procedure" 2
+
+head
+"Chord - Edit Chord" " " 8
+
+heavily
+"Midi - MIDI Setup" " " 2
+
+help
+"Using help" " procedure" 13
+"Help organisation" " concept" 11
+"The Rosegarden Help System" " introduction" 10
+"The Rosegarden Top Box" " introduction" 8
+"Rosegarden" " section" 6
+"File Boxes" " concept" 3
+"Importing MIDI files" " procedure" 2
+
+hidden
+"File Boxes" " concept" 3
+
+history
+"Using help" " procedure" 3
+
+i
+"Chord - Create by Name" " " 2
+"Petal questions and bug reports" " procedure" 2
+
+ie
+"Basic concepts of Petal" " procedure" 2
+
+immediately
+"Bar - Double Bar" " " 2
+
+import
+"Importing MIDI files" " procedure" 6
+"Editor" " section" 2
+
+imported
+"Editor File - Import MIDI" " " 2
+
+importing
+"Group - Auto Beam" " " 3
+"Editor" " section" 2
+"Editor File" " menu" 2
+"Editor File - Import MIDI" " " 2
+"Grouping" " procedure" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+in
+"Importing MIDI files" " procedure" 18
+"Inserting notes and signs" " procedure" 12
+"Adding text" " procedure" 11
+"File Boxes" " concept" 11
+"Organising recorded data" " procedure" 11
+"Chords" " procedure" 10
+"Petal C commands" " introduction" 10
+"Petal Data Types" " introduction" 10
+"Petal Tcl commands" " introduction" 10
+"Displaying a track" " procedure" 9
+"Group - Tuplet" " " 9
+"Editing with the Event List" " procedure" 8
+"Help organisation" " concept" 8
+"Preparing a MIDI file for the Editor" " procedure" 8
+"Considerations in inserting notes" " procedure" 7
+"Editing and using the clipboard" " procedure" 7
+"Operations on staffs" " procedure" 7
+"Using help" " procedure" 7
+"Basic concepts of Petal" " procedure" 6
+"Converting Rosegarden 2.0 files" " " 6
+"Using the Palette" " procedure" 6
+"Bar - Double Bar" " " 5
+"Bar - Time Signature" " " 5
+"Chord - Pitch Search and Replace" " " 5
+"Exporting MIDI files" " procedure" 5
+"Tempos and times" " procedure" 5
+"Bar - Key Signature" " " 4
+"Chord - Create by Name" " " 4
+"Editor Edit - Undo" " " 4
+"Editor File - Export MIDI" " " 4
+"Editor Filter" " menu" 4
+"Event - Insert Note" " " 4
+"Moving around" " procedure" 4
+"Playback Status" " function" 4
+"Recording MIDI data" " procedure" 4
+"Sequencer Filter" " menu" 4
+"Starting a new piece of music" " procedure" 4
+"The Rosegarden Top Box" " introduction" 4
+"Track - Filter By Pitch" " " 4
+"Track - Show Event List" " " 4
+"About the Apply Filter functions" " procedure" 3
+"Exporting MusicTeX files" " procedure" 3
+"Group - Simple Tuplet" " " 3
+"Grouping" " procedure" 3
+"Marking chords" " procedure" 3
+"Midi - MIDI Setup" " " 3
+"Midi - Set Initial Patches" " " 3
+"Saving an editor file" " procedure" 3
+"Stave - Fill to End" " " 3
+"Testing a filter" " procedure" 3
+"Text" " menu" 3
+"Text - Add Text options" " " 3
+"The Rosegarden Help System" " introduction" 3
+"Track - Quantize" " " 3
+"Using the editing cursor" " procedure" 3
+"Bar - Metronome" " " 2
+"Chord - Break Chord" " " 2
+"Chord - Create Chord" " " 2
+"Editor" " section" 2
+"Editor File" " menu" 2
+"Editor File - Export MusicTeX" " " 2
+"Editor File - Export PMX" " " 2
+"Editor File - Import MIDI" " " 2
+"Editor File - Sequence" " " 2
+"Event - Insert Controller Change" " " 2
+"Event - Insert Program Change" " " 2
+"Midi - Reset" " " 2
+"Midi - System Reset" " " 2
+"Playing a MIDI file" " procedure" 2
+"Sequencer File - Fast Forward" " " 2
+"Sequencer File - Rewind" " " 2
+"Stave - Show MIDI Patches" " " 2
+"The Rosegarden Editor" " introduction" 2
+"Track - Change Channel" " " 2
+"Track - Filter By Event" " " 2
+"Track - Track Info" " " 2
+
+included
+"Playback Status" " function" 2
+
+including
+"Editor File - Export MIDI" " " 2
+
+independently
+"The Rosegarden Sequencer" " introduction" 2
+
+index
+"Petal Tcl commands" " introduction" 6
+
+indicated
+"Chord - Edit Chord" " " 7
+
+indication
+"Bar - Metronome" " " 2
+"Editor" " section" 2
+"Group - Crescendo" " " 2
+"Group - Decrescendo" " " 2
+"Group - Slur" " " 2
+"Group - Tie" " " 2
+
+individual
+"Chords" " procedure" 3
+
+info
+"Sequencer" " section" 4
+
+information
+"Editor File - Export MIDI" " " 3
+"Editing with the Event List" " procedure" 2
+
+initial
+"Midi - Set Initial Patches" " " 2
+"Sequencer" " section" 2
+
+insert
+"Sequencer" " section" 14
+"Inserting notes and signs" " procedure" 7
+"Event - Insert Text Event" " " 3
+"Chord - Create by Name" " " 2
+"Event - Insert Note" " " 2
+"Using the editing cursor" " procedure" 2
+
+inserted
+"Bar - End Bar Here" " " 3
+"Using the Palette" " procedure" 3
+"Editing and using the clipboard" " procedure" 2
+"Editing with the Event List" " procedure" 2
+"Inserting notes and signs" " procedure" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+inserting
+"Considerations in inserting notes" " procedure" 5
+"Inserting notes and signs" " procedure" 5
+"Using the editing cursor" " procedure" 5
+"Editor" " section" 4
+"Bar - Double Bar" " " 2
+"Bar - Key Signature" " " 2
+"Starting a new piece of music" " procedure" 2
+"Using the Palette" " procedure" 2
+
+insertion
+"Using the Palette" " procedure" 3
+
+instance
+"Group - Tuplet" " " 4
+"Basic concepts of Petal" " procedure" 2
+"Considerations in inserting notes" " procedure" 2
+"Help organisation" " concept" 2
+"Petal Pre-defined Variables" " introduction" 2
+
+instrument
+"Organising recorded data" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+
+intended
+"Petal C commands" " introduction" 2
+
+into
+"Converting Rosegarden 2.0 files" " " 6
+"Inserting notes and signs" " procedure" 5
+"File Boxes" " concept" 4
+"Group - Simple Tuplet" " " 4
+"Organising recorded data" " procedure" 4
+"Saving an editor file" " procedure" 4
+"Considerations in inserting notes" " procedure" 3
+"Group - Tuplet" " " 3
+"Grouping" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Using the Palette" " procedure" 3
+"Bar - Key Signature" " " 2
+"Editing and using the clipboard" " procedure" 2
+"Editor File - Export MIDI" " " 2
+"Importing MIDI files" " procedure" 2
+"Track - Split By Channel" " " 2
+
+introduction
+"Petal" " section" 5
+"Rosegarden" " section" 3
+
+inversion
+"Group - Invert" " " 2
+
+invert
+"Editor" " section" 2
+
+inverted
+"Group - Invert" " " 3
+
+invokes
+"The Rosegarden Top Box" " introduction" 2
+
+isinscale
+"Petal C commands" " introduction" 2
+
+item
+"Petal Tcl commands" " introduction" 21
+"Petal Data Types" " introduction" 5
+"Bar - Double Bar" " " 4
+"Inserting notes and signs" " procedure" 4
+"Considerations in inserting notes" " procedure" 3
+"Using the editing cursor" " procedure" 2
+
+items
+"Grouping" " procedure" 3
+"Group - Break Group" " " 2
+"Marking chords" " procedure" 2
+
+ith
+"Petal C commands" " introduction" 2
+
+jerky
+"Midi - MIDI Setup" " " 2
+
+jump
+"Moving around" " procedure" 2
+
+just
+"Using help" " procedure" 2
+
+k
+"Petal C commands" " introduction" 4
+
+keep
+"Bar - Double Bar" " " 2
+
+key
+"Bar - Key Signature" " " 9
+"Considerations in inserting notes" " procedure" 5
+"Petal Tcl commands" " introduction" 4
+"Using the Palette" " procedure" 3
+"Editor" " section" 2
+"Importing MIDI files" " procedure" 2
+"Inserting notes and signs" " procedure" 2
+"Organising recorded data" " procedure" 2
+"Petal Data Types" " introduction" 2
+
+keys
+"Inserting notes and signs" " procedure" 2
+
+keywords
+"Using help" " procedure" 3
+
+know
+"Chords" " procedure" 2
+
+label
+"Editor" " section" 12
+"Tempos and times" " procedure" 12
+"Chords" " procedure" 8
+"File Boxes" " concept" 6
+"Bar - Label" " " 5
+"Bar - Remove Label" " " 2
+"Chord - Edit Chord" " " 2
+"Track Counter" " function" 2
+
+labelled
+"Chords" " procedure" 4
+"Chord - Label All Chords" " " 2
+"File Boxes" " concept" 2
+
+labels
+"Text" " menu" 3
+
+language
+"Exporting MusicTeX files" " procedure" 2
+"What is Petal?" " " 2
+
+last
+"Editing and using the clipboard" " procedure" 2
+
+leading
+"Chord - Create by Name" " " 2
+
+leave
+"About the Apply Filter functions" " procedure" 2
+
+left
+"Moving around" " procedure" 6
+"Inserting notes and signs" " procedure" 3
+"Chord - Edit Chord" " " 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+left-
+"Organising recorded data" " procedure" 2
+
+length
+"Inserting notes and signs" " procedure" 3
+"Bar - Metronome" " " 2
+"Importing MIDI files" " procedure" 2
+"Stave - Fill to End" " " 2
+"Using the Palette" " procedure" 2
+
+lengths
+"Importing MIDI files" " procedure" 2
+
+like
+"Basic concepts of Petal" " procedure" 2
+
+likely
+"Importing MIDI files" " procedure" 2
+
+limitations
+"Editor File - Export PMX" " " 2
+
+line
+"Bar - Double Bar" " " 6
+"Changing bar properties" " procedure" 6
+
+lines
+"Bar - Double Bar" " " 2
+"Changing bar properties" " procedure" 2
+
+linux
+"Midi - MIDI Setup" " " 3
+
+list
+"Displaying a track" " procedure" 18
+"Editing with the Event List" " procedure" 13
+"File Boxes" " concept" 9
+"Sequencer" " section" 4
+"Track - Show Event List" " " 4
+"Event" " menu" 3
+"Midi - MIDI Setup" " " 2
+"Petal Tcl commands" " introduction" 2
+"Sequencer Edit" " menu" 2
+"Sequencer Edit - Copy" " " 2
+"Sequencer Edit - Cut" " " 2
+"Sequencer Edit - Delete" " " 2
+"Sequencer Edit - Paste" " " 2
+
+ll
+"Petal questions and bug reports" " procedure" 3
+"About the Apply Filter functions" " procedure" 2
+
+load
+"Converting Rosegarden 2.0 files" " " 3
+"File Boxes" " concept" 3
+"Loading a MIDI file" " procedure" 3
+
+loaded
+"Midi - MIDI Setup" " " 3
+
+loading
+"Sequencer File" " menu" 3
+"Sequencer" " section" 2
+"Sequencer File - Open" " " 2
+
+long
+"The Rosegarden Top Box" " introduction" 2
+
+longest
+"Stave - Fill to End" " " 2
+
+m
+"Petal C commands" " introduction" 3
+
+machine
+"Midi - MIDI Setup" " " 3
+
+made
+"Editing and using the clipboard" " procedure" 2
+"Editor Edit - Redo" " " 2
+
+mailing-list
+"Petal questions and bug reports" " procedure" 2
+
+main
+"Using the Palette" " procedure" 6
+"Basic concepts of Petal" " procedure" 5
+"Editing and using the clipboard" " procedure" 5
+"File Boxes" " concept" 3
+"Using the editing cursor" " procedure" 3
+"Arguments" " procedure" 2
+"Displaying a track" " procedure" 2
+"Inserting notes and signs" " procedure" 2
+"Moving around" " procedure" 2
+"Organising recorded data" " procedure" 2
+"Sequencer Filter" " menu" 2
+"Sequencer Filter - Apply Petal Filter" " " 2
+
+maintain
+"Midi - MIDI Setup" " " 3
+
+major
+"Chord - Create by Name" " " 3
+"Petal C commands" " introduction" 2
+
+make
+"Editor File - Export MusicTeX" " " 2
+"Group - Tuplet" " " 2
+
+making
+"Chords" " procedure" 2
+
+mark
+"Group - Crescendo" " " 2
+"Group - Decrescendo" " " 2
+"Marking chords" " procedure" 2
+"Marks" " menu" 2
+
+marked
+"Chord - Edit Chord" " " 2
+
+marking
+"Tempos and times" " procedure" 6
+"Marks" " menu" 3
+"Editor" " section" 2
+"Marking chords" " procedure" 2
+"Text - Dynamic" " " 2
+"Using the editing cursor" " procedure" 2
+
+markings
+"Adding text" " procedure" 3
+"Converting Rosegarden 2.0 files" " " 2
+"Grouping" " procedure" 2
+
+marks
+"Marking chords" " procedure" 10
+"Marks" " menu" 4
+"Converting Rosegarden 2.0 files" " " 2
+"Editor" " section" 2
+
+matching
+"Chord - Pitch Search and Replace" " " 2
+
+me
+"Petal questions and bug reports" " procedure" 3
+
+means
+"Arguments" " procedure" 2
+"Basic concepts of Petal" " procedure" 2
+"Importing MIDI files" " procedure" 2
+
+medium
+"Text - Add Text options" " " 2
+
+menu
+"Editor" " section" 9
+"Toolbars" " introduction" 9
+"Editor Filter" " menu" 6
+"Sequencer" " section" 6
+"Sequencer Filter" " menu" 6
+"Help organisation" " concept" 5
+"Using help" " procedure" 5
+"Adding text" " procedure" 4
+"Editor File" " menu" 4
+"Stave" " menu" 4
+"Bar" " menu" 3
+"Chord" " menu" 3
+"Displaying a track" " procedure" 3
+"Editor Edit" " menu" 3
+"Event - Insert Text Event" " " 3
+"Marking chords" " procedure" 3
+"Marks" " menu" 3
+"Opening an editor file" " procedure" 3
+"Sequencer Edit" " menu" 3
+"Sequencer File" " menu" 3
+"Text" " menu" 3
+"Text - Add Text options" " " 3
+"Track" " menu" 3
+"Track - Quantize" " " 3
+"Bar - Key Signature" " " 2
+"Chord - Label All Chords" " " 2
+"Chord - Label Chords and Notes" " " 2
+"Chord - Label Named Chords Only" " " 2
+"Chord - Label No Chords" " " 2
+"Chord - Pitch Search and Replace" " " 2
+"Editing with the Event List" " procedure" 2
+"Event" " menu" 2
+"Group" " menu" 2
+"Group - Tuplet" " " 2
+"Grouping" " procedure" 2
+"Midi" " menu" 2
+"Midi - MIDI Setup" " " 2
+"Saving an editor file" " procedure" 2
+"Sequencer File - Stop" " " 2
+"Tempos and times" " procedure" 2
+"Track - Change All to Device" " " 2
+
+merge
+"Sequencer" " section" 2
+"Track - Merge" " " 2
+
+metronome
+"Tempos and times" " procedure" 9
+"Editor" " section" 4
+"Bar - Remove Metronome" " " 2
+
+midi
+"Sequencer" " section" 28
+"Importing MIDI files" " procedure" 18
+"Preparing a MIDI file for the Editor" " procedure" 13
+"Stave - Assign MIDI Patch" " " 13
+"Editor" " section" 12
+"Editor File - Export MIDI" " " 10
+"Exporting MIDI files" " procedure" 10
+"Midi - MIDI Setup" " " 10
+"Recording MIDI data" " procedure" 10
+"Midi" " menu" 9
+"Playing a MIDI file" " procedure" 9
+"Sequencer File" " menu" 9
+"Organising recorded data" " procedure" 8
+"Petal Data Types" " introduction" 6
+"Editor File" " menu" 5
+"Editor File - Import MIDI" " " 5
+"Midi - Set Initial Patches" " " 5
+"Midi - System Reset" " " 5
+"Playback Status" " function" 5
+"Sequencer File - Stop" " " 5
+"Adding text" " procedure" 4
+"Midi - File Info" " " 4
+"Midi - Set Timebase" " " 4
+"Sequencer File - Play" " " 4
+"Sequencer File - Play through Slave" " " 4
+"Sequencer File - Record" " " 4
+"Stave - Show MIDI Patches" " " 4
+"Bar - Key Signature" " " 3
+"Bar - Metronome" " " 3
+"Bar - Time Signature" " " 3
+"Displaying a track" " procedure" 3
+"Generating Csound" " procedure" 3
+"Group - Auto Beam" " " 3
+"Midi - Reset" " " 3
+"Midi - System Exclusive" " " 3
+"Sequencer File - Open" " " 3
+"Sequencer File - Save" " " 3
+"Sequencer File - Save As" " " 3
+"Stave - Rename Staff" " " 3
+"Text" " menu" 3
+"The Rosegarden Top Box" " introduction" 3
+"Event - Insert Controller Change" " " 2
+"Grouping" " procedure" 2
+"Loading a MIDI file" " procedure" 2
+"Petal C commands" " introduction" 2
+"Saving a MIDI file" " procedure" 2
+"Sequencer File - Export Csound" " " 2
+"Sequencing a piece of music" " procedure" 2
+"The Rosegarden Editor" " introduction" 2
+"The Rosegarden Sequencer" " introduction" 2
+"Track" " menu" 2
+"Track - Show Event List" " " 2
+"Track Counter" " function" 2
+
+midi_pitch
+"Petal C commands" " introduction" 3
+
+mode
+"Inserting notes and signs" " procedure" 6
+"Petal C commands" " introduction" 6
+"Using the editing cursor" " procedure" 6
+"Petal Data Types" " introduction" 5
+"Using the Palette" " procedure" 3
+"Basic concepts of Petal" " procedure" 2
+"Petal Tcl commands" " introduction" 2
+"Testing a filter" " procedure" 2
+
+modifier
+"Using the Palette" " procedure" 4
+
+modify
+"Editing with the Event List" " procedure" 5
+"Sequencer" " section" 2
+
+more
+"Editing with the Event List" " procedure" 3
+"Editor File - Export OpusTeX" " " 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Using help" " procedure" 3
+"About the Apply Filter functions" " procedure" 2
+"Chord - Edit Chord" " " 2
+"Editor Edit - Undo" " " 2
+"Importing MIDI files" " procedure" 2
+"Organising recorded data" " procedure" 2
+"Petal C commands" " introduction" 2
+
+motion
+"Moving around" " procedure" 2
+
+mouse
+"Using the editing cursor" " procedure" 8
+"Inserting notes and signs" " procedure" 3
+"Using the Palette" " procedure" 2
+
+move
+"Moving around" " procedure" 4
+"Sequencer File - Rewind" " " 2
+"Using the editing cursor" " procedure" 2
+
+moves
+"Chord - Edit Chord" " " 2
+"File Boxes" " concept" 2
+
+moving
+"Editor" " section" 2
+"Using the editing cursor" " procedure" 2
+
+multi-track
+"Organising recorded data" " procedure" 2
+
+multiples
+"Importing MIDI files" " procedure" 2
+
+music
+"Editing and using the clipboard" " procedure" 7
+"Editor" " section" 6
+"Editor File" " menu" 4
+"Exporting MIDI files" " procedure" 4
+"Preparing a MIDI file for the Editor" " procedure" 4
+"The Rosegarden Top Box" " introduction" 4
+"Editor File - New" " " 3
+"Editor File - Sequence" " " 3
+"Organising recorded data" " procedure" 3
+"Printing a piece of music" " procedure" 3
+"Using the Palette" " procedure" 3
+"Adding text" " procedure" 2
+"Changing bar properties" " procedure" 2
+"Chord - Pitch Search and Replace" " " 2
+"Exporting MusicTeX files" " procedure" 2
+"Group - Transpose" " " 2
+"Petal C commands" " introduction" 2
+"The Rosegarden Editor" " introduction" 2
+"Using the editing cursor" " procedure" 2
+
+musical
+"Using the editing cursor" " procedure" 2
+
+musictex
+"Exporting MusicTeX files" " procedure" 9
+"Editor File - Export MusicTeX" " " 7
+"Editor File - Export OpusTeX" " " 6
+"Editor" " section" 4
+"Editor File" " menu" 3
+"Printing a piece of music" " procedure" 3
+"Editor File - Export PMX" " " 2
+
+musixtex
+"Editor File - Export PMX" " " 2
+"Exporting MusicTeX files" " procedure" 2
+
+mute
+"Playback Status" " function" 2
+"Sequencer" " section" 2
+"Track - Mute All Tracks" " " 2
+
+n
+"Petal Tcl commands" " introduction" 2
+
+name
+"Chords" " procedure" 7
+"File Boxes" " concept" 6
+"Stave - Rename Staff" " " 3
+"Chord - Create by Name" " " 2
+"Editor" " section" 2
+"Event - Insert Note" " " 2
+"Help organisation" " concept" 2
+"Petal C commands" " introduction" 2
+"Saving a MIDI file" " procedure" 2
+"Sequencer File - Save As" " " 2
+
+named
+"Chords" " procedure" 4
+"Chord - Create by Name" " " 2
+"Editor" " section" 2
+
+names
+"Chords" " procedure" 12
+"Chord - Clear Chord Names" " " 4
+"Chord - Label Named Chords Only" " " 4
+"Editor" " section" 4
+"Chord - Guess Chord Names" " " 3
+"File Boxes" " concept" 3
+"Chord - Create by Name" " " 2
+"Editor File" " menu" 2
+"Starting a new piece of music" " procedure" 2
+
+natural
+"Inserting notes and signs" " procedure" 2
+"Using the Palette" " procedure" 2
+
+need
+"Editor File - Export MusicTeX" " " 2
+
+new
+"Starting a new piece of music" " procedure" 7
+"Bar - Key Signature" " " 5
+"Editor" " section" 4
+"Tempos and times" " procedure" 4
+"Editor File" " menu" 3
+"Editor File - New" " " 3
+"Importing MIDI files" " procedure" 3
+"Opening an editor file" " procedure" 3
+"Saving an editor file" " procedure" 3
+"Converting Rosegarden 2.0 files" " " 2
+"Operations on staffs" " procedure" 2
+"Saving a MIDI file" " procedure" 2
+"Sequencer File - Save As" " " 2
+
+next
+"Help organisation" " concept" 3
+"Using help" " procedure" 3
+"Editor" " section" 2
+"Editor File - Export MIDI" " " 2
+"Stave - Unbracket" " " 2
+"The Rosegarden Help System" " introduction" 2
+
+no
+"Chords" " procedure" 5
+"Importing MIDI files" " procedure" 5
+"Editor" " section" 2
+"Editor File - Import MIDI" " " 2
+"Group - Invert" " " 2
+"Group - Retrograde" " " 2
+"Group - Transpose" " " 2
+"Petal Data Types" " introduction" 2
+"Sequencer Filter" " menu" 2
+
+normal
+"File Boxes" " concept" 4
+
+normally
+"Group - Tuplet" " " 2
+
+notate
+"Sequencer" " section" 2
+"The Rosegarden Top Box" " introduction" 2
+
+notation
+"Chord - Create by Name" " " 2
+
+noted
+"Chord - Create by Name" " " 3
+
+noteindex
+"Petal C commands" " introduction" 2
+
+notes
+"Chords" " procedure" 9
+"Inserting notes and signs" " procedure" 9
+"Chord - Pitch Search and Replace" " " 7
+"Using the Palette" " procedure" 7
+"Considerations in inserting notes" " procedure" 6
+"Editor" " section" 6
+"Grouping" " procedure" 6
+"Bar - Double Bar" " " 5
+"Group - Simple Tuplet" " " 5
+"Group - Tuplet" " " 5
+"Importing MIDI files" " procedure" 5
+"Using the editing cursor" " procedure" 5
+"Bar - Key Signature" " " 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Starting a new piece of music" " procedure" 2
+"Track - Show Piano Roll" " " 2
+
+number
+"Group - Tuplet" " " 4
+"Arguments" " procedure" 2
+"Basic concepts of Petal" " procedure" 2
+"Moving around" " procedure" 2
+"Petal Tcl commands" " introduction" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Starting a new piece of music" " procedure" 2
+
+numbers
+"Stave - Show MIDI Patches" " " 2
+
+obtain
+"Using the Palette" " procedure" 2
+
+octave
+"Event - Insert Note" " " 3
+"Chord - Create by Name" " " 2
+"Track - Filter By Pitch" " " 2
+
+offered
+"Group - Tuplet" " " 2
+
+offset
+"Petal C commands" " introduction" 2
+
+often
+"Importing MIDI files" " procedure" 3
+
+old
+"Editor File - Open" " " 2
+
+one
+"Chord - Edit Chord" " " 5
+"Chords" " procedure" 5
+"Basic concepts of Petal" " procedure" 4
+"Sequencer Filter" " menu" 4
+"Using help" " procedure" 4
+"Editing with the Event List" " procedure" 3
+"Editor Filter" " menu" 3
+"Editor Filter - Apply Petal Filter" " " 3
+"Help organisation" " concept" 3
+"Moving around" " procedure" 3
+"Petal Data Types" " introduction" 3
+"Sequencer Filter - Apply Petal Filter" " " 3
+"Tempos and times" " procedure" 3
+"About the Apply Filter functions" " procedure" 2
+"Bar - Double Bar" " " 2
+"Editing and using the clipboard" " procedure" 2
+"Editor Edit - Undo" " " 2
+"Inserting notes and signs" " procedure" 2
+"Organising recorded data" " procedure" 2
+"Petal Tcl commands" " introduction" 2
+
+ones
+"File Boxes" " concept" 2
+
+online
+"The Rosegarden Help System" " introduction" 2
+
+onto
+"Chords" " procedure" 3
+
+open
+"Opening an editor file" " procedure" 4
+"Editor" " section" 2
+"Editor File - Save" " " 2
+"Loading a MIDI file" " procedure" 2
+"Saving a MIDI file" " procedure" 2
+"Sequencer" " section" 2
+
+opened
+"Opening an editor file" " procedure" 3
+
+opening
+"Editor File" " menu" 3
+"Opening an editor file" " procedure" 3
+"Editor" " section" 2
+"Editor File - Open" " " 2
+
+operation
+"Editor Edit - Undo" " " 2
+
+operations
+"Editor" " section" 2
+"Editor Edit - Undo" " " 2
+"Editor File" " menu" 2
+"Starting a new piece of music" " procedure" 2
+"Stave" " menu" 2
+"Using the editing cursor" " procedure" 2
+
+option
+"Midi - MIDI Setup" " " 5
+"Chord - Pitch Search and Replace" " " 3
+"Bar - Key Signature" " " 2
+"Displaying a track" " procedure" 2
+"Saving a MIDI file" " procedure" 2
+"Track - Quantize" " " 2
+
+options
+"Editing with the Event List" " procedure" 3
+"Adding text" " procedure" 2
+"Editor" " section" 2
+"Petal C commands" " introduction" 2
+
+opustex
+"Editor File - Export OpusTeX" " " 6
+"Exporting MusicTeX files" " procedure" 3
+"Editor" " section" 2
+"Editor File - Export MusicTeX" " " 2
+"Editor File - Export PMX" " " 2
+
+order
+"Help organisation" " concept" 2
+"Inserting notes and signs" " procedure" 2
+
+organisation
+"Help organisation" " concept" 3
+"Rosegarden" " section" 2
+"The Rosegarden Help System" " introduction" 2
+"Using help" " procedure" 2
+
+organising
+"Importing MIDI files" " procedure" 4
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Recording MIDI data" " procedure" 2
+"Sequencer" " section" 2
+"Track" " menu" 2
+
+oss
+"Midi - MIDI Setup" " " 2
+
+other
+"Group - Tuplet" " " 4
+"Chord - Pitch Search and Replace" " " 3
+"Importing MIDI files" " procedure" 3
+"The Rosegarden Top Box" " introduction" 3
+"Considerations in inserting notes" " procedure" 2
+"Editor File - Export MIDI" " " 2
+"Midi - MIDI Setup" " " 2
+"Moving around" " procedure" 2
+"Organising recorded data" " procedure" 2
+"Petal C commands" " introduction" 2
+"Petal Data Types" " introduction" 2
+"Using the editing cursor" " procedure" 2
+
+otherwise
+"Petal Tcl commands" " introduction" 2
+
+out
+"Using the editing cursor" " procedure" 5
+"Organising recorded data" " procedure" 4
+"Editing and using the clipboard" " procedure" 3
+"Chord - Pitch Search and Replace" " " 2
+"Editor File - Export MusicTeX" " " 2
+"Exporting MIDI files" " procedure" 2
+"File Boxes" " concept" 2
+"Group" " menu" 2
+"Group - Tuplet" " " 2
+"Marking chords" " procedure" 2
+
+output
+"Editor File - Export OpusTeX" " " 7
+"Exporting MusicTeX files" " procedure" 4
+"Editor File - Export PMX" " " 3
+"Basic concepts of Petal" " procedure" 2
+"Editor File - Export MusicTeX" " " 2
+"Midi - MIDI Setup" " " 2
+"Testing a filter" " procedure" 2
+
+over
+"Inserting notes and signs" " procedure" 4
+"Using the editing cursor" " procedure" 3
+"Marking chords" " procedure" 2
+
+page
+"Help organisation" " concept" 11
+"Using help" " procedure" 8
+"The Rosegarden Help System" " introduction" 2
+
+pages
+"Help organisation" " concept" 4
+"Using help" " procedure" 4
+
+palette
+"Using the Palette" " procedure" 8
+"Inserting notes and signs" " procedure" 7
+"Using the editing cursor" " procedure" 4
+"Editor" " section" 2
+"Starting a new piece of music" " procedure" 2
+
+parameters
+"Editing with the Event List" " procedure" 2
+
+parent
+"Help organisation" " concept" 3
+
+part
+"Bar - Key Signature" " " 2
+"Group - Tuplet" " " 2
+"The Rosegarden Editor" " introduction" 2
+
+particular
+"Bar - Key Signature" " " 2
+
+parts
+"Organising recorded data" " procedure" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+passed
+"Basic concepts of Petal" " procedure" 5
+
+paste
+"Editing with the Event List" " procedure" 5
+"Editing and using the clipboard" " procedure" 4
+"Editor" " section" 2
+"Sequencer" " section" 2
+
+patch
+"Stave - Assign MIDI Patch" " " 9
+"Stave - Show MIDI Patches" " " 5
+"Editor" " section" 2
+
+patches
+"Editor" " section" 2
+"Sequencer" " section" 2
+"Stave - Assign MIDI Patch" " " 2
+
+pattern
+"Basic concepts of Petal" " procedure" 2
+
+petal
+"Petal" " section" 20
+"Editor Filter" " menu" 10
+"Sequencer Filter" " menu" 10
+"Basic concepts of Petal" " procedure" 6
+"Petal Tcl commands" " introduction" 6
+"What is Petal?" " " 5
+"Editor Filter - Apply Petal Filter" " " 4
+"Sequencer Filter - Apply Petal Filter" " " 4
+"Petal C commands" " introduction" 3
+"Petal Pre-defined Variables" " introduction" 3
+"Petal questions and bug reports" " procedure" 3
+"Editor" " section" 2
+"Requirements and building" " procedure" 2
+"Sequencer" " section" 2
+"Top" " " 2
+"Writing filters" " procedure" 2
+
+petalexit
+"Petal Tcl commands" " introduction" 3
+
+petalgetitem
+"Petal Tcl commands" " introduction" 2
+
+petalinitinternals
+"Petal C commands" " introduction" 2
+
+petalputitem
+"Petal Tcl commands" " introduction" 2
+
+piano
+"Displaying a track" " procedure" 13
+"Sequencer" " section" 4
+"Track - Show Piano Roll" " " 4
+"Organising recorded data" " procedure" 2
+"Sequencer Edit" " menu" 2
+"Viewing with the Piano Roll" " procedure" 2
+
+piece
+"Editor" " section" 6
+"Editor File" " menu" 4
+"Moving around" " procedure" 4
+"Operations on staffs" " procedure" 4
+"Starting a new piece of music" " procedure" 4
+"Editor File - New" " " 3
+"Importing MIDI files" " procedure" 3
+"Stave - Fill to End" " " 3
+"Considerations in inserting notes" " procedure" 2
+"Editor File - Sequence" " " 2
+"Exporting MIDI files" " procedure" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"The Rosegarden Top Box" " introduction" 2
+
+pieces
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+pitch
+"Petal Tcl commands" " introduction" 8
+"Sequencer" " section" 6
+"Track - Filter By Pitch" " " 5
+"Preparing a MIDI file for the Editor" " procedure" 4
+"Track - Split By Pitch" " " 4
+"Chord - Edit Chord" " " 3
+"Considerations in inserting notes" " procedure" 3
+"Organising recorded data" " procedure" 3
+"Chord - Pitch Search and Replace" " " 2
+"Editor" " section" 2
+"Event - Insert Note" " " 2
+"Petal C commands" " introduction" 2
+
+pitches
+"Petal Tcl commands" " introduction" 8
+"Chord - Pitch Search and Replace" " " 7
+"Bar - Key Signature" " " 2
+
+place
+"Bar - Double Bar" " " 4
+"Chords" " procedure" 3
+"Marks" " menu" 2
+
+placed
+"Bar - Metronome" " " 2
+"Bar - Time Signature" " " 2
+"Group - Invert" " " 2
+"Group - Retrograde" " " 2
+"Group - Transpose" " " 2
+"Moving around" " procedure" 2
+
+placement
+"Adding text" " procedure" 3
+
+plain
+"Changing bar properties" " procedure" 4
+"Bar - End Bar Here" " " 2
+"Bar - Plain" " " 2
+"Editor" " section" 2
+
+play
+"Sequencer" " section" 4
+"Group - Tuplet" " " 3
+"Playing a MIDI file" " procedure" 3
+
+playback
+"Playing a MIDI file" " procedure" 6
+"Midi - MIDI Setup" " " 5
+"Playback Status" " function" 4
+"Sequencer" " section" 2
+"Sequencer File - Rewind" " " 2
+"Track - Activate All Tracks" " " 2
+"Track - Mute All Tracks" " " 2
+
+playing
+"Track Counter" " function" 4
+"Sequencer File" " menu" 3
+"Playback Status" " function" 2
+"Sequencer" " section" 2
+"Sequencer File - Fast Forward" " " 2
+"Sequencer File - Play" " " 2
+"Sequencer File - Stop" " " 2
+
+pmx
+"Editor File - Export PMX" " " 7
+"Exporting MusicTeX files" " procedure" 3
+"Editor" " section" 2
+"Editor File - Export MusicTeX" " " 2
+"Editor File - Export OpusTeX" " " 2
+
+point
+"Bar - Double Bar" " " 2
+"Bar - End Bar Here" " " 2
+"Editor Edit - Select this Bar" " " 2
+"Editor Edit - Select this Staff" " " 2
+"Playing a MIDI file" " procedure" 2
+"Sequencer Edit - Paste" " " 2
+"Using the editing cursor" " procedure" 2
+
+pointer
+"Inserting notes and signs" " procedure" 5
+"Moving around" " procedure" 3
+"Using the editing cursor" " procedure" 3
+
+popped
+"Operations on staffs" " procedure" 2
+
+position
+"Editing and using the clipboard" " procedure" 2
+"Sequencer File - Rewind" " " 2
+"Text" " menu" 2
+"Text - Add Text options" " " 2
+"Track - Quantize" " " 2
+"Track Counter" " function" 2
+
+possible
+"Group - Tuplet" " " 4
+
+power
+"Chord - Create by Name" " " 2
+
+pre-defined
+"Petal" " section" 2
+
+preparing
+"Importing MIDI files" " procedure" 2
+"Sequencer" " section" 2
+"The Rosegarden Top Box" " introduction" 2
+"Track" " menu" 2
+
+presented
+"Loading a MIDI file" " procedure" 2
+
+press
+"Track - Change All to Device" " " 2
+
+pressed
+"Using help" " procedure" 2
+
+previous
+"Help organisation" " concept" 3
+"Using help" " procedure" 2
+
+previously
+"Opening an editor file" " procedure" 2
+
+printing
+"Printing a piece of music" " procedure" 3
+"Editor" " section" 2
+
+probably
+"Editor File - Export MusicTeX" " " 3
+
+procedure
+"Editor" " section" 22
+"Sequencer" " section" 10
+"Petal" " section" 7
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+produce
+"Exporting MusicTeX files" " procedure" 2
+"Midi - MIDI Setup" " " 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+program
+"Event - Insert Program Change" " " 3
+"Midi - Set Initial Patches" " " 3
+"The Rosegarden Top Box" " introduction" 3
+"Sequencer" " section" 2
+"Stave - Assign MIDI Patch" " " 2
+
+prompts
+"Importing MIDI files" " procedure" 2
+
+properties
+"Bar" " menu" 3
+"Editor" " section" 2
+"Starting a new piece of music" " procedure" 2
+"Tempos and times" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+provide
+"Chords" " procedure" 2
+
+quantization
+"Track - Quantize" " " 4
+
+quantize
+"Track - Quantize" " " 5
+"Importing MIDI files" " procedure" 4
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Organising recorded data" " procedure" 2
+"Sequencer" " section" 2
+
+quantized
+"Importing MIDI files" " procedure" 2
+
+quantizing
+"Importing MIDI files" " procedure" 4
+
+quaver
+"Group - Tuplet" " " 3
+
+quavers
+"Group - Tuplet" " " 5
+
+questions
+"Petal" " section" 2
+"Petal questions and bug reports" " procedure" 2
+
+range
+"Event - Insert Note" " " 2
+
+rapidly
+"Using the editing cursor" " procedure" 2
+
+re
+"Midi - MIDI Setup" " " 6
+
+read
+"Testing a filter" " procedure" 3
+
+recognize
+"Chord - Create by Name" " " 2
+
+record
+"Recording MIDI data" " procedure" 5
+"Sequencer" " section" 2
+
+recorded
+"Importing MIDI files" " procedure" 4
+"Organising recorded data" " procedure" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Recording MIDI data" " procedure" 2
+"Sequencer" " section" 2
+"Sequencer File - Record" " " 2
+"Track" " menu" 2
+
+recording
+"Playback Status" " function" 3
+"Sequencer File" " menu" 3
+"Sequencer File - Record" " " 3
+"Midi - MIDI Setup" " " 2
+"Recording MIDI data" " procedure" 2
+"Sequencer" " section" 2
+"Sequencer File - Stop" " " 2
+
+redo
+"Editing and using the clipboard" " procedure" 2
+"Editor" " section" 2
+"Editor Edit - Redo" " " 2
+
+reference
+"Basic concepts of Petal" " procedure" 3
+"The Rosegarden Help System" " introduction" 2
+
+remove
+"Editor" " section" 6
+"Tempos and times" " procedure" 5
+"Group - Crescendo" " " 3
+"Group - Decrescendo" " " 3
+"Group - Slur" " " 3
+"Group - Tie" " " 3
+"Bar - Key Signature" " " 2
+
+rename
+"Editor" " section" 2
+"Operations on staffs" " procedure" 2
+"Sequencer" " section" 2
+"Starting a new piece of music" " procedure" 2
+
+repeat
+"Changing bar properties" " procedure" 5
+"Bar - End Bar Here" " " 4
+"Editor" " section" 4
+"Bar - Repeat at End" " " 3
+"Bar - Repeat at Start" " " 3
+"Bar" " menu" 2
+
+replace
+"Chord - Pitch Search and Replace" " " 6
+"Editor" " section" 2
+
+replaced
+"Chord - Pitch Search and Replace" " " 3
+
+replacement
+"Chord - Pitch Search and Replace" " " 3
+
+replacements
+"Chord - Pitch Search and Replace" " " 2
+
+replaces
+"Tempos and times" " procedure" 2
+
+reports
+"Petal" " section" 2
+"Petal questions and bug reports" " procedure" 2
+
+required
+"Editing with the Event List" " procedure" 2
+
+requirements
+"Petal" " section" 2
+
+requires
+"Operations on staffs" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+reset
+"Midi - System Reset" " " 4
+"Sequencer" " section" 4
+"Midi - Reset" " " 2
+
+resolution
+"Preparing a MIDI file for the Editor" " procedure" 3
+
+resource
+"Group - Crescendo" " " 3
+"Group - Decrescendo" " " 3
+"Adding text" " procedure" 2
+"Converting Rosegarden 2.0 files" " " 2
+"Editor File - Export MIDI" " " 2
+
+respectively
+"Chord - Edit Chord" " " 3
+
+rest
+"Using the Palette" " procedure" 4
+"Importing MIDI files" " procedure" 2
+
+rests
+"Inserting notes and signs" " procedure" 2
+"Stave - Fill to End" " " 2
+
+resulting
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+retrograde
+"Editor" " section" 2
+"Group - Retrograde" " " 2
+
+return
+"Using help" " procedure" 5
+"Playing a MIDI file" " procedure" 2
+"Sequencer" " section" 2
+"Sequencer File - Play" " " 2
+"Using the Palette" " procedure" 2
+
+returns
+"Petal Tcl commands" " introduction" 9
+"Petal C commands" " introduction" 3
+
+reversed
+"Group - Retrograde" " " 3
+
+rewind
+"Playing a MIDI file" " procedure" 3
+"Sequencer" " section" 2
+"Track Counter" " function" 2
+
+right
+"Moving around" " procedure" 4
+"Using the Palette" " procedure" 3
+"Chord - Edit Chord" " " 2
+"Petal Tcl commands" " introduction" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+right-hand
+"Organising recorded data" " procedure" 2
+
+roll
+"Displaying a track" " procedure" 13
+"Track - Show Piano Roll" " " 5
+"Sequencer" " section" 4
+"Sequencer Edit" " menu" 2
+"Viewing with the Piano Roll" " procedure" 2
+
+root
+"Chord - Create by Name" " " 5
+
+rough
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+run
+"The Rosegarden Editor" " introduction" 2
+"The Rosegarden Sequencer" " introduction" 2
+
+running
+"Sequencing a piece of music" " procedure" 3
+"The Rosegarden Top Box" " introduction" 2
+
+s
+"Petal C commands" " introduction" 5
+"Basic concepts of Petal" " procedure" 3
+"Editing and using the clipboard" " procedure" 3
+"Midi - MIDI Setup" " " 3
+"Testing a filter" " procedure" 3
+"Editor File - Export PMX" " " 2
+"Inserting notes and signs" " procedure" 2
+"Petal Tcl commands" " introduction" 2
+"Toolbars" " introduction" 2
+"Using help" " procedure" 2
+
+same
+"Bar - Double Bar" " " 2
+"Midi - MIDI Setup" " " 2
+
+sample
+"Basic concepts of Petal" " procedure" 2
+
+save
+"Saving an editor file" " procedure" 15
+"Saving a MIDI file" " procedure" 6
+"File Boxes" " concept" 5
+"Importing MIDI files" " procedure" 5
+"Editor" " section" 4
+"Editor File - Import MIDI" " " 4
+"Sequencer" " section" 4
+"Editor File - Save" " " 3
+"Editor File - Export MIDI" " " 2
+
+saved
+"Saving a MIDI file" " procedure" 3
+"Converting Rosegarden 2.0 files" " " 2
+"Editor File - Import MIDI" " " 2
+"Editor File - Open" " " 2
+
+saving
+"Editor File" " menu" 3
+"Sequencer File" " menu" 3
+"Editor" " section" 2
+"Editor File - Save" " " 2
+"Editor File - Save As" " " 2
+"Opening an editor file" " procedure" 2
+"Saving" " " 2
+"Sequencer" " section" 2
+"Sequencer File - Save" " " 2
+"Sequencer File - Save As" " " 2
+"Text" " menu" 2
+
+say
+"Group - Tuplet" " " 2
+
+scale
+"Petal C commands" " introduction" 11
+
+score
+"Midi - MIDI Setup" " " 4
+"Operations on staffs" " procedure" 2
+
+screenful
+"Moving around" " procedure" 2
+
+scrollbar
+"Moving around" " procedure" 3
+
+scrollbars
+"Moving around" " procedure" 2
+
+scrolls
+"Moving around" " procedure" 2
+
+search
+"Using help" " procedure" 8
+"Editor" " section" 2
+
+section
+"Top" " " 4
+
+see
+"Using the editing cursor" " procedure" 5
+"Editor File - Export MIDI" " " 4
+"Inserting notes and signs" " procedure" 4
+"Editing with the Event List" " procedure" 3
+"Exporting MusicTeX files" " procedure" 3
+"Importing MIDI files" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Text" " menu" 3
+"The Rosegarden Top Box" " introduction" 3
+"About the Apply Filter functions" " procedure" 2
+"Bar - Key Signature" " " 2
+"Changing bar properties" " procedure" 2
+"Editor File" " menu" 2
+"Editor File - Open" " " 2
+"Editor File - Save As" " " 2
+"Exporting MIDI files" " procedure" 2
+"Grouping" " procedure" 2
+"Opening an editor file" " procedure" 2
+"Petal C commands" " introduction" 2
+"Playing a MIDI file" " procedure" 2
+"Recording MIDI data" " procedure" 2
+"Using the Palette" " procedure" 2
+
+select
+"Displaying a track" " procedure" 6
+"Using the Palette" " procedure" 6
+"Editor" " section" 4
+"Editing with the Event List" " procedure" 3
+"Opening an editor file" " procedure" 3
+"Bar - Key Signature" " " 2
+"Editor Filter" " menu" 2
+"File Boxes" " concept" 2
+"Group - Tuplet" " " 2
+"Grouping" " procedure" 2
+"Loading a MIDI file" " procedure" 2
+"Sequencer Filter" " menu" 2
+"Track - Change All to Device" " " 2
+"Using the editing cursor" " procedure" 2
+
+selected
+"Chord - Pitch Search and Replace" " " 6
+"Editing with the Event List" " procedure" 6
+"Group - Tuplet" " " 5
+"Operations on staffs" " procedure" 4
+"Using the Palette" " procedure" 4
+"Bar" " menu" 3
+"Event - Modify Event" " " 3
+"File Boxes" " concept" 3
+"Inserting notes and signs" " procedure" 3
+"Midi - MIDI Setup" " " 3
+"Sequencer Edit - Copy" " " 3
+"Track - Quantize" " " 3
+"Track - Transpose" " " 3
+"Adding text" " procedure" 2
+"Bar - Key Signature" " " 2
+"Basic concepts of Petal" " procedure" 2
+"Changing bar properties" " procedure" 2
+"Chord - Create Chord" " " 2
+"Group - Auto Beam" " " 2
+"Group - Break Group" " " 2
+"Group - Simple Tuplet" " " 2
+"Grouping" " procedure" 2
+"Sequencer Edit - Cut" " " 2
+"Sequencer Edit - Delete" " " 2
+"Stave - Fill to End" " " 2
+"Track - Merge" " " 2
+"Track - Split By Pitch" " " 2
+"Using the editing cursor" " procedure" 2
+
+selecting
+"File Boxes" " concept" 3
+"Track - Quantize" " " 2
+
+selection
+"Editing with the Event List" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+semiquavers
+"Group - Tuplet" " " 3
+
+semitones
+"Group - Invert" " " 2
+"Group - Transpose" " " 2
+
+sent
+"Petal questions and bug reports" " procedure" 2
+"Sequencing a piece of music" " procedure" 2
+
+separate
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Organising recorded data" " procedure" 2
+
+sequence
+"Sequencing a piece of music" " procedure" 3
+"Adding text" " procedure" 2
+"Editor" " section" 2
+"Stave - Assign MIDI Patch" " " 2
+"The Rosegarden Top Box" " introduction" 2
+
+sequencer
+"Sequencer" " section" 78
+"Playing a MIDI file" " procedure" 11
+"The Rosegarden Top Box" " introduction" 11
+"Editing with the Event List" " procedure" 8
+"Importing MIDI files" " procedure" 8
+"Midi - MIDI Setup" " " 8
+"Recording MIDI data" " procedure" 7
+"Basic concepts of Petal" " procedure" 6
+"Organising recorded data" " procedure" 6
+"Saving a MIDI file" " procedure" 6
+"Sequencer File - Exit" " " 5
+"Sequencer File - Fast Forward" " " 5
+"Sequencer File - Play" " " 5
+"Sequencer Filter" " menu" 5
+"Sequencing a piece of music" " procedure" 5
+"About the Apply Filter functions" " procedure" 4
+"Sequencer File - Record" " " 4
+"Sequencer File - Return to Start" " " 4
+"Sequencer File - Rewind" " " 4
+"The Rosegarden Sequencer" " introduction" 4
+"Track Counter" " function" 4
+"Editor File - Export MIDI" " " 3
+"Editor File - Sequence" " " 3
+"Sequencer Edit - Copy" " " 3
+"Sequencer Edit - Cut" " " 3
+"Sequencer Edit - Delete" " " 3
+"Sequencer Edit - Paste" " " 3
+"Sequencer Edit - Show Clipboard" " " 3
+"Sequencer Edit - Undo" " " 3
+"Sequencer File - Close" " " 3
+"Sequencer File - Export Csound" " " 3
+"Sequencer File - Notate" " " 3
+"Sequencer File - Open" " " 3
+"Sequencer File - Play through Slave" " " 3
+"Sequencer File - Save" " " 3
+"Sequencer File - Save As" " " 3
+"Sequencer File - Skip to End" " " 3
+"Sequencer File - Stop" " " 3
+"Sequencer Filter - Apply Petal Filter" " " 3
+"Editor File" " menu" 2
+"Editor Filter" " menu" 2
+"Exporting MIDI files" " procedure" 2
+"Generating Csound" " procedure" 2
+"Loading a MIDI file" " procedure" 2
+"Sequencer Edit" " menu" 2
+"Sequencer File" " menu" 2
+"Testing a filter" " procedure" 2
+"Top" " " 2
+
+sequencing
+"Editor File - Sequence" " " 3
+"Editor" " section" 2
+"Editor File" " menu" 2
+"Exporting MIDI files" " procedure" 2
+"The Rosegarden Top Box" " introduction" 2
+
+series
+"Grouping" " procedure" 6
+
+set
+"Sequencer" " section" 4
+"Exporting MusicTeX files" " procedure" 2
+"Petal C commands" " introduction" 2
+"Starting a new piece of music" " procedure" 2
+
+setup
+"Midi - MIDI Setup" " " 2
+"Playing a MIDI file" " procedure" 2
+"Recording MIDI data" " procedure" 2
+"Sequencer" " section" 2
+
+several
+"Editing and using the clipboard" " procedure" 2
+"Marking chords" " procedure" 2
+"Petal Data Types" " introduction" 2
+
+sgi
+"Midi - MIDI Setup" " " 3
+
+sharp
+"Using the Palette" " procedure" 3
+"Inserting notes and signs" " procedure" 2
+
+shell
+"Basic concepts of Petal" " procedure" 2
+
+shift
+"Inserting notes and signs" " procedure" 2
+
+short
+"Importing MIDI files" " procedure" 2
+
+shorter
+"Importing MIDI files" " procedure" 2
+
+should
+"Chord - Create by Name" " " 11
+"Petal C commands" " introduction" 4
+"Event - Insert Note" " " 3
+"Importing MIDI files" " procedure" 3
+"Organising recorded data" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Writing filters" " procedure" 3
+"Editor File - Export MIDI" " " 2
+"Petal Tcl commands" " introduction" 2
+"Petal questions and bug reports" " procedure" 2
+"Testing a filter" " procedure" 2
+
+show
+"Displaying a track" " procedure" 8
+"Sequencer" " section" 6
+"Editor" " section" 4
+"Editing and using the clipboard" " procedure" 2
+"Editing with the Event List" " procedure" 2
+"Stave - Assign MIDI Patch" " " 2
+"Using the Palette" " procedure" 2
+
+showing
+"Chord - Pitch Search and Replace" " " 2
+
+shown
+"Track - Show Piano Roll" " " 3
+
+shows
+"File Boxes" " concept" 5
+
+signature
+"Bar - Key Signature" " " 9
+"Tempos and times" " procedure" 6
+"Bar - Time Signature" " " 4
+"Considerations in inserting notes" " procedure" 4
+"Editor" " section" 4
+"Importing MIDI files" " procedure" 4
+"Bar" " menu" 2
+"Starting a new piece of music" " procedure" 2
+"Using the Palette" " procedure" 2
+
+signatures
+"Bar - Key Signature" " " 2
+
+signs
+"Using the editing cursor" " procedure" 5
+"Using the Palette" " procedure" 3
+"Bar - Double Bar" " " 2
+"Bar - Key Signature" " " 2
+"Editor" " section" 2
+"Starting a new piece of music" " procedure" 2
+
+simple
+"Group - Simple Tuplet" " " 3
+"Adding text" " procedure" 2
+"Editor" " section" 2
+"Grouping" " procedure" 2
+
+simply
+"Displaying a track" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+since
+"Editor File" " menu" 2
+"Petal Data Types" " introduction" 2
+
+single
+"Moving around" " procedure" 2
+
+size
+"Midi - MIDI Setup" " " 3
+
+skip
+"Playing a MIDI file" " procedure" 2
+"Sequencer" " section" 2
+
+slave
+"Sequencer" " section" 2
+
+slower
+"Editor File - Export MusicTeX" " " 2
+
+slur
+"Group - Slur" " " 4
+"Grouping" " procedure" 3
+"Editor" " section" 2
+
+small
+"The Rosegarden Top Box" " introduction" 2
+
+smallish
+"Adding text" " procedure" 3
+
+some
+"Grouping" " procedure" 3
+"Importing MIDI files" " procedure" 3
+"Petal Pre-defined Variables" " introduction" 3
+"Bar - Double Bar" " " 2
+"Basic concepts of Petal" " procedure" 2
+"Editor File - Export MIDI" " " 2
+"Inserting notes and signs" " procedure" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Using help" " procedure" 2
+
+something
+"About the Apply Filter functions" " procedure" 2
+
+specified
+"Chord - Create by Name" " " 4
+"Organising recorded data" " procedure" 3
+"Sequencer Edit - Paste" " " 2
+"Track - Filter By Pitch" " " 2
+
+speed
+"Petal C commands" " introduction" 2
+
+split
+"Sequencer" " section" 4
+"Group - Tuplet" " " 2
+
+splitting
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+squash
+"Group - Tuplet" " " 2
+
+staff
+"Operations on staffs" " procedure" 19
+"Editor" " section" 12
+"Adding text" " procedure" 9
+"Stave - Add Staff" " " 6
+"Stave - Fill to End" " " 6
+"Using the editing cursor" " procedure" 5
+"Basic concepts of Petal" " procedure" 4
+"Chords" " procedure" 4
+"Editor Filter" " menu" 4
+"Editor Filter - Apply Petal Filter" " " 4
+"Stave - Rename Staff" " " 4
+"Text - Add Text options" " " 4
+"Bar - Key Signature" " " 3
+"Converting Rosegarden 2.0 files" " " 3
+"Inserting notes and signs" " procedure" 3
+"Starting a new piece of music" " procedure" 3
+"Stave - Assign MIDI Patch" " " 3
+"Editing and using the clipboard" " procedure" 2
+"Editor Edit - Select this Staff" " " 2
+"Editor File - Import MIDI" " " 2
+"Group - Invert" " " 2
+"Group - Retrograde" " " 2
+"Group - Transpose" " " 2
+"Stave" " menu" 2
+"Stave - Delete Staff" " " 2
+"Stave - Empty Staff" " " 2
+"Stave - Show MIDI Patches" " " 2
+"Tempos and times" " procedure" 2
+"Text - Clear Staff" " " 2
+
+staffs
+"Starting a new piece of music" " procedure" 7
+"Operations on staffs" " procedure" 4
+"Bar - Double Bar" " " 3
+"Editor File - Export MIDI" " " 3
+"Stave" " menu" 3
+"Editor" " section" 2
+"Stave - Bracket with Next" " " 2
+"Using the editing cursor" " procedure" 2
+
+start
+"Bar - End Bar Here" " " 3
+"Playing a MIDI file" " procedure" 3
+"Bar" " menu" 2
+"Bar - Repeat at Start" " " 2
+"Changing bar properties" " procedure" 2
+"Editing with the Event List" " procedure" 2
+"Editor" " section" 2
+"Sequencer" " section" 2
+"Sequencer File - Play" " " 2
+"The Rosegarden Top Box" " introduction" 2
+
+started
+"The Rosegarden Top Box" " introduction" 3
+"Editor Filter" " menu" 2
+"Sequencer Filter" " menu" 2
+"Sequencing a piece of music" " procedure" 2
+
+starting
+"Editor" " section" 2
+"Editor File" " menu" 2
+"Editor File - New" " " 2
+
+status
+"Playback Status" " function" 2
+"Sequencer" " section" 2
+"Track - Activate All Tracks" " " 2
+"Track - Mute All Tracks" " " 2
+
+stave
+"Editor" " section" 20
+"Stave" " menu" 13
+"Operations on staffs" " procedure" 10
+"Stave - Assign MIDI Patch" " " 5
+"Stave - Show MIDI Patches" " " 5
+"Stave - Unbracket" " " 5
+"Stave - Add Staff" " " 3
+"Stave - Bracket with Next" " " 3
+"Stave - Delete Staff" " " 3
+"Stave - Empty Staff" " " 3
+"Stave - Fill to End" " " 3
+"Stave - Rename Staff" " " 3
+"Considerations in inserting notes" " procedure" 2
+"Editor File - Export MIDI" " " 2
+"Starting a new piece of music" " procedure" 2
+"Using the Palette" " procedure" 2
+
+staves
+"Chords" " procedure" 2
+
+stop
+"Playing a MIDI file" " procedure" 2
+"Sequencer" " section" 2
+
+stopped
+"Playing a MIDI file" " procedure" 3
+
+store
+"Editing and using the clipboard" " procedure" 2
+"Exporting MIDI files" " procedure" 2
+
+strip
+"Organising recorded data" " procedure" 3
+
+structure
+"The Rosegarden Help System" " introduction" 2
+
+style
+"Converting Rosegarden 2.0 files" " " 5
+"Text - Add Text options" " " 2
+
+styles
+"Adding text" " procedure" 2
+"Converting Rosegarden 2.0 files" " " 2
+
+subdirectories
+"File Boxes" " concept" 2
+
+subdirectory
+"File Boxes" " concept" 2
+
+subpages
+"Help organisation" " concept" 3
+
+subsets
+"Chord - Pitch Search and Replace" " " 2
+
+such
+"Importing MIDI files" " procedure" 5
+"Bar" " menu" 2
+"Converting Rosegarden 2.0 files" " " 2
+"Group" " menu" 2
+"Marking chords" " procedure" 2
+"Organising recorded data" " procedure" 2
+
+suite
+"The Rosegarden Editor" " introduction" 2
+"The Rosegarden Top Box" " introduction" 2
+
+supported
+"Midi - MIDI Setup" " " 2
+
+sweep
+"Marking chords" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+swept
+"Editing and using the clipboard" " procedure" 3
+"Group - Invert" " " 2
+"Group - Retrograde" " " 2
+"Group - Transpose" " " 2
+"Grouping" " procedure" 2
+"Marking chords" " procedure" 2
+"Using the editing cursor" " procedure" 2
+
+system
+"Help organisation" " concept" 5
+"Midi - MIDI Setup" " " 4
+"Sequencer" " section" 4
+"The Rosegarden Top Box" " introduction" 4
+"Exporting MusicTeX files" " procedure" 2
+"Rosegarden" " section" 2
+"The Rosegarden Help System" " introduction" 2
+"Using help" " procedure" 2
+
+t
+"Basic concepts of Petal" " procedure" 4
+"Using help" " procedure" 3
+"Editor Edit - Undo" " " 2
+
+take
+"Basic concepts of Petal" " procedure" 2
+
+tcl
+"Petal Tcl commands" " introduction" 5
+"Requirements and building" " procedure" 4
+"Basic concepts of Petal" " procedure" 3
+"Petal" " section" 2
+"Testing a filter" " procedure" 2
+"Writing filters" " procedure" 2
+
+tclmidi
+"Requirements and building" " procedure" 2
+
+tempo
+"Midi - MIDI Setup" " " 3
+"Tempos and times" " procedure" 3
+"Bar - Metronome" " " 2
+"Importing MIDI files" " procedure" 2
+"Sequencer" " section" 2
+
+tempos
+"Adding text" " procedure" 2
+"Bar" " menu" 2
+"Changing bar properties" " procedure" 2
+"Editor" " section" 2
+"Using the editing cursor" " procedure" 2
+
+term
+"Petal Tcl commands" " introduction" 2
+
+test
+"Testing a filter" " procedure" 2
+
+testing
+"Basic concepts of Petal" " procedure" 3
+"Petal" " section" 2
+
+tex
+"Editor File - Export MusicTeX" " " 3
+"Editor File - Export PMX" " " 2
+"Exporting MusicTeX files" " procedure" 2
+
+text
+"Adding text" " procedure" 26
+"Editor" " section" 16
+"Text" " menu" 10
+"Text - Add Text options" " " 10
+"Converting Rosegarden 2.0 files" " " 6
+"Using help" " procedure" 5
+"Text - Clear Bar" " " 4
+"Text - Clear Group" " " 4
+"Text - Clear Staff" " " 4
+"Text - Dynamic" " " 4
+"Event - Insert Text Event" " " 3
+"Editor File - Export MIDI" " " 2
+"Help organisation" " concept" 2
+"Sequencer" " section" 2
+"Using the editing cursor" " procedure" 2
+
+textual
+"Converting Rosegarden 2.0 files" " " 3
+
+their
+"Toolbars" " introduction" 2
+
+them
+"Grouping" " procedure" 4
+"Chord - Guess Chord Names" " " 3
+"Petal questions and bug reports" " procedure" 3
+"Chord - Create by Name" " " 2
+"Converting Rosegarden 2.0 files" " " 2
+"Importing MIDI files" " procedure" 2
+"Using help" " procedure" 2
+
+then
+"Chords" " procedure" 4
+"Editing and using the clipboard" " procedure" 3
+"Editing with the Event List" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Starting a new piece of music" " procedure" 3
+"Adding text" " procedure" 2
+"Editor Filter" " menu" 2
+"Inserting notes and signs" " procedure" 2
+"Marking chords" " procedure" 2
+"Sequencer File - Fast Forward" " " 2
+"Sequencer File - Rewind" " " 2
+"Sequencer Filter" " menu" 2
+"Toolbars" " introduction" 2
+"Track - Quantize" " " 2
+
+theory
+"Petal C commands" " introduction" 2
+
+these
+"Petal C commands" " introduction" 5
+"Text" " menu" 3
+"Chords" " procedure" 2
+"Group" " menu" 2
+"Importing MIDI files" " procedure" 2
+"Marking chords" " procedure" 2
+"Petal Pre-defined Variables" " introduction" 2
+"Using the Palette" " procedure" 2
+
+they
+"Adding text" " procedure" 3
+"Exporting MIDI files" " procedure" 3
+"Editing and using the clipboard" " procedure" 2
+"Toolbars" " introduction" 2
+
+thing
+"Petal Tcl commands" " introduction" 3
+"Petal Data Types" " introduction" 2
+
+those
+"Chord - Pitch Search and Replace" " " 2
+"Using help" " procedure" 2
+
+three
+"Group - Simple Tuplet" " " 3
+"Group - Tuplet" " " 3
+
+through
+"Help organisation" " concept" 4
+"Sequencer" " section" 2
+"Sequencer File - Play through Slave" " " 2
+
+ticked
+"Using the Palette" " procedure" 2
+
+tidy
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+tie
+"Group - Tie" " " 4
+"Editor" " section" 2
+
+tied
+"Bar - Double Bar" " " 2
+"Inserting notes and signs" " procedure" 2
+
+time
+"Group - Tuplet" " " 7
+"Tempos and times" " procedure" 7
+"Bar - Time Signature" " " 5
+"Starting a new piece of music" " procedure" 5
+"Importing MIDI files" " procedure" 4
+"Editing with the Event List" " procedure" 3
+"Group - Simple Tuplet" " " 3
+"Bar" " menu" 2
+"Editing and using the clipboard" " procedure" 2
+"Editor" " section" 2
+
+timebase
+"Midi - Set Timebase" " " 3
+"Sequencer" " section" 2
+
+times
+"Using the editing cursor" " procedure" 3
+"Adding text" " procedure" 2
+"Bar" " menu" 2
+"Changing bar properties" " procedure" 2
+"Editor" " section" 2
+"Importing MIDI files" " procedure" 2
+
+tmp
+"Testing a filter" " procedure" 2
+
+together
+"Group - Tie" " " 2
+"Grouping" " procedure" 2
+"Stave - Bracket with Next" " " 2
+
+tonality
+"Petal C commands" " introduction" 5
+"Petal Tcl commands" " introduction" 3
+
+too
+"Importing MIDI files" " procedure" 2
+
+toolbar
+"Toolbars" " introduction" 5
+
+toolbars
+"Rosegarden" " section" 2
+"Toolbars" " introduction" 2
+
+top
+"The Rosegarden Top Box" " introduction" 10
+"Using help" " procedure" 3
+"Editor File - Sequence" " " 2
+"Help organisation" " concept" 2
+"Rosegarden" " section" 2
+"Sequencing a piece of music" " procedure" 2
+"Using the Palette" " procedure" 2
+
+track
+"Sequencer" " section" 42
+"Organising recorded data" " procedure" 24
+"Displaying a track" " procedure" 23
+"Track" " menu" 22
+"Preparing a MIDI file for the Editor" " procedure" 13
+"Basic concepts of Petal" " procedure" 10
+"Track - Show Event List" " " 9
+"Importing MIDI files" " procedure" 8
+"Track - Split By Pitch" " " 8
+"Petal Tcl commands" " introduction" 7
+"Track - Merge" " " 7
+"Track - Quantize" " " 7
+"Track - Split By Channel" " " 7
+"Recording MIDI data" " procedure" 6
+"Sequencer File - Fast Forward" " " 6
+"Sequencer Filter" " menu" 6
+"Sequencer Filter - Apply Petal Filter" " " 6
+"Track - Clone" " " 6
+"Track - Rename" " " 6
+"Track - Show Piano Roll" " " 6
+"Track - Track Info" " " 6
+"Track - Transpose" " " 6
+"Track Counter" " function" 6
+"Editing with the Event List" " procedure" 5
+"Sequencer File - Rewind" " " 5
+"Track - Filter By Event" " " 5
+"Arguments" " procedure" 4
+"Playback Status" " function" 4
+"Sequencer File - Skip to End" " " 4
+"Track - Change Channel" " " 4
+"Track - Filter By Channel" " " 4
+"Track - Filter By Pitch" " " 4
+"Midi - MIDI Setup" " " 3
+"Track - Activate All Tracks" " " 3
+"Track - Change All to Device" " " 3
+"Track - Mute All Tracks" " " 3
+"Editor File - Import MIDI" " " 2
+"Petal Data Types" " introduction" 2
+"Playing a MIDI file" " procedure" 2
+"Sequencer Edit - Undo" " " 2
+"Sequencer File - Record" " " 2
+"Sequencer File - Return to Start" " " 2
+"Stave - Assign MIDI Patch" " " 2
+
+tracking
+"Midi - MIDI Setup" " " 3
+
+tracks
+"Organising recorded data" " procedure" 8
+"Sequencer" " section" 4
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Displaying a track" " procedure" 2
+"Track - Activate All Tracks" " " 2
+"Track - Change All to Device" " " 2
+"Track - Mute All Tracks" " " 2
+"Track - Quantize" " " 2
+
+transcribed
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+transcribing
+"Preparing a MIDI file for the Editor" " procedure" 2
+
+transcription
+"Preparing a MIDI file for the Editor" " procedure" 5
+
+transmitted
+"Event - Insert Program Change" " " 2
+
+transport
+"Help organisation" " concept" 2
+
+transpose
+"Bar - Key Signature" " " 3
+"Chord - Pitch Search and Replace" " " 2
+"Editor" " section" 2
+"Group - Transpose" " " 2
+"Organising recorded data" " procedure" 2
+"Sequencer" " section" 2
+"Track - Transpose" " " 2
+
+transposed
+"Group - Transpose" " " 3
+
+tree
+"Help organisation" " concept" 3
+
+triplet
+"Group - Tuplet" " " 3
+"Group - Simple Tuplet" " " 2
+
+triplets
+"Importing MIDI files" " procedure" 3
+
+tuplet
+"Group - Tuplet" " " 10
+"Group - Simple Tuplet" " " 6
+"Editor" " section" 4
+"Grouping" " procedure" 4
+"Group - Break Group" " " 2
+
+two
+"Basic concepts of Petal" " procedure" 3
+"Group - Tie" " " 3
+"Event - Insert Text Event" " " 2
+"Group - Tuplet" " " 2
+"Grouping" " procedure" 2
+"Importing MIDI files" " procedure" 2
+"Inserting notes and signs" " procedure" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Stave - Bracket with Next" " " 2
+"Track - Quantize" " " 2
+
+type
+"Importing MIDI files" " procedure" 4
+
+types
+"Track - Filter By Event" " " 3
+"Petal" " section" 2
+"Petal Data Types" " introduction" 2
+
+typesetting
+"Editor File - Export MusicTeX" " " 2
+"Editor File - Export OpusTeX" " " 2
+"Editor File - Export PMX" " " 2
+"Exporting MusicTeX files" " procedure" 2
+
+unbracket
+"Editor" " section" 2
+
+uncomment
+"Editor File - Export MusicTeX" " " 2
+
+undo
+"Editor Edit - Redo" " " 7
+"Editor Edit - Undo" " " 4
+"Editing and using the clipboard" " procedure" 3
+"Editor" " section" 2
+"Sequencer" " section" 2
+"Sequencer Edit - Undo" " " 2
+"Stave - Add Staff" " " 2
+
+undoable
+"Stave - Add Staff" " " 2
+
+undone
+"Editor Edit - Undo" " " 2
+
+unwanted
+"Organising recorded data" " procedure" 2
+
+up
+"Chord - Edit Chord" " " 4
+"Displaying a track" " procedure" 4
+"File Boxes" " concept" 4
+"The Rosegarden Top Box" " introduction" 4
+"Editing with the Event List" " procedure" 2
+"Group - Tuplet" " " 2
+"Operations on staffs" " procedure" 2
+"Sequencing a piece of music" " procedure" 2
+"Starting a new piece of music" " procedure" 2
+"Stave - Fill to End" " " 2
+
+use
+"Chords" " procedure" 4
+"Importing MIDI files" " procedure" 4
+"Organising recorded data" " procedure" 3
+"Adding text" " procedure" 2
+"Editing and using the clipboard" " procedure" 2
+"Editor File - Export MIDI" " " 2
+"Editor File - Export MusicTeX" " " 2
+"Midi - MIDI Setup" " " 2
+"Operations on staffs" " procedure" 2
+"Petal C commands" " introduction" 2
+"Testing a filter" " procedure" 2
+"Using help" " procedure" 2
+
+used
+"File Boxes" " concept" 3
+"Inserting notes and signs" " procedure" 3
+"Organising recorded data" " procedure" 3
+"Preparing a MIDI file for the Editor" " procedure" 3
+"Using the Palette" " procedure" 3
+"Basic concepts of Petal" " procedure" 2
+"Chord - Pitch Search and Replace" " " 2
+"Chords" " procedure" 2
+"Petal Tcl commands" " introduction" 2
+"Stave - Assign MIDI Patch" " " 2
+"What is Petal?" " " 2
+
+user
+"Organising recorded data" " procedure" 3
+
+using
+"Inserting notes and signs" " procedure" 8
+"Preparing a MIDI file for the Editor" " procedure" 7
+"Using the editing cursor" " procedure" 7
+"Editor" " section" 6
+"Editing and using the clipboard" " procedure" 5
+"File Boxes" " concept" 4
+"Midi - MIDI Setup" " " 4
+"Starting a new piece of music" " procedure" 4
+"Adding text" " procedure" 3
+"Editor Edit - Select this Bar" " " 3
+"Editor Edit - Select this Staff" " " 3
+"Grouping" " procedure" 3
+"The Rosegarden Help System" " introduction" 3
+"Using" " " 3
+"Using the Palette" " procedure" 3
+"Chords" " procedure" 2
+"Editing with the Event List" " procedure" 2
+"Editor Edit" " menu" 2
+"Editor File - Import MIDI" " " 2
+"Exporting MIDI files" " procedure" 2
+"Group - Simple Tuplet" " " 2
+"Help organisation" " concept" 2
+"Marking chords" " procedure" 2
+"Moving around" " procedure" 2
+"Organising recorded data" " procedure" 2
+"Recording MIDI data" " procedure" 2
+"Rosegarden" " section" 2
+
+v7
+"Requirements and building" " procedure" 2
+
+value
+"Event - Insert Note" " " 2
+
+values
+"Editor File - Export MusicTeX" " " 2
+"Event - Insert Controller Change" " " 2
+"Petal C commands" " introduction" 2
+"Petal Pre-defined Variables" " introduction" 2
+
+variables
+"Petal Pre-defined Variables" " introduction" 6
+"Petal C commands" " introduction" 3
+"Petal" " section" 2
+
+various
+"Group - Tuplet" " " 2
+
+velocity
+"Event - Insert Note" " " 2
+
+version
+"Converting Rosegarden 2.0 files" " " 7
+
+very
+"Petal C commands" " introduction" 2
+
+viewing
+"Displaying a track" " procedure" 2
+"Sequencer" " section" 2
+"Sequencer Edit" " menu" 2
+
+want
+"Chords" " procedure" 6
+"Editing and using the clipboard" " procedure" 2
+"Group - Tuplet" " " 2
+"Starting a new piece of music" " procedure" 2
+
+was
+"Opening an editor file" " procedure" 2
+
+way
+"Basic concepts of Petal" " procedure" 3
+"Importing MIDI files" " procedure" 3
+"Chords" " procedure" 2
+
+well
+"File Boxes" " concept" 2
+
+were
+"Using help" " procedure" 2
+
+what
+"Petal" " section" 2
+
+where
+"Operations on staffs" " procedure" 3
+"Bar - Double Bar" " " 2
+
+whether
+"Chord - Pitch Search and Replace" " " 2
+
+which
+"Chords" " procedure" 6
+"File Boxes" " concept" 6
+"Organising recorded data" " procedure" 6
+"Using help" " procedure" 6
+"Editing and using the clipboard" " procedure" 4
+"Help organisation" " concept" 4
+"Midi - MIDI Setup" " " 4
+"Petal Tcl commands" " introduction" 4
+"Basic concepts of Petal" " procedure" 3
+"Grouping" " procedure" 3
+"Opening an editor file" " procedure" 3
+"Track - Filter By Pitch" " " 3
+"Track - Show Event List" " " 3
+"Using the editing cursor" " procedure" 3
+"Bar - Key Signature" " " 2
+"Editor File" " menu" 2
+"Editor File - Export MIDI" " " 2
+"Exporting MusicTeX files" " procedure" 2
+"Group" " menu" 2
+"Group - Tuplet" " " 2
+"Importing MIDI files" " procedure" 2
+"Petal C commands" " introduction" 2
+"Petal Pre-defined Variables" " introduction" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Saving an editor file" " procedure" 2
+"Toolbars" " introduction" 2
+
+while
+"Moving around" " procedure" 2
+
+whole
+"Using the editing cursor" " procedure" 2
+
+will
+"Chord - Pitch Search and Replace" " " 10
+"Using the Palette" " procedure" 10
+"Midi - MIDI Setup" " " 8
+"Group - Tuplet" " " 6
+"Bar - Key Signature" " " 5
+"Basic concepts of Petal" " procedure" 5
+"Considerations in inserting notes" " procedure" 5
+"Editing with the Event List" " procedure" 5
+"Testing a filter" " procedure" 5
+"Using the editing cursor" " procedure" 5
+"Bar - Double Bar" " " 4
+"Converting Rosegarden 2.0 files" " " 4
+"Editor File - Export MIDI" " " 4
+"Inserting notes and signs" " procedure" 4
+"Preparing a MIDI file for the Editor" " procedure" 4
+"Track - Quantize" " " 4
+"Arguments" " procedure" 3
+"Chord - Create by Name" " " 3
+"Chords" " procedure" 3
+"Displaying a track" " procedure" 3
+"Editor File - Export MusicTeX" " " 3
+"Exporting MIDI files" " procedure" 3
+"Marking chords" " procedure" 3
+"Petal Tcl commands" " introduction" 3
+"Playback Status" " function" 3
+"Recording MIDI data" " procedure" 3
+"Saving an editor file" " procedure" 3
+"Sequencer Filter" " menu" 3
+"Sequencing a piece of music" " procedure" 3
+"Starting a new piece of music" " procedure" 3
+"Stave - Assign MIDI Patch" " " 3
+"About the Apply Filter functions" " procedure" 2
+"Chord - Break Chord" " " 2
+"Chord - Create Chord" " " 2
+"Chord - Edit Chord" " " 2
+"Chord - Label All Chords" " " 2
+"Editing and using the clipboard" " procedure" 2
+"Editor Filter" " menu" 2
+"Group - Simple Tuplet" " " 2
+"Importing MIDI files" " procedure" 2
+"Loading a MIDI file" " procedure" 2
+"Moving around" " procedure" 2
+"Operations on staffs" " procedure" 2
+"Playing a MIDI file" " procedure" 2
+"Saving a MIDI file" " procedure" 2
+"Sequencer Filter - Apply Petal Filter" " " 2
+"Stave - Bracket with Next" " " 2
+"Track - Filter By Event" " " 2
+"Track - Split By Channel" " " 2
+"Using help" " procedure" 2
+
+window
+"Displaying a track" " procedure" 7
+"Using the Palette" " procedure" 7
+"Editing and using the clipboard" " procedure" 5
+"Inserting notes and signs" " procedure" 5
+"Using help" " procedure" 5
+"Using the editing cursor" " procedure" 4
+"Editing with the Event List" " procedure" 3
+"Moving around" " procedure" 3
+"Starting a new piece of music" " procedure" 3
+"Track - Show Event List" " " 3
+"Chord - Edit Chord" " " 2
+"The Rosegarden Top Box" " introduction" 2
+"Track - Show Piano Roll" " " 2
+
+wish
+"Editing with the Event List" " procedure" 2
+
+with
+"Midi - MIDI Setup" " " 13
+"Chord - Create by Name" " " 10
+"File Boxes" " concept" 6
+"Displaying a track" " procedure" 5
+"Petal Tcl commands" " introduction" 5
+"Bar - Key Signature" " " 4
+"Editor File - Export MIDI" " " 4
+"Importing MIDI files" " procedure" 4
+"Operations on staffs" " procedure" 4
+"Sequencer" " section" 4
+"Sequencer Edit" " menu" 4
+"Bar - Double Bar" " " 3
+"Considerations in inserting notes" " procedure" 3
+"Editor File - Export MusicTeX" " " 3
+"Editor File - Export OpusTeX" " " 3
+"Moving around" " procedure" 3
+"Saving an editor file" " procedure" 3
+"Tempos and times" " procedure" 3
+"Using help" " procedure" 3
+"Using the editing cursor" " procedure" 3
+"Writing filters" " procedure" 3
+"About the Apply Filter functions" " procedure" 2
+"Adding text" " procedure" 2
+"Bar - Label" " " 2
+"Chord - Label Named Chords Only" " " 2
+"Chord - Pitch Search and Replace" " " 2
+"Chords" " procedure" 2
+"Converting Rosegarden 2.0 files" " " 2
+"Editing with the Event List" " procedure" 2
+"Editor" " section" 2
+"Event" " menu" 2
+"Event - Insert Note" " " 2
+"Event - Insert Text Event" " " 2
+"Group - Tuplet" " " 2
+"Grouping" " procedure" 2
+"Inserting notes and signs" " procedure" 2
+"Organising recorded data" " procedure" 2
+"Petal Data Types" " introduction" 2
+"Preparing a MIDI file for the Editor" " procedure" 2
+"Stave - Fill to End" " " 2
+"Stave - Unbracket" " " 2
+"The Rosegarden Help System" " introduction" 2
+"The Rosegarden Top Box" " introduction" 2
+"Toolbars" " introduction" 2
+"Track - Merge" " " 2
+"Using the Palette" " procedure" 2
+"What is Petal?" " " 2
+
+within
+"Changing bar properties" " procedure" 2
+"Chords" " procedure" 2
+"Marks" " menu" 2
+"Using the editing cursor" " procedure" 2
+
+without
+"What is Petal?" " " 2
+
+words
+"Using help" " procedure" 3
+"Help organisation" " concept" 2
+
+work
+"Editor Edit - Undo" " " 2
+"Moving around" " procedure" 2
+
+write
+"Basic concepts of Petal" " procedure" 2
+"Exporting MIDI files" " procedure" 2
+
+writing
+"Petal" " section" 2
+
+written
+"Petal C commands" " introduction" 2
+
+wrong
+"Importing MIDI files" " procedure" 3
+
+yet
+"Basic concepts of Petal" " procedure" 3
+
+your
+"About the Apply Filter functions" " procedure" 3
+"Editor Edit - Undo" " " 2
+"Exporting MusicTeX files" " procedure" 2
+"Playing a MIDI file" " procedure" 2
+
+
+::END::
+
