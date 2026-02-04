@@ -35,6 +35,6 @@ Rosegarden main binary is in /usr/local/bin.
 Have fun!
 
 
-@chulofiasco
+@chulofiasco,
 Silicon Graphics User Group
 
