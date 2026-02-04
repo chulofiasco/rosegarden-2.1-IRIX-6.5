@@ -1,0 +1,2 @@
+#!/bin/sh
+xterm -sb -sl 300 -e $HOME/rosegarden/bin/debug-aux $HOME/rosegarden/bin/sequencer $*

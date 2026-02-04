@@ -1,0 +1,7 @@
+#!/bin/sh
+execfile=$1
+shift
+echo You probably want the command:
+echo run $*
+gdb $execfile
+
