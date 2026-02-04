@@ -1,0 +1,114 @@
+  Sorry, no makefile for BSD/OS.
+
+1. Copy or symlink the device driver source to /usr/src/sys/i386/isa.
+   For example:
+
+     mkdir /usr/src/sys/i386/isa/midi
+     for f in \
+       midi.c sup_var.h midiioctl.h sup_export.h sup_softc.h \
+       sys_bsdi2.0.c sys_bsdi2.0.h sup_iface.h sup_iface.c \
+       iface_mpu401.c iface_mpu401.h iface_mpu401_uart.c iface_mqx32.c \
+       iface_mqx32.h iface_gravis.h iface_gravis.c iface_sb.c iface_sb.h \
+       iface_serial.c iface_serial.h \
+       timer_kern.c timer_kern.h timer_smpte.c timer_smpte.h \
+       timer_mpu401.c timer_mpu401.h \
+       sup_timer.c sup_timer.h sup_timer_list.c sup_timer_list.h \
+       sup_stynamic.c sup_stynamic.h sup_event.h sup_pnp.h sup_pnp.c
+     do
+       ln -s `pwd`/$f /usr/src/sys/i386/isa/midi
+     done
+
+     cp midiioctl.h /usr/include/sys/
+
+2 - cd /sys/i386/isa/midi
+    ln -s sys_bsdi2.0.h sup_os.h
+
+3 - cd ../conf
+    edit files.i386 and add the midi source files.
+    on 2.0.1 systems, you can use this patch:
+*** files.i386.orig	Thu Mar  7 20:22:00 1996
+--- files.i386	Thu Mar  7 20:25:03 1996
+***************
+*** 67,73 ****
+  
+  # MPU-401/compatible MIDI controller
+  device	midi at isa
+! file	i386/isa/midi.c			midi&!objsrc device-driver always-source
+  
+  # SoundBlaster Pro
+  device	sb at isa
+--- 67,89 ----
+  
+  # MPU-401/compatible MIDI controller
+  device	midi at isa
+! file	i386/isa/midi/midi.c		midi&!objsrc device-driver always-source
+! file	i386/isa/midi/sys_bsdi2.0.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/sup_iface.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/sup_pnp.c		midi&!objsrc device-driver always-source
+! file	i386/isa/midi/sup_timer.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/sup_timer_list.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/sup_stynamic.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/iface_mpu401.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/iface_mpu401_uart.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/iface_mqx32.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/iface_gravis.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/iface_sb.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/iface_serial.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/timer_kern.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/timer_smpte.c	midi&!objsrc device-driver always-source
+! file	i386/isa/midi/timer_mpu401.c	midi&!objsrc device-driver always-source
+  
+  # SoundBlaster Pro
+  device	sb at isa
+
+
+4 - find the line that looks like (if it exists, otherwise add one):
+
+#midi0	at isa? port 0x300
+
+    uncomment it, and add a flags field.  The flags determine the type
+    of midi card you are using.  See sup_iface.h for the complete list,
+    but for now they are:
+	0	fully MPU401 compat. board
+	1	UART MPU401 only MPU401 compat.
+	2	Music Quest MQX32 with SMPTE
+	3	Gravis w/ internal voices - GF1 (GUS)
+	4	Gravis w/ internal voices - Iwave (PnP)
+	5	Gravis w/ external voices - GF1 (GUS)
+	6	Gravis w/ external voices - Iwave (PnP)
+	7	SoundBlaster
+	8	PC type UART (16450, etc.)
+    a config line for a normal MPU401 might look like
+
+midi0	at isa? port 0x300 flags 0
+
+
+5 - Right above the line you created define which interfaces you'd like to
+    build.  Do this by creating one or more ``options'' lines using one
+    or more of the following options:
+	options	MIDI_BUILD_ALL
+	options	MIDI_BUILD_MPU401
+	options	MIDI_BUILD_MPU401_UART
+	options	MIDI_BUILD_MQX32
+	options	MIDI_BUILD_GRAVIS_GF1
+	options	MIDI_BUILD_GRAVIS_IWAVE
+	options	MIDI_BUILD_GRAVIS_EXT
+	options	MIDI_BUILD_SB
+	options	MIDI_BUILD_SERIAL
+
+
+6 - define DEFUALT_THRU in the source if you want MIDIIN passed to
+    MIDIOUT by default (even when the device is closed)
+
+7 - create some midi device nodes:
+	mknod midi0 c 22 0
+	mknod midi1 c 22 1
+	mknod midi2 c 22 2
+	mknod rmidi0 c 22 64
+	mknod rmidi1 c 22 65
+	mknod rmidi2 c 22 66
+	chmod 666 /dev/midi* /dev/rmidi*
+    *Note, the MAKEDEV script in /dev will make midi devices, but
+    for a much older version of the driver.
+
+8 - make a new kernel as per the lizard book instructions.

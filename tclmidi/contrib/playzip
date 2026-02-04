@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# uuencoded
+#
+#begin 644 /usr/local/etc/mt32reset
+#,`/`)01`6$G\```'W
+#`
+#end
+
+Single() {
+	unzip -p $1 $2 2> /dev/null | mplay -quiet
+	if [ "$3" = "-r" ]; then
+		cat /usr/local/etc/mt32reset > /dev/midi0
+	fi
+}
+
+if [ "$3" = "-s" ]; then
+	Single $1 $2 $4
+elif [ $# -ge 2 ]; then
+	xargs -i $0 $1 {} -s $3 < $2
+else
+	echo "Usage: playzip <archive.zip> <album|{song -s}> [-r]"
+	exit 1
+fi
+exit 0

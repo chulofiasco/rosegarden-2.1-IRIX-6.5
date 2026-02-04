@@ -1,0 +1,14 @@
+  To install the Unixware driver, you'll need to edit the configuration
+files in the SVR4_ID directory.  Namely the System file.  Set the
+correct values for the I/O ports and the interrupt.  If you have more
+than three midi cards, you'll also have to edit the Space.c file.
+Once the files contain the proper values for your setup, you need only
+type:
+
+make -f Makefile.unixware
+make -f Makefile.unixware install
+make -f Makefile.unixware load
+
+to unload the driver, type:
+
+make -f Makefile.unixware unload

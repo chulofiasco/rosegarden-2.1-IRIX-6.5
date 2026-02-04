@@ -1,0 +1,140 @@
+How to install the driver under NetBSD-current as of March 17, 1995:
+
+1. Copy or symlink the device driver source to /usr/src/sys/arch/i386/isa/midi.
+   For example:
+
+     mkdir /usr/src/sys/arch/i386/isa/midi
+     for f in \
+       midi.c sup_var.h midiioctl.h sup_export.h sup_softc.h \
+       sys_netbsd.c sys_netbsd.h sup_iface.h sup_iface.c \
+       iface_mpu401.c iface_mpu401.h iface_mpu401_uart.c iface_mqx32.c \
+       iface_mqx32.h iface_gravis.h iface_gravis.c iface_sb.c iface_sb.h \
+       iface_serial.c iface_serial.h \
+       timer_kern.c timer_kern.h timer_smpte.c timer_smpte.h \
+       timer_mpu401.c timer_mpu401.h \
+       sup_timer.c sup_timer.h sup_timer_list.c sup_timer_list.h \
+       sup_stynamic.c sup_stynamic.h sup_event.h sup_pnp.h sup_pnp.c
+     do
+       ln -s `pwd`/$f /usr/src/sys/arch/i386/isa/midi/
+     done
+
+     cp midiioctl.h /usr/include/sys/
+
+2. cd /usr/src/sys/arch/i386/isa/midi
+   ln -s sys_netbsd.h sup_os.h
+
+3. Add the midi device to /usr/src/sys/arch/i386/i386/conf.c.
+   The context diff below is for reference only; the exact
+   line numbers and the major device number are subject to change.
+
+*** conf.c~	Sun Apr  2 12:52:50 1995
+--- conf.c	Wed May 10 13:18:23 1995
+***************
+*** 351,356 ****
+--- 351,364 ----
+  	(dev_type_reset((*))) nullop, 0, dev_init(c,n,select), \
+  	(dev_type_mmap((*))) enodev, 0 }
+  
++ #include "midi.h"
++ cdev_decl(midi);
++ #define cdev_midi_init(c,n) { \
++ 	dev_init(c,n,open), dev_init(c,n,close), dev_init(c,n,read), \
++ 	dev_init(c,n,write), dev_init(c,n,ioctl), (dev_type_stop((*))) enodev, \
++ 	(dev_type_reset((*))) nullop, 0, dev_init(c,n,select), \
++ 	(dev_type_mmap((*))) enodev, 0 }
++ 
+  #include "com.h"
+  #include "cy.h"
+  #include "mms.h"
+***************
+*** 406,412 ****
+  	cdev_bpftun_init(NBPFILTER,bpf),/* 23: Berkeley packet filter */
+  	cdev_notdef(),			/* 24: unused */
+  	cdev_notdef(),			/* 25: unused */
+! 	cdev_notdef(),			/* 26: unused */
+  	cdev_spkr_init(NSPEAKER,spkr),	/* 27: PC speaker */
+  	cdev_lkm_init(NLKM,lkm),	/* 28: loadable module driver */
+  	cdev_lkm_dummy(),		/* 29 */
+--- 414,420 ----
+  	cdev_bpftun_init(NBPFILTER,bpf),/* 23: Berkeley packet filter */
+  	cdev_notdef(),			/* 24: unused */
+  	cdev_notdef(),			/* 25: unused */
+! 	cdev_midi_init(NMIDI,midi),	/* 26: midi */
+  	cdev_spkr_init(NSPEAKER,spkr),	/* 27: PC speaker */
+  	cdev_lkm_init(NLKM,lkm),	/* 28: loadable module driver */
+  	cdev_lkm_dummy(),		/* 29 */
+
+
+4. Add the driver files to /usr/src/sys/arch/i386/conf/files.i386.newconf:
+
+*** files.i386.newconf.nomidi	Mon Jul  3 14:47:03 1995
+--- files.i386.newconf	Mon May 29 21:46:04 1995
+***************
+*** 178,183 ****
+--- 178,197 ----
+  device	spkr at isa: tty
+  file	arch/i386/isa/spkr.c		speaker needs-flag
+  
++ device	midi at isa: tty
++ file	arch/i386/isa/midi/midi.c		midi needs-flag
++ file	arch/i386/isa/midi/sys_netbsd.c		midi needs-flag
++ file	arch/i386/isa/midi/sup_iface.c		midi needs-flag
++ file	arch/i386/isa/midi/iface_mpu401.c	midi needs-flag
++ file	arch/i386/isa/midi/iface_mpu401_uart.c	midi needs-flag
++ file	arch/i386/isa/midi/iface_mqx32.c	midi needs-flag
++ file	arch/i386/isa/midi/iface_gravis.c	midi needs-flag
++ file	arch/i386/isa/midi/iface_sb.c		midi needs-flag
++ file	arch/i386/isa/midi/iface_serial.c	midi needs-flag
++ file	arch/i386/isa/midi/timer_kern.c		midi needs-flag
++ file	arch/i386/isa/midi/timer_smpte.c	midi needs-flag
++ file	arch/i386/isa/midi/sup_pnp.c		midi needs-flag
++ file	arch/i386/isa/midi/sup_timer.c		midi needs-flag
++ file	arch/i386/isa/midi/sup_timer_list.c	midi needs-flag
++ file	arch/i386/isa/midi/sup_stynamic.c	midi needs-flag
++ file	arch/i386/isa/midi/timer_mpu401.c	midi needs-flag
++ 
+  #
+  # EISA-only drivers
+  #
+
+
+
+5. Add a line like the following to your config file:
+
+midi0	at isa? port 0x320 irq 9 flags 0
+
+   The flags determine the type of midi card you are using.  See
+   sup_iface.h for the complete list, but for now they are:
+	0	fully MPU401 compat. board
+	1	UART MPU401 only MPU401 compat.
+	2	Music Quest MQX32 with SMPTE
+	3	Gravis w/ internal voices GF1 (GUS)
+	4	Gravis w/ internal voices Iwave (PnP)
+	5	Gravis w/ external voices GF1 (GUS)
+	6	Gravis w/ external voices Iwave (PnP)
+	7	SoundBlaster
+	8	PC type UART (16450, etc.)
+
+6. Right above the line you created define which interfaces you'd like to
+   build.  Do this by creating one or more ``options'' lines using one
+   or more of the following options:
+	options	MIDI_BUILD_ALL
+	options	MIDI_BUILD_MPU401
+	options	MIDI_BUILD_MPU401_UART
+	options	MIDI_BUILD_MQX32
+	options	MIDI_BUILD_GRAVIS
+	options	MIDI_BUILD_SB
+	options	MIDI_BUILD_SERIAL
+
+7. Create some midi device nodes:
+	mknod midi0 c 22 0
+	mknod midi1 c 22 1
+	mknod midi2 c 22 2
+	mknod rmidi0 c 22 64
+	mknod rmidi1 c 22 65
+	mknod rmidi2 c 22 66
+	chmod 666 /dev/midi* /dev/rmidi*
+   You should replace the value 22 above with the correct major
+   number for your new device.
+
+8. Build and install a new kernel.

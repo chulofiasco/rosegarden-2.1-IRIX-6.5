@@ -1,0 +1,97 @@
+#!/usr/local/bin/tclmidi
+#
+# mbuild - Transpose & replicate patterns to build an accompaniment SMF
+#
+# Copyright (c) 1994 by Luchezar Georgiev, Bulgaria   <lucho@midi.tu-varna.bg>
+#
+proc Usage {} {
+    puts stderr \
+      {Usage: mbuild [-t semitones] [-r times] pattern.mid . . . > accomp.mid}
+    exit 1
+}
+
+if {!$argc} {
+    Usage
+}
+
+# Drums channel - don't transpose
+set dc 9
+set end 0
+set config ""
+set errMsg ""
+set omf [midimake]
+set semitones 0
+set copies 1
+
+for {set i 0} {$i < $argc} {midifree $imf; incr i} {
+    # Get any optional arguments
+    for {} {[set opt [lindex $argv $i]] == "-t" || $opt == "-r"} {incr i} {
+	if {$i >= [expr $argc - 2]} {
+	    Usage
+	}
+	incr i
+	switch -- $opt {
+	    "-t" {set semitones [lindex $argv $i]}
+	    "-r" {set copies [lindex $argv $i]}
+	}
+    }
+    set fname [lindex $argv $i]
+    set f [open $fname r]
+    set imf [midiread $f]
+    midirewind $imf
+    set newconfig [midiconfig $imf]
+    if {$config == ""} {
+	set config $newconfig
+	set format [lindex $config 0]
+	set division [lindex $config 1]
+	set t [lindex $config 2]
+	set tracks [lindex $t 1]
+	midiconfig $omf $format $division $t
+    } elseif {$config != $newconfig} {
+	puts stderr "\"$fname\" has different configuration."
+	puts stderr "Must be \"$config\" as in \"[lindex $argv 0]\""
+	exit -1
+    }
+    # Determine the longest track
+    set len 0
+    for {set k 0} {$k < $tracks} {incr k} {
+	if {$len < [miditrack $imf $k end]} {
+	    set len [miditrack $imf $k end]
+	}
+    }
+    for {set j 0} {$j < $copies} {incr j; incr end $len} {
+	for {set k 0} {$k < $tracks} {incr k} {
+	    while {[set event [midiget $imf $k next]] != "EOT"} {
+		set type [lindex $event 1]
+		# Transpose all notes except on drum channel
+		if {$type == "Note" && [lindex $event 2] != $dc} {
+		    set event [lreplace $event 3 3 \
+		      [expr [lindex $event 3] + $semitones]]
+		}
+		# Alter event times
+		set event [lreplace $event 0 0 [expr [lindex $event 0] + $end]]
+		# Copy meta events only the first time except for EOT
+		if {$j == 0 && ![string match "MetaEndOfTrack" $type] \
+		      || ![string match "Meta*" $type]} {
+		    catch {
+			midiput $omf $k $event
+		    } errMsg
+		    if {$errMsg != ""} {
+			puts stderr "$errMsg \"$event\""
+		    }
+		}
+	    }
+	}
+    }
+}
+
+# Append EOT to all tracks
+for {set k 0} {$k < $tracks} {incr k} {
+    if {[lindex $format 1] != 0 && $k == 0} {
+	midiput $omf 0 "0 MetaEndOfTrack"
+    } else {
+	midiput $omf $k "$end MetaEndOfTrack"
+    }
+}
+midiwrite stdout $omf
+midifree $omf

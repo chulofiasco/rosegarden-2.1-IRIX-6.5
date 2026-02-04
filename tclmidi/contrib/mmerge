@@ -1,0 +1,33 @@
+#!/usr/local/bin/tclmidi
+
+if {$argc} {
+	puts {Usage: mmerge < type1.mid > type0.mid}
+	exit 1
+}
+
+set imf [midiread stdin]
+set config [midiconfig $imf]
+
+if {[lindex [lindex $config 0] 1] != 1} {
+	puts stderr {Input must be type 1}
+	exit -1
+}
+
+set division [lindex $config 1]
+set omf [midimake]
+midiconfig $omf "format 0" $division "tracks 1"
+set tracks [lindex [lindex $config 2] 1]
+
+for {set i 0} {$i < $tracks} {incr i} {
+	midirewind $imf
+	set lastevent [midiget $imf $i prev]
+	if {[lindex $lastevent 1] == "MetaEndOfTrack"} {
+		mididelete $imf $i $lastevent
+	}
+	midimerge "$omf 0" "$imf $i"
+}
+
+midiput $omf 0 "[miditrack $omf 0 end] MetaEndOfTrack"
+midiwrite stdout $omf
+midifree $imf
+midifree $omf

@@ -1,0 +1,27 @@
+#
+# This is the command to format the man pages
+#
+ROFF = groff -mdoc -Tascii
+
+#
+# This is where you want the man pages to go
+#
+MANPATH = /usr/local/man
+
+MAN4 = midi.4
+
+MAN4COOKED = midi.0
+
+.SUFFIXES: .0 .4
+
+install-raw:
+	cp $(MAN4) $(MANPATH)/man4
+
+install-cooked: $(MAN4COOKED)
+	cp $(MAN4COOKED) $(MANPATH)/cat4
+
+clean:
+	rm -f $(MAN4COOKED)
+
+.4.0:
+	$(ROFF) $< > $@

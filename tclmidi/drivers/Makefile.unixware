@@ -1,0 +1,71 @@
+#
+# Define which interfaces you'd like to build.  Your choices are:
+#	-DMIDI_BUILD_ALL
+#	-DMIDI_BUILD_MPU401
+#	-DMIDI_BUILD_MPU401_UART
+#	-DMIDI_BUILD_MQX32
+#	-DMIDI_BUILD_GRAVIS
+#	-DMIDI_BUILD_SB
+#	-DMIDI_BUILD_SERIAL
+#
+IFACEFLAGS = -DMIDI_BUILD_ALL
+
+#
+# You must have gcc because of the use of 'long long' and of course
+# be root to make install, uninstall, load, unload ...
+# Add the DEFAULT_THRU define if you want the driver to pass MIDIIN
+# to MIDIOUT by default (even when the device is closed)
+#
+CONF      = /etc/conf/bin
+CC        = gcc
+LOCALDEFS = -D_KERNEL -DINKERNEL -DSYSV -DSVR4 -D_SYSTEMENV=4 -DLOADABLE
+CFLAGS    = -O $(LOCALDEFS) $(IFACEFLAGS) ##-Wall -DDEFAULT_THRU
+
+DRVNAME = Midi driver for MPU401 compatible boards in UART mode
+
+PFX     = midi
+SRC     = midi.c sup_quad.c sys_unixware.c
+HEADERS = sup_export.h midiioctl.h sup_var.h sup_softc.h sys_unixware.h
+OBJS    = midi.o sup_quad.o sys_unixware.o
+IFACEOBJS = sup_iface.o iface_mpu401.o iface_mpu401_uart.o iface_mqx32.o \
+    iface_gravis.o iface_sb.o iface_serial.o timer_kern.o timer_smpte.o \
+    sup_timer.o sup_timer_list.o sup_stynamic.o timer_mpu401.o sup_pnp.o
+
+DRIVER = SVR4_ID/Driver.o
+
+all: $(DRIVER)
+
+$(DRIVER): version $(OBJS) $(IFACEOBJS)
+	-rm -f $(DRIVER)
+	$(LD) -r -o $@ $(OBJS) $(IFACEOBJS)
+
+install:
+	cp midiioctl.h /usr/include/sys/midiioctl.h
+	( cd ./SVR4_ID; \
+	$(CONF)/idinstall -e -M $(PFX); \
+	$(CONF)/idbuild -K -M $(PFX); )
+
+uninstall: 
+	-modadmin -U $(PFX)
+	$(CONF)/idinstall -d $(PFX)
+
+clean:
+	-rm -f $(OBJS) $(DRIVER)
+
+load:
+	modadmin -l $(PFX)
+
+unload:
+	modadmin -U $(PFX)
+
+version: 
+	echo -n 'static char version [] = "' >version.h
+	echo -n "$(DRVNAME): " >> version.h
+	echo  `date` '";' >> version.h
+
+midi.o: midi.c sup_os.h sup_export.h
+sys_unixware.o: sys_unixware.c sys_unixware.h sup_export.h
+sup_quad.o: sup_quad.c sup_quad.h
+
+sup_os.h:
+	ln -s sys_unixware.h sup_os.h

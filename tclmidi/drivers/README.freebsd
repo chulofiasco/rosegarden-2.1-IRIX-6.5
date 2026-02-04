@@ -1,0 +1,154 @@
+How to install the driver under FreeBSD-2.0.5
+
+1. Copy or symlink the device driver source to /usr/src/sys/i386/isa.
+   For example:
+
+     mkdir /usr/src/sys/i386/isa/midi
+     for f in \
+       midi.c sup_var.h midiioctl.h sup_export.h sup_softc.h \
+       sys_freebsd.c sys_freebsd.h sup_iface.h sup_iface.c \
+       iface_mpu401.c iface_mpu401.h iface_mpu401_uart.c iface_mqx32.c \
+       iface_mqx32.h iface_gravis.h iface_gravis.c iface_sb.c iface_sb.h \
+       iface_serial.c iface_serial.h \
+       timer_kern.c timer_kern.h timer_smpte.c timer_smpte.h \
+       timer_mpu401.c timer_mpu401.h \
+       sup_timer.c sup_timer.h sup_timer_list.c sup_timer_list.h \
+       sup_stynamic.c sup_stynamic.h sup_event.h sup_pnp.h sup_pnp.c
+     do
+       ln -s `pwd`/$f /usr/src/sys/i386/isa/midi
+     done
+
+     cp midiioctl.h /usr/include/sys/
+
+2. cd /usr/src/sys/i386/isa/midi
+   ln -s sys_freebsd.h sup_os.h
+
+3. Add the midi device to /usr/src/sys/i386/i386/conf.c.
+   The context diff below is for reference only; the exact
+   line numbers and the major device number are subject to change.
+
+*** i386/conf.c.orig	Mon Oct 23 13:41:24 1995
+--- i386/conf.c	Mon Oct 23 13:47:57 1995
+***************
+*** 1016,1021 ****
+--- 1016,1038 ----
+  #define	labpcioctl		nxioctl
+  #endif
+  
++ #include "midi.h"
++ #if NMIDI > 0
++ d_open_t	midiopen;
++ d_close_t	midiclose;
++ d_rdwr_t	midiread, midiwrite;
++ d_select_t	midiselect;
++ d_ioctl_t	midiioctl;
++ #else
++ #define	midiopen	nxopen
++ #define	midiclose	nxclose
++ #define	midiread	nxread
++ #define	midiwrite	nxwrite
++ #define	midiselect	nxselect
++ #define	midiioctl	nxioctl
++ #endif
++ 
++ 
+  /* open, close, read, write, ioctl, stop, reset, ttys, select, mmap, strat */
+  struct cdevsw	cdevsw[] =
+  {
+***************
+*** 1230,1235 ****
+--- 1247,1255 ----
+  	{ labpcopen,	labpcclose,	rawread,	rawwrite,	/*66*/
+  	  labpcioctl,	nostop,		nullreset,	nodevtotty,/* labpc */
+  	  seltrue,	nommap,		labpcstrategy },
++ 	{ midiopen,	midiclose,	midiread,	midiwrite,	/*67*/
++ 	  midiioctl,	nostop,		nullreset,	nodevtotty,/* midi */
++ 	  midiselect,	nommap,		NULL },
+  };
+  int	nchrdev = sizeof (cdevsw) / sizeof (cdevsw[0]);
+  
+
+
+4. Add the driver files to /usr/src/sys/i386/conf/files.i386:
+
+*** conf/files.i386.orig	Mon Oct 23 13:39:01 1995
+--- conf/files.i386	Mon Oct 23 13:41:08 1995
+***************
+*** 113,118 ****
+--- 113,134 ----
+  i386/isa/scd.c			optional	scd	device-driver
+  i386/isa/seagate.c		optional	sea	device-driver
+  i386/isa/sio.c			optional	sio	device-driver
++ i386/isa/midi.c			optional	midi	device-driver
++ i386/isa/sys_freebsd.c		optional	midi	device-driver
++ i386/isa/sup_iface.c		optional	midi	device-driver
++ i386/isa/iface_mpu401.c		optional	midi	device-driver
++ i386/isa/iface_mpu401_uart.c	optional	midi	device-driver
++ i386/isa/iface_mqx32.c		optional	midi	device-driver
++ i386/isa/iface_gravis.c		optional	midi	device-driver
++ i386/isa/iface_sb.c		optional	midi	device-driver
++ i386/isa/iface_serial.c		optional	midi	device-driver
++ i386/isa/timer_kern.c		optional	midi	device-driver
++ i386/isa/timer_smpte.c		optional	midi	device-driver
++ i386/isa/sup_pnp.c		optional	midi	device-driver
++ i386/isa/sup_timer.c		optional	midi	device-driver
++ i386/isa/sup_timer_list.c		optional	midi	device-driver
++ i386/isa/sup_stynamic.c	optional	midi	device-driver
++ i386/isa/timer_mpu401.c	optional	midi	device-driver
+  i386/isa/sound/dev_table.c	optional	snd	device-driver
+  i386/isa/sound/soundcard.c	optional	snd	device-driver
+  i386/isa/sound/sound_switch.c	optional	snd	device-driver
+
+
+5. Add a line like the following to your config file:
+
+*** conf/GENERIC.orig	Mon Oct 23 13:53:00 1995
+--- conf/GENERIC	Mon Oct 23 13:56:55 1995
+***************
+*** 104,109 ****
+--- 104,123 ----
+  device ze0 at isa? port 0x300 net irq 5 iomem 0xd8000 vector zeintr
+  device zp0 at isa? port 0x300 net irq 10 iomem 0xd8000 vector zpintr
+  
++ #
++ # The flags determine the type of midi card you are using.  See
++ # sup_iface.h for the complete list, but for now they are:
++ #	0	fully MPU401 compat. board
++ #	1	UART only MPU401
++ #	2	Music Quest MQX32 with SMPTE
++ #	3	Gravis w/ internal voices - GF1 (GUS)
++ #	4	Gravis w/ internal voices - Iwave (PnP)
++ #	5	Gravis w/ external voices - GF1 (GUS)
++ #	6	Gravis w/ external voices - Iwave (PnP)
++ #	7	SoundBlaster
++ #	8	PC type UART (16450, etc.)
++ device midi0 at isa? port 0x330 irq 5 flags 0 vector midiintr
++ 
+  pseudo-device	loop
+  pseudo-device	ether
+  pseudo-device	log
+
+
+6. Right above the line you created define which interfaces you'd like to
+   build.  Do this by creating one or more ``options'' lines using one
+   or more of the following options:
+	options	MIDI_BUILD_ALL
+	options	MIDI_BUILD_MPU401
+	options	MIDI_BUILD_MPU401_UART
+	options	MIDI_BUILD_MQX32
+	options	MIDI_BUILD_GRAVIS
+	options	MIDI_BUILD_SB
+	options	MIDI_BUILD_SERIAL
+
+7. Create some midi device nodes:
+	mknod midi0 c 67 0
+	mknod midi1 c 67 1
+	mknod midi2 c 67 2
+	mknod rmidi0 c 67 64
+	mknod rmidi1 c 67 65
+	mknod rmidi2 c 67 66
+	chmod 666 /dev/midi* /dev/rmidi*
+   You should replace the value 67 above with the correct major
+   number for your new device.
+
+8. Build and install a new kernel.

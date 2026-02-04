@@ -1,0 +1,65 @@
+LOADABLE MODULE
+1) Edit sys_linux.c for the correct setup for your MPU401s.  You should
+   adjust the midi_conf array around line 41.
+2) create a unique major number for MIDI_MAJOR in <linux/major.h>
+   Something like:
+     #define MIDI_MAJOR 35
+   I believe 35 is now the official tclmidi driver number [mbd - 9/13/95]
+3) make the midi devices in /dev.  Feel free to make extras if you
+   have more than 3 MPU401s.  Having extra entries in /dev doesn't
+   hurt anything.  I've assumed that the MIDI_MAJOR number is 35,
+   if it is something else, change the 35s in the following lines
+   to the correct value.
+
+   mknod /dev/midi0 c 35 0
+   mknod /dev/midi1 c 35 1
+   mknod /dev/midi2 c 35 2
+   mknod /dev/rmidi0 c 35 64
+   mknod /dev/rmidi1 c 35 65
+   mknod /dev/rmidi2 c 35 66
+   chmod 666 /dev/midi* /dev/rmidi*
+
+4) Take a look at Makefile.linux and make any changes that are needed.
+   The defaults might be fine as is, but you should double check.
+   Make sure KERNEL_PATH points to your linux kernel.
+5) make -f Makefile.linux
+6) make -f Makefile.linux install
+7) Load the module with:
+   make -f Makefile.linux load
+8) When you wish to unload the module:
+   make -f Makefile.linux unload
+9) that's it
+
+  If you are compiling without CONFIG_MODVERSIONS, remember to
+rebuild the module if you rebuild the kernel.  Preferably after
+rebooting with the new kernel.  See below for more information
+about MODVERSIONS.
+
+  It is advised that you get and use modules-1.2.8, which is the most
+up to date version as of July 6, 1995.
+
+  The following is an excerpt from the Makefile.  I believe current
+versions of the kernel do *not* have MODVERSIONS enabled by default,
+though this is likely to change in the future.
+# 
+# Module support: your best bet is to compile the driver as a loadable
+# module, rather than rebuilding the kernel just to add midi support.
+# Loadable modules have been supported for some time, since early 1.1.x
+# kernels.  Everyone should be running 1.2.x anyway, since it's not a
+# development kernel like 1.1.x.  Please get the newest modules utils,
+# modules-1.2.8.tar.gz.  A copy of them can be found in /pub/midi on
+# jagger.me.berkeley.edu.  They should be available on the major linux
+# sites as well.  Using modules-1.1.87 you may have problems loading
+# modules, especially if you move to ELF.
+#
+# Define CONFIG_MODVERSIONS to make modules independent of kernel version.
+#
+# Undefine it if you get `undefined symbol' errors when you try to 
+# load the midi module -- it means your kernel doesn't support module
+# versioning.  Do one of the following:
+#
+#   1) remove the -DCONFIG_MODVERSIONS flag and recompile the module
+#      using `make clean; make'   (This is the quick fix..)
+#   2) rebuild the kernel after enabling CONFIG_MODVERSIONS during 
+#      the `make config' stage.  (This is the recommended fix..)
+#   

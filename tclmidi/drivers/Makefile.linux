@@ -1,0 +1,73 @@
+# Makefile for the tclmidi driver module under Linux
+
+#
+# enable DEFAULT_THRU if you want the driver to pass MIDIIN to MIDIOUT
+# by default.
+#
+EXTRAFLAGS = -Wall -Wstrict-prototypes -O2
+# EXTRAFLAGS = -Wall -Wstrict-prototypes -O2 -DDEFAULT_THRU
+
+#
+# Define which interfaces you'd like to build.  Your choices are:
+#	-DMIDI_BUILD_ALL
+#	-DMIDI_BUILD_MPU401
+#	-DMIDI_BUILD_MPU401_UART
+#	-DMIDI_BUILD_MQX32
+#	-DMIDI_BUILD_GRAVIS
+#	-DMIDI_BUILD_SB
+#	-DMIDI_BUILD_SERIAL
+#
+IFACEFLAGS = -DMIDI_BUILD_ALL
+
+# 
+# Module support: your best bet is to compile the driver as a loadable
+# module, rather than rebuilding the kernel just to add midi support.
+#
+# Please get the newest modules utils, either modules-1.2.8.tar.gz or
+# modules-1.3.57.tar.gz depending on which kernel you are running.
+# The modules-1.1.87 release *will* cause problems, especially if you
+# are trying to load ELF modules.
+#
+# Define MODVERSIONS to make modules independent of kernel version.
+# Currently it's disabled by default, as the standard kernel sources
+# don't support it by default either.  I've cleaned up some things, and
+# the modules utilities have improved as well -- it's now possible to
+# load unversioned modules into a versioned kernel, and I'm pretty sure
+# vice-versa.  This should eliminate some of the troubles we've been
+# having.  If you are still having "undefined symbol" or "multiply
+# defined symbol" errors, please try loading the module with something
+# like "insmod -v midimodule.o" and send me the output.
+#
+# CFLAGS = -DMODULE -DMODVERSIONS -D__KERNEL__ -DKERNEL $(EXTRAFLAGS) $(IFACEFLAGS)
+CFLAGS = -DMODULE -D__KERNEL__ -DKERNEL $(EXTRAFLAGS) $(IFACEFLAGS)
+
+# Where to put the module (a directory)
+# MODULE_PATH = /dev
+MODULE_PATH = /boot/modules
+
+# No user-serviceable parts below this point..
+
+IFACEOBJS = sup_iface.o iface_mpu401.o iface_mpu401_uart.o iface_mqx32.o \
+    iface_gravis.o iface_sb.o iface_serial.o timer_kern.o timer_smpte.o \
+    sup_timer.o sup_timer_list.o sup_stynamic.o timer_mpu401.o sup_pnp.o
+
+all:	midimodule.o
+
+midi.o: midi.c sup_os.h
+
+midimodule.o: midi.o sys_linux.o sup_quad.o $(IFACEOBJS)
+	$(LD) -r -o midimodule.o midi.o sys_linux.o sup_quad.o $(IFACEOBJS)
+
+sup_os.h:
+	ln -fs sys_linux.h sup_os.h
+
+install: midimodule.o
+	cp -f midimodule.o $(MODULE_PATH)/midi.o
+	cp -f midiioctl.h /usr/include/sys/midiioctl.h
+#	- rmmod midi
+#	insmod $(MODULE_PATH)/midi.o
+
+clean:
+	rm -f *.o sup_os.h
+
+FORCE:

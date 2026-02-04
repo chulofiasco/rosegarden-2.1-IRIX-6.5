@@ -1,0 +1,514 @@
+.nr pp 12
+.nr sp 12
+.sz 12
+.ll 6i
+.po 5n
+.if t \
+.	po 1.25i
+.fo //%//
+.(l C
+.sz +2
+Trials and Tribulations of Writing a
+MIDI Device Driver
+.)l
+.sp
+.sh 1 "In the Beginning"
+.pp
+It all began about 3 years ago.
+I had a 386, a drum machine and an alpha release of BSD/386.
+I thought, wouldn't it be great to program my drum machine
+from my computer, under BSD/386.
+My first step was to buy a MIDI controller card.
+I didn't have much knowledge of computer/MIDI equipment, but
+had seen the name MPU401 bantered around a bit, so decided
+to get one of those.
+Someone told me that Music Quest made a good version, so
+I bought a Music Quest PC-MIDI card.
+At the same time I also bought their developer's package, which
+explained how to interface with the card at a low level.
+Now I was set to write a MPU401 device driver.
+.sh 1 "The First Attempt"
+.pp
+I was pleased to see that the MPU401 had an intelligent mode,
+where it would take over the chore of event timing.
+Unix systems just aren't designed for real time work and
+I didn't want to make the kernel do something it wasn't designed to
+do.
+I made my first driver as transparent as possible, passing almost
+all of the work to the user level program.
+The MIDI card has eight play tracks, one record track and one
+conductor track for tempo changes.
+Thus, I have 10 \fC/dev\fP entries, one for each track on the
+board.
+The MPU401 also has many commands for starting and stopping play,
+automatically remapping track numbers, setting the clock rate,
+etc.
+I made all of these available via \fCioctl\fP calls.
+.pp
+This driver actually worked pretty well,
+but you had to have a smart user level program.
+To play a standard MIDI file, user level programs had to convert
+events to the MPU401 form, meaning NOP events
+had to be created to adjust timing.
+Tempo change events were stripped out into a separate
+track if it was a format 0 song, and timings adjusted and
+converted to compensate for the change.
+A big \fCselect\fP loop could then be used to check which of
+the 8 play tracks needed more data, and the data could be
+written to the correct device.
+The \fCselect\fP loop could also check the record track to
+see if there was any incoming data if recording was desired.
+.pp
+On the down side, I could only play eight tracks at once.
+This meant if you wanted to play a MIDI file with nine
+or more tracks, you had to pick the eight you wanted to
+hear.
+The driver was also limited to the division settings available
+on the board.
+Since there are many existing MIDI files that use division settings
+that aren't found on the board, 480 for example, the user program
+had to do some conversion.
+.pp
+After a while, I realized I could just collapse all the non-tempo
+tracks in a MIDI file together, adjust the timings and then
+only use one of play tracks on the MIDI board.
+I started doing this, and got rid of the extra seven \fC/dev\fP
+entries.
+This was the first time I decided, ``just because the board can
+do something, doesn't mean I have to make use of if.''
+One play track was enough, the rest were redundant.
+.sh 1 "The Second Attempt"
+.pp
+Though this driver worked fine and allowed a user program a
+great deal of control over the board, I wasn't satisfied.
+It just wasn't very Unixy.
+In order to interact with the board, you always needed a fancy
+utility program.
+I wanted to be able to \fCcat\fP to the board to play and \fCcat\fP
+from the board to record.
+Just your basic \fCread\fP and \fCwrite\fP calls.
+And, only one \fC/dev\fP entry for both playing and recording.
+Just one entry per MPU401.
+.pp
+Unfortunately, this just wasn't possible.
+No matter how I wrote a driver, if I wanted to play a MIDI file
+with multiple tracks, I'd either have to collapse them first,
+or allow the driver to read in an entire MIDI file and deal
+with it internally.
+This is because MIDI files store tracks sequentially, even
+though they are played in parallel.
+Since MIDI files could get quite large, reading the entire thing
+into the kernel before playing just didn't make sense.
+Dynamically allocating 500k plus bytes in the kernel, just isn't
+playing fair with other kernel modules.
+Recording via \fCcat\fP would also be a problem.
+MIDI files have headers with the number of bytes in a track.
+Thus, the driver couldn't release any data to \fCread\fP until it
+finished record, counted how long the track was and could construct
+the appropriate header.
+.pp
+So using \fCcat\fP to play and record was out of the question, but
+maybe I could come close.
+I could certainly play a format 0 song that only contains one track
+if I could split the tempo events from the other events, and I
+could record a track if I just ignored the header.
+So that's what I did.
+.pp
+The next version of the driver could read events in the standard
+MIDI file format and would
+write the same.
+If you had a format 0 MIDI file, it was just a matter of stripping
+off the header and \fCcat\fPing it to the driver.
+To record a MIDI file, just cat to a file, slap on a correct header
+and there you are.
+Nothing to it.
+.pp
+Well, there was something to it.
+Tempo events still had to be separated from other events and sent
+to a the conductor track instead of the play track.
+Event timings had to be adjusted after the tempo events were separated
+and the event timings had to be converted from the SMF form to
+the MPU401 form, with all the appropriate NOPs.
+Recording had to do the reverse translation.
+So, the driver got a bit more complex, but the interface got simpler.
+That was OK since the driver only had to be written once, while
+application programs might be written a number of times.
+.pp
+Now the user level program had it easy.
+The \fCselect\fP loop only had one device to check and didn't have to
+do much thinking.
+Just collapse a MIDI file to one track and start writing the data.
+It was, really, almost as easy as that.
+The only catch was the driver could not cope with partial events.
+Each event needed to be written atomically.
+This meant the user level program still had to parse the data stream.
+.pp
+But this wasn't the biggest problem.
+The real problem with this version of the driver was the conductor
+track.
+Since the driver had to separate the tempo events from the other
+events, it maintained two separate outgoing queues.
+One queue contained those events waiting to go to the play track
+and the other queue contained those events waiting to go to the
+conductor track.
+.pp
+This made blocking and the \fCselect\fP entry point very troublesome.
+Since the two outgoing queues could empty and fill at different
+rates, depending on the type of events written to the driver, how
+does the driver know when to block and unblock?
+Should the driver block only when both queues are full, or only
+when one queue is full?
+.pp
+It the driver blocks only when both queues are full, there is
+a crash just waiting to happen.
+Murphy guarantees that the first event written to the
+driver when one queue is full, but the other empty, will need to
+go into the full queue.
+.pp
+The other alternative is to block when just one of the two
+queues is full.
+But this might cause timing to suffer.
+For example, the non-tempo queue might be full of events waiting
+to play over the next 2 minutes, while the tempo queue is virtually
+empty.
+The driver sees that one queue is full, and blocks, but the user
+level program needs to write a tempo event that is ready to play
+in just 10 seconds.
+Obviously, the tempo event will arrive almost 2 minutes late.
+.pp
+One way to avoid this problem, is to have the driver unblock
+as soon as there is room for at least one more event in the full queue.
+Unfortunately, this means the queue would constantly block and
+unblock, without ever draining very far.
+This is bad because it results in more \fCwrite\fP call of smaller
+size.
+It is more efficient to write in larger chunks, less often.
+The driver's queues were designed to block when full, and
+unblock only after they had drained to a certain
+\*(lqlow water mark.\*(rq
+This meant that a block would remain in effect for a relatively
+long period of time.
+.pp
+Keeping two separate output queues in the driver, just wouldn't
+work.
+They needed to be combined.
+.sh 1 "The Third Attempt"
+.pp
+My first attempt at driver number three wasn't much different
+from driver number two.
+All the outgoing events were kept in one queue, but tempo change
+events were handled in a special manner.
+The conductor track was turned off, and only the first play track
+was used for timing.
+Whenever the board reported that it was time to write another event,
+and that event was a tempo event, the driver would instead write
+a NOP.
+Immediately after writing the NOP, the driver would send the board
+a tempo change command.
+In this manner, the play track could provide
+timing for both tempo and non-tempo events.
+I thought this was a particularly ingenious hack, but it worked
+a lot better in theory then in practice.
+Too often the tempo change events were followed immediately, zero
+time later, by non-tempo events.
+This caused the driver and the board to fall out of synch.
+The board would say, "Hurry up, send me another event now!" right
+when the driver was trying to execute the tempo change command.
+The board would then mistakenly try to interpret the tempo change
+as a normal event.
+Trying to adjust the data stream so tempo events were always pushed
+to the back of event groups with zero delta times,
+and thus giving them some breathing room, was just too
+much of a headache.
+.pp
+It was at this point that I started realizing, perhaps using the
+intelligent mode just wasn't very smart.
+I started looking into
+using the board only in UART mode.
+A few pluses turned up right away.
+Since the kernel would be doing all the timing, and write events
+in raw MIDI form, the driver no longer
+had to distinguish between tempo events and other events.
+It could use just one queue for both and be done with the whole
+blocking problem for good.
+Also, the
+driver wouldn't have to worry about sending NOPs to the board at
+special times.
+An event could consist of just the event itself, not a series of
+NOP events followed by the real event.
+There was also an ambiguous situation while recording that the
+UART mode fixed.
+Since the MIDI standard says that system exclusive messages
+are terminated by any byte with its high bit set, not just 0xf7
+(though 0xf7 is preferred), and the MPU401 event timing byte can
+have its high bit set, or not, it wasn't always easy to tell
+where a system exclusive message ended.
+Running in UART mode, where the data stream from the MPU401 will
+never contain timing bytes solved that problem.
+Plus, the huge switch statement in the ioctl function could be
+reduced.
+In UART mode, the MPU401 doesn't have near as many options and
+not near as many \fCioctl\fP commands were needed.
+.pp
+At this point, things were looking blue sky and sunny days, except
+for one minor problem.
+Now the Unix system had to do the timing - real time.
+There are three approaches to this, do the timing in the user process
+and write events to the driver when the should be sent to the MIDI
+bus, do the timing in the kernel and have the kernel notify the
+user process when to send events or buffer a small number of events
+in the kernel and have it do the timing and sending.
+.pp
+The first solution has the advantage that the driver becomes very
+simple.
+All it needs to do is pass bytes to and from the card.
+It does not have to do any thinking at all.
+The drawback is the user process must have accurate timing.
+This is a big problem.
+Not only is there no way to guarantee any sort of accurate timing
+in a user process, but every time the user process makes a system
+call, it might get swapped out.
+That means when the user process decides it must send an event,
+now, it calls \fCwrite\fP and then risks having the write delayed
+while another process is run.
+Even the calculations to do timing involve system calls,
+and might be delayed.
+.pp
+The second solution is a compromise.
+The user process still converts events to the proper form and writes
+them at the correct time, but it depends on the kernel to notify
+it when the correct time arrives.
+This is essentially just the same case as the first, only now the
+user process makes a system call to the driver for the timing information
+instead of a kernel time function.
+The same drawbacks of the first case apply.
+.pp
+The third choice is to do everything in the kernel.
+This is the way I chose to write the third version of my driver.
+A small buffer of events are kept in the driver and the driver sends them
+at the correct time.
+Since a \fCwrite\fP call merely enqueues events, rather than sends them
+to the MIDI bus, a slight delay due to process swapping is not a
+problem for a well sized queue.
+.pp
+The timing problem turned out to be less serious than anticipated too.
+The kernel has a function that allows a driver to register a callback
+function that will be called after a certain number of kernel tick.
+Every kernel tick, the kernel checks to see if there are any functions
+registered, and if there are, it checks to see if it is time to call
+them.
+If it is time, they are run.
+Since the kernel runs at a 100 ticks
+a second, this gives the driver timing accuracy to 10ms.
+.pp
+To assure long term accuracy, the driver uses \fClong long\fPs
+when converting SMF ticks to/from kernel ticks.
+The driver then keeps track of fractional ticks, and makes
+adjustments when necessary.
+This gives good accuracy over long periods of time and many
+events.
+All played and recorded events should be accurate to 10ms.
+.pp
+This setup does have some drawbacks though.
+The driver keeps a buffer of events to improve timing accuracy,
+but this means the user program must write events before they
+are due.
+Therefore, the user program can perform no last second modification
+of the data and no real time graphical updates.
+The latency can be reduced by reducing the queue size in the driver,
+but that would mean more frequent system calls, and a potential
+loss of timing accuracy.
+As with many things in life, it is a trade off.
+The other drawback is now the timing information must be passed
+to the driver.
+Since one form of including timing information in a MIDI data stream
+had already been developed for the standard MIDI file, I used it in
+my driver.
+.pp
+Though the third implementation of the UART interface might be
+the most accurate,
+it is also the most complex.
+The driver must be capable of parsing standard MIDI file events,
+managing its play and record queues and timing the events.
+Since I had solved most of these problems in the other versions
+of my driver, they were not big factors.
+And, the extra driver overhead meant the user process could be simpler.
+In this version of the driver, the restriction about writing and
+reading events atomically was removed.
+The driver could read and write partial events.
+Using \fCcat\fP for recording and playing now works as intended.
+A user application no longer needs to parse the data stream,
+it just writes as much as the driver will take.
+Nothing could be simpler.
+.sh "Creeping Featurisms"
+.pp
+It seems everyone is looking for new features in the driver.
+What once started as a simple driver to allow me to write
+applications has grown so that it now the focus on most of
+my new work.
+Here are some new features that have been added to the driver
+(and I imagine this section will continues to grow over time).
+.sh 2 "No Hung Notes on Close"
+.pp
+The driver now
+keeps tracks of what notes are activated on the
+different channels and automatically turns off any left on when
+\fCclose\fP is called.
+No more annoying stuck notes when a process is aborted.
+.sh 2 "Reading/Writing Partial Events"
+.pp
+And as was mentioned earlier, the new version of the driver
+can read and write partial events.
+It is possible to read and write events one byte at a time
+if desired.
+.sh 2 "MIDI THRU"
+.pp
+MIDI THRU capabilities have been added to
+the driver.
+This is controlled via an \fCioctl\fP call.
+When activated, any data arriving at the MIDI IN port will be
+passed to the MIDI OUT port.
+.sh 2 "SMPTE Support and Issues"
+.pp
+The driver can now use an external timing source, currently
+limited to SMPTE.
+This turned out to be quite a major change.
+Some Music Quest boards will talk SMPTE and can generate
+a message to the PC 4 times for every SMPTE frame (even
+in UART mode).
+Given a SMPTE frame rate of 30 frames per second, this gives
+us a clock rate of 120 Hz.
+Not only is this higher than the kernel timing rate of
+100 Hz, but since it is generated from an external clock,
+it is more reliable than the internal kernel clock.
+.pp
+If a clock was the only thing we wanted from SMPTE, these
+driver changes would have been simple enough, but it wasn't
+the only thing we wanted.
+SMPTE not only supplies a clock, but it also gives you a
+time in terms of hours, minutes, seconds, frames and fractional
+frames.
+Since this time is encoded on a tape which is played to the
+MIDI interface, it is possible to halt, fast forward and even
+rewind the tape, making time jump.
+We would like to have the driver notice this and adjust itself
+to the new time, playing the MIDI data that occurs at that time.
+.pp
+This is very difficult since the MIDI stream is designed to
+move in only one direction, without breaks.
+To support this, the driver will flush both record and play
+queues and then notify the user process via a SIGURG that
+it should start writing events from the new time.
+.pp
+To allow a user process to determine the new time in the driver,
+an ioctl has been added, MGETSMFTIME.
+This ioctl returns the current time in the driver in terms of
+SMF ticks.
+To calculate this, the driver must determine the current time
+in timing ticks (either kernel ticks or external ticks),
+locate all tempo change events that have occurred before this
+time, and determine in SMF ticks when the last tempo change
+event occurred.
+It then must calculate the time between the current time and
+the time of the last tempo change in SMF ticks and add that
+to the time of the last tempo change.
+All this work is necessary because the conversion between an
+absolute real time index like timing ticks and a timing
+system based of ticks per quarter note depends on the tempo
+at that time, and the time at which other tempo changes occurred.
+Thus the driver was modified to maintain a list of all tempo events
+and when they occurred.
+.pp
+This new ioctl now allows the user level application to determine
+the current time in the driver after it receives a SIGURG and
+starting writing events that occur at that time.
+.pp
+This solution is far from perfect as it does not take into
+account NoteOn events that occur before the new time, with
+NoteOff events that occur after.
+These notes should be turned on at the new time.
+There is also the problem of keeping track of voicings that
+change and other parameters like pitchwheel settings.
+But that is more a limitation of the sequential nature
+of MIDI and not the driver itself.
+.pp
+There is also the problem of starting playing at sometime other
+than the beginning of a song and fastforwarding over some tempo
+changes.
+In both these cases the driver has not seen all prior events
+and might be missing some or all of the tempo change events.
+This would result in it returning an incorrect value to the
+MGSMFTIME ioctl.
+.pp
+To work around this, the driver will skip any events it
+sees that are considered ``old.''
+Where ``old'' means occurring a certain number of timing
+ticks prior to the current driver timing position.
+If the driver sees such an ``old'' event, it will only look
+at it long enough to determine if it is a tempo event and
+extract the relevant information if it is.
+It then discards the event and immediately looks at the next.
+Thus it is possible to send a large number of events through
+the driver very rapidly, until it current time is reached,
+and also correctly maintain the list of tempo changes.
+.pp
+Though these changes allow one to use the driver will a timing
+source that might jump both forwards and backwards, it is
+far from an elegant solution.
+A better solution would be to do all timing for events in
+an absolute time, such as 100ths of seconds.
+Instead of reading and writing events with a time stamp
+specifying SMF ticks since pervious event, they could be
+stamped with a delta time specified in a clock based time notation,
+or event stamped with an absolute time.
+This would also solve the problem of doing ``long long'' calculations
+in the kernel.
+.pp
+This modification might happen in future versions of the driver,
+but would involve some thought as it would affect user level
+applications and also move the event format away from the SMF
+standard.
+.pp
+Adding all this SMPTE support was both more complicated,
+time consuming and greater in scope than I would have guess.
+The driver grew by a substantial number of lines and is
+even more convoluted, but there is a plus side for normal
+internal timing operation.
+In the process of adding SMPTE support, a timing bug was
+discovered.
+The driver would not properly compensate when the kernel
+was late in calling a registered callback function.
+It now correctly adjusts for these delays leading to more
+accurate long term timing when run from the kerel clock.
+.sh 1 "What About the Rest of the World"
+.pp
+While this is all interesting in an academic sort of way, it's
+not very useful to the world at large if the driver is only
+available to those with a MPU401 running BSD/386.
+Though nothing has been done about making the driver work with
+other MIDI boards, it shouldn't be too difficult.
+Since the driver now runs in UART mode, it primarily deal with
+just writing MIDI events and reading them.
+There are few hardware dependent function in the driver.
+All the timing, queueing and parsing operations, which make up
+the bulk of the driver, are hardware independent.
+.pp
+On the other hand, the driver has been ported to other x86
+based Unix systems.
+Since most Unix systems provide basically the same kernel
+functions, though often with different names, it was not
+too difficult to port the driver
+(Though, there are a few out there who helped me test the ports
+who might argue with that statement).
+A majority of the code does not change.
+Ports exist for the 386 based BSD variants,
+Linux and SVR4, though the SVR4 version remains untested.
+The driver is available with the tclmidi package found
+in the comp.sources.misc archives and via ftp from:
+ftp://xor.com/pub/midi.
+.sp
+.(l L
+Mike Durian
+June 23, 1994
+January 22, 1995
+.)l

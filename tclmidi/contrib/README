@@ -1,0 +1,8 @@
+This directory contains tclmidi scripts and related programs
+written by others.
+
+The following were written by Luchezar Georgiev <lucho@midi.tu-varna.bg>
+  mmap.mt32 - converts General MIDI files to Roland MT-32 form
+  mmet - generates a metronome beat with alternating volumes
+  playzip - automatically unzips and plays selected song from an archive
+  mbuild - concatenate and transpose MIDI files

@@ -1,0 +1,43 @@
+#----------------------------------------------------------------
+# The information below is modified by the configure script when
+# Makefile is generated from Makefile.in.  You shouldn't normally
+# modify any of this stuff by hand.
+#----------------------------------------------------------------
+
+SHLIB_CFLAGS =		@SHLIB_CFLAGS@
+SHLIB_LD =		@SHLIB_LD@
+SHLIB_SUFFIX =		@SHLIB_SUFFIX@
+SHLIB_VERSION =		@SHLIB_VERSION@
+SRC_DIR =		@srcdir@
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+CFLAGS = @CFLAGS@ @DEFS@
+CXXFLAGS = @CXXFLAGS@ @DEFS@
+CPPFLAGS = @CPPFLAGS@
+CC_SWITCHES = ${CPPFLAGS} @CXXFLAGS@ @DEFS@ -DTCL_7_5 -I${TCL_GENERIC_DIR} ${SHLIB_CFLAGS} \
+    -I$(srcdir)/../events -I$(srcdir)/../rb -I$(srcdir)/../patch \
+    -I$(srcdir)/../smf -I$(srcdir)/../song -I$(srcdir)/.. -I$(srcdir)
+
+DEVICEFILES = MidiDev.o TclmDr75.o
+DEVICEFILES_SRC = MidiDev.cxx TclmDr75.cxx
+
+.SUFFIXES: .cxx $(SUFFIXES)
+
+.cxx.o:
+	@CXX@ -c $(CC_SWITCHES) $<
+
+objs: $(DEVICEFILES)
+	for f in $(DEVICEFILES) ; do echo device/$$f ; done > objs
+
+depend:
+	sed "/[#]# Dependancies/,$$$$d" < Makefile > Makefile.tmp
+	echo >> Makefile.tmp
+	echo "##" "Dependancies" >> Makefile.tmp
+	@CXX@ -M $(CC_SWITCHES) $(DEVICEFILES_SRC) >> Makefile.tmp
+	cp Makefile.tmp Makefile
+	rm Makefile.tmp
+
+clean:
+	-rm *.o objs

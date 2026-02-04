@@ -1,0 +1,50 @@
+  This is a device driver for MPU401 UART compatible MIDI controllers.
+It used to be three separate drivers for BSD, Linux and SVR4 systems.
+It is now one unified driver with small support files for each
+individual system.
+
+  Its features include:
+
+  + the MPU401 is run in UART mode so the driver will (hopefully)
+    work with MPU401 compatible cards that don't support
+    the intelligent mode.
+
+  + Reads/Writes data in Standard MIDI File event form.  Just
+    grab an event from a Standard MIDI File and write(2) it
+    to the device - the driver will do the right thing.
+
+  + Supports open, close, read, write, ioctl and select
+    system calls.
+
+  + Supports an ASYNC mode.  The driver will send a SIGIO to the
+    process group whenever data arrives or data can be written.
+
+  + Automatic note off and controller reset on device close(2)
+
+  + SMPTE timing support if you have a Music Quest card with
+    SMPTE features.
+
+  To install, Linux and Unixware have Makefiles.  BSDI has a
+README with specific instructions.  Read the README for you
+system and follow the instructions in it.
+
+  The man page is written with the new mandoc macros as opposed
+to the old man macros.  Berkeley is making this shift and
+I'm following suit.  I don't know how available the mandoc
+macros are, but groff comes with them.  There is a Makefile file
+for making and installing the man page.  Edit it as necessary.
+
+  The file PORTING contains instructions on how to port the driver
+to a new systems.
+
+  This implementation of the driver uses long longs when
+converting SMF ticks to/from kernel ticks.  This is to
+preserve accuracy.  Without using long longs, a long value
+will overflow, or accuracy will be lost be dividing early.
+Unfortunately doing long long math is costly and impacts
+the system.  If someone is good with numerics and has a
+good way of doing these calculations without losing accuracy,
+or overflowing, please let me know.
+
+mike
+durian@boogie.com

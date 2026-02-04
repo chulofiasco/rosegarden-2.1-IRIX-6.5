@@ -1,0 +1,6 @@
+midi	midi0	c	0
+midi	midi1	c	1
+midi	midi2	c	2
+midi	rmidi0	c	64
+midi	rmidi1	c	65
+midi	rmidi2	c	66

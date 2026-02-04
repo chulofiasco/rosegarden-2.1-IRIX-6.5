@@ -1,0 +1,347 @@
+.Dd January 14, 1994
+.Dt MIDI 4
+.Os
+.Sh NAME
+.Nm midi
+.Nd Roland MPU-401 compatible devices
+.Sh SYNOPSIS
+.Ss BSD
+.Fd #include <sys/ioctl.h>
+.Fd #include <sys/midiioctl.h>
+.Ss LINUX
+.Fd #include <linux/midi.h>
+.Ss SVR4
+.Fd #include <sys/midi.h>
+.Sh DESCRIPTION
+.Ss MIDI
+MIDI, Musical Instrument Digital Interface, allows control of various
+musical instruments and non-musical devices.
+For instance, it allows a keyboard on a synthesizer to control
+a drum machine, a drum machine to control a
+lighting rack or a MIDI
+guitar to control a multi-track recorder.
+This is an interface to the Roland MPU-401
+compatible class of PC MIDI boards.
+Through the MIDI
+device, you can send out MIDI commands to your
+equipment as well as read the data they produce.
+.Pp
+The MPU-401 PC MIDI
+board can operate in two modes, intelligent mode and UART mode.
+This driver only uses the UART mode to increase compatibility
+with other MIDI controllers.
+.Pp
+There are three interfaces to each board.
+You can access board X through the following devices:
+.Pa /dev/midiX
+for
+kernel timed events and
+.Pa /dev/rmidiX
+for untimed events.
+The driver will convert all
+MIDI events the board receives to the Standard MIDI
+File event format.
+It also expects all data written to the device
+be in the same format.
+The driver ignores most META events (though
+it keeps track of the timing intervals), but does correctly
+handle META tempo events.
+.Pp
+This device supports the following system
+commands:
+.Xr open 2 ,
+.Xr close 2 ,
+.Xr read 2 ,
+.Xr write 2 ,
+.Xr ioctl 2
+and
+.Xr select 2 .
+.Pp
+When in timed mode, the driver does a few things to the handle the real-time
+nature of MIDI events.
+This first is to buffer a small amount of data,
+approximately 140 events, in kernel space.
+This means the driver does not have to go to user space
+to send an event when the correct time has arrived, thus removing
+the posibility of an inopportune context switch.
+On the other hand, this also means that the buffered data
+cannot be changed once it is written.
+It can be drained, however.
+The device also supports asynchronus notification
+via SIGIO when data can be written or read.
+This allows a process to avoid blocking for long periods
+of time while data is playing.
+Events can still be written directly, bypassing the queue and timing
+mechanism via the raw midi interface,
+.Pa /dev/rmidiX .
+Events read from the raw device will not contain timing information.
+.Pp
+A
+.Xr close 2
+on the MIDI device will block until
+the play queue empties.
+To drain the play queue, see the
+MDRAIN
+.Xr ioctl 2
+system call.
+.Pp
+The granularity of the UNIX system clock means that the highest
+resolution of MIDI timing available, when not in SMPTE mode,
+is \fChz\fP times a second.
+This is usually 100.
+Thus events timed closer than 1/100s will be sent or read at the
+same time.
+.Ss SMPTE
+.Pp
+Some MPU401 compatible boards manufactured by Music Quest
+support SMPTE timing.
+This driver supports those board, and can be setup to
+use external SMPTE timing instead of internal kernel timing.
+To make use you the SMPTE support, use the MFEATURE
+.Xr ioctl
+to select the MFEAT_SMPTE_TIMING feature.
+.Pp
+The SMPTE device will support timing changes by rewinding
+or fast forwarding the SMPTE tape to a limited extent.
+The driver will notify the application by sending a SIGURG
+(if enabled) and by setting the exceptional condition flag
+to
+.Xr select 2
+when ever SMPTE sync has been lost and then regained.
+The driver will drain both record and play queues at this
+time.
+The application should issue an
+MFEATURE, MFEAT_GET_SMPTE ioctl to determine the new driver time, and write
+events from that time.
+.Pp
+The timing resolution when in SMPTE mode varies on the SMPTE frame
+rate, but is usually 120 Hz.
+.Ss RAW DEVICE
+.Pp
+This MIDI driver also supports accessing the device directly,
+bypassing the play queue and timing mechanism.
+Events written to
+.Pa /dev/rmidiX
+will be sent out through the MIDI board with as little delay as
+possible.
+The raw device is also accessable while the timed devices are
+in use.
+This means you can asynchronously drop events, such as program change events,
+into a timed MIDI stream.
+The driver still parses the events written to the raw device to
+insure that there will be no problems conflicts with running status
+assumptions.
+.Pp
+Data can also be read from the raw device.
+These events will be the same as those read from the normal device,
+minus any timing data.
+If there are multiple processes reading from the same device, there
+is no guarantee which process will receive which events.
+It is not recommended that multiple processes read from the same device.
+.Pp
+Since each system call may result in a context switch and a possible
+delay, the raw device interface should not be used for timing critical
+processing.
+Use the timed device interface instead.
+.Ss IOCTLS
+.Pp
+The MPU-401 driver supports a few
+.Xr ioctl 2
+commands.
+They are:
+.Ss "IOCTLS for MIDI"
+.Bl -tag -width "MSDIVISION" -compact
+.It IOCTL
+Description
+.sp
+.It FIONBIO
+Selects either blocking or non-blocking
+i/o.
+See
+.Xr fcntl 2 .
+.sp
+.It FIOASYNC
+.It MASYNC
+This is a standard
+.Xr ioctl 2
+command with functionality provided
+through
+.Xr fcntl 2 .
+It has one integer argument, which if non-zero
+sets the mode and if zero clears async mode.
+When in async mode, the device sends a SIGIO
+to the process group whenever data is available
+for reading or the write queue unblocks.
+It has two entry points because not all OSes pass the
+FIOASYNC ioctl down to the actual driver.
+For portability purposes, the MASYNC ioctl should be
+used over the FIOASYNC.
+.sp
+.It MRESET
+Restores the board to poweron condition and
+puts it in UART mode.
+.sp
+.It MDRAIN
+Clears anything queued for playing.
+Aborts any writes that may have blocked.
+These writes will return 0.
+.sp
+.It MFLUSH
+Blocks until all events are finished
+playing.
+.sp
+.It MGPLAYQ
+Takes one argument, a pointer to an int.
+Upon return, this argument will contain the number of
+events in the play queue.
+.sp
+.It MGRECQ
+Takes one argument, a pointer to an int.
+Upon return, this argument will contain the number of
+events in the record queue.
+.sp
+.It MGSMPTE
+Takes one argument, a pointer to a struct SMPTE_frame.
+Upon return, this argument will contain the SMPTE time
+info for the last SMPTE frame the driver received.
+.sp
+.It MSDIVISION
+Takes one argument, a pointer to an int.
+This sets the driver to play at a rate of
+argument clocks per beat.
+This is not to be confused with the tempo,
+which is beats per minute.
+.sp
+.It MGDIVISION
+Takes one argument, a pointer to an int.
+Returns the current division setting of
+the driver in clocks per beat.
+.sp
+.It MGQAVAIL
+Takes one argument, a pointer to an int.
+Returns the number of events that can
+currently be written without blocking.
+.sp
+.It MTHRU
+Enables or disables \%MIDITHRU capabilities.
+This
+.Xr ioctl 2
+takes a pointer to an int.
+If the integer is zero, data arriving at the
+\%MIDI IN port will not be passed to the
+\%MIDI OUT port.
+If the integer is non-zero, data will be
+passed as it arrives, though the driver will
+protect the events from running state conflicts
+with any events being played via
+.Xr write 2 .
+This state is saved between calls to
+.Xr open 2
+and data will be passed even if the device
+is closed.
+.It MGTHRU
+Returns the current \%MIDITHRU setting in the
+driver.
+The value is returned as a boolean int in
+the
+.Xr ioctl 2
+argument.
+.It MRECONPLAY
+Takes a pointer to an int.
+If this int is non-zero, the driver will
+clear the record timer when the first play
+event is scheduled.
+If the int is zero, the default case, the
+timer is cleared on
+.Xr open 2 .
+This
+.Xr ioctl 2
+allows for better synchornization when
+recording while playing.
+.It MGSMFTIME
+Takes a pointer to an unsigned long.
+Upon return, this value will be the current time in the
+driver in SMF ticks.
+.It MFEATURE
+This is a catch all
+.Xr ioctl 2
+that enables board specific features on different devices.
+It takes a pointer to a midi_feature structure that contains
+the feature identifier and any extra data.
+.Bd -literal
+struct midi_feature {
+	MIDI_FEATURE_TYPE	type;
+	void			*data;
+};
+.Ed
+.Pp
+The feature type is defined in
+.Pa midiioctl.h .
+Note all boards support all possible features.
+Current features are
+.Bl -tag -width "MFEAT_KERNEL_TIMER" -compact
+.It MFEAT_KERNEL_TIMING
+which makes the device use kernel timing (the default).
+The data parameter is ignored.
+.It MFEAT_SMPTE_TIMING
+which makes the device use SMPTE timing (if available).
+The data parameter is ignored.
+.It MFEAT_GET_SMPTE
+returns the current SMPTE time for devices using SMPTE timing.
+The data parameter should contain a pointer to a SMPTE_frame
+structure.
+This structure will be filled in by the device with the current
+SMPTE time.
+.El
+Other features may be added as support for different hardware
+is added to the driver.
+.It MGETID
+Returns an identifier for the MIDI device.
+The argument to this
+.Xr ioctl 2
+is a pointer to an int.
+This int will be filled in with a value that can be used to
+indentify the device in other ioctls.
+.It MSLAVE
+Makes the device a slave to another MIDI device.
+The slave will use the master device's timer, and the two
+(or more) devices will stay in synch.
+A slave can only have one master, though a master can have
+many slaves.
+.Pp
+This
+.Xr ioctl 2
+take a pointer to an int as an argument.
+This int should contain the ID of the master as returned
+from an MGETID ioctl.
+.Pp
+It is a bad idea to close a master before closing its slaves.
+.El
+.Pp
+The MPU-401 driver only supports one
+.Xr open 2
+on a timed device at a time.
+However, any number of raw devices may be opened
+in conjunction with the timed device.
+.Sh FILES
+.Pa /dev/midi[0-9]
+.Pa /dev/rmidi[0-9]
+.Sh "SEE ALSO"
+.Xr ioctl 2 ,
+.Xr fcntl 2 ,
+.Xr read 2 ,
+.Xr write 2 ,
+.Xr select 2 ,
+.Xr open 2 ,
+.Xr close 2
+.Sh AUTHORS
+Mike Durian - durian@boogie.com
+.Sh BUGS
+.Pp
+The fast-forward and rewind capabilities of the driver while in
+SMPTE mode are kludgey.
+Determining current SMF time for the MGSMFTIME
+.Xr ioctl 2
+requires saving MetaTempo events in the driver.
+Future versions of the driver will probably move to an absolute
+time base, which will help fix this problem.

@@ -1,0 +1,56 @@
+#!/usr/local/bin/tclmidi
+#
+# msplit - type 0 to type 1 SMF conversion filter
+#
+# Copyright (c) 1994 by Luchezar Georgiev, Bulgaria   <lucho@midi.tu-varna.bg>
+#
+# The resulting file contains 18 tracks:
+#	track 0 contains meta events,
+#	tracks 1...16 - events for channels 1...16,
+#	track 17 - SysEx events.
+# If there are no suitable events for a track, it's left empty. Sorry! :-)
+#
+if {$argc} {
+	puts stderr {Usage: msplit < type0.mid > type1.mid}
+	exit 1
+}
+
+set imf [midiread stdin]
+set config [midiconfig $imf]
+
+if {[lindex [lindex $config 0] 1]} {
+	puts stderr {Input must be type 0}
+	exit -1
+}
+set division [lindex $config 1]
+set xmf [midimake]
+midiconfig $xmf "format 0" $division "tracks 1"
+set omf [midimake]
+midiconfig $omf "format 1" $division "tracks 18"
+
+midisplit "$imf 0" "$omf 0" "$xmf 0"
+midirewind $xmf
+set errMsg ""
+
+while {[set event [midiget $xmf 0 next]] != "EOT"} {
+	switch [lindex $event 1] {
+		"MetaEndOfTrack" {continue}
+		"SystemExclusive" {set trk 17}
+		default {set trk [expr [lindex $event 2] + 1]}
+	}
+	catch {
+		midiput $omf $trk $event
+	} errMsg
+	if {$errMsg != ""} {
+		puts stderr "$errMsg \"$event\""
+	}
+}
+
+for {set i 1} {$i < 18} {incr i} {
+	midiput $omf $i "[miditrack $omf $i end] MetaEndOfTrack"
+}
+
+midiwrite stdout $omf
+midifree $imf
+midifree $xmf
+midifree $omf

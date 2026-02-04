@@ -1,0 +1,28 @@
+  This is a note from Dejan Vucinic, the author of the serial card midi
+support.  He has a few things to say on how to use your serial card
+as a MIDI interface.
+
+
+Hello MIDIzens,
+
+I have added support for PC serial cards to Mike Durian's midi driver.
+Mike's going to add it to the distribution in the next release, but
+it would be nice if someone tried it out with 16450 UARTs.  I have 16550A,
+so the current incarnation enables FIFOs.  I think it should work with
+any "normal" 16450 as is.  I'm using Linux, but the changes for other
+unices should be trivial.  Let me know if you want the sources.
+
+[In case you're wondering how can you use UART to drive MIDI, you can get
+the instructions from http://harmony-central.mit.edu/MIDI/.  In brief,
+you have to replace the 18.432MHz crystal on the card with a 20MHz one,
+and get a MIDI adaptor, like the one for SoundBlaster (if you've ever done
+any soldering you can build one for less than $10 with new parts).  You
+need one adaptor for every serial line you want to use (it inverts the
+signal and drops the voltage to 5V, and optocouples the RX side), and
+there's one crystal per serial card.  A 16-port serial card can drive quite
+a bit of gear this way...  :-o ]
+
+Regards,
+
+Dejan Vucinic
+dejan@mit.edu

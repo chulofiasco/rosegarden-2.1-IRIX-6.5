@@ -1,0 +1,131 @@
+#!/usr/local/bin/tclmidi
+#
+# mmet - Generate an empty Standard MIDI File containing only a metronome track
+#
+# Copyright (c) 1994 by Luchezar Georgiev, Bulgaria   <lucho@midi.tu-varna.bg>
+#
+proc Usage {} {
+	puts stderr \
+"Usage: mmet \[-measures measures\]\n\
+\t    \[-first pitch volume\] \[-next pitch volume\] \[-channel channel\]\n\
+\t    \[-tempo tempo\] \[-timesig numerator denominator\]\n\
+\t    \[-division division\] \[filename\]"
+}
+
+set measures 32
+set firstpitch 37
+set firstvolume 127
+set nextpitch 37
+set nextvolume 80
+set channel 9
+set tempo 120
+set numerator 4
+set denominator 4
+set division 120
+set fname stdout
+set f stdout
+
+for {set i 0} {$i < $argc} {incr i} {
+	switch -- [lindex $argv $i] {
+	"-measures" {
+		incr i
+		if {$i >= $argc} {
+			Usage
+			exit 1
+		}
+		set measures [lindex $argv $i]
+	} "-first" {
+		incr i
+		if {$i >= $argc - 1} {
+			Usage
+			exit 1
+		}
+		set firstpitch [lindex $argv $i]
+		incr i
+		set firstvolume [lindex $argv $i]
+	} "-next" {
+		incr i
+		if {$i >= $argc - 1} {
+			Usage
+			exit 1
+		}
+		set nextpitch [lindex $argv $i]
+		incr i
+		set nextvolume [lindex $argv $i]
+	} "-channel" {
+		incr i
+		if {$i >= $argc} {
+			Usage
+			exit 1
+		}
+		set channel [lindex $argv $i]
+		incr channel -1
+	} "-tempo" {
+		incr i
+		if {$i >= $argc} {
+			Usage
+			exit 1
+		}
+		set tempo [lindex $argv $i]
+	} "-timesig" {
+		incr i
+		if {$i >= $argc - 1} {
+			Usage
+			exit 1
+		}
+		set numerator [lindex $argv $i]
+		incr i
+		set denominator [lindex $argv $i]
+	} "-division" {
+		incr i
+		if {$i >= $argc} {
+			Usage
+			exit 1
+		}
+		set division [lindex $argv $i]
+	} "-?"
+		-
+	  "-h"
+		-
+	 "-help" {
+		Usage
+		exit 1
+	} default {
+		if {$fname != "stdout"} {
+			Usage
+			exit 1
+		}
+		set fname [lindex $argv $i]
+		if {$fname == "-"} {
+			set f stdout
+		} else {
+			set f [open $fname w]
+		}
+	}
+	}
+}
+
+set mf [midimake]
+midiconfig $mf {format 1} "division [expr $division]" {tracks 2}
+
+midirewind $mf
+
+# track 0
+midiput $mf 0 "0 MetaTempo [expr $tempo]"
+midiput $mf 0 "0 MetaTime [expr $numerator] [expr $denominator] 24 8"
+midiput $mf 0 "0 MetaEndOfTrack"
+
+set a [expr $division * 4 / $denominator]
+set b [expr $numerator * $a]
+set c [expr $measures * $b]
+
+for {set i 0} {$i < $c} {incr i $b} {
+    midiput $mf 1 "$i NoteOn $channel $firstpitch $firstvolume"
+    for {set j [expr $i+$a]; set d [expr $i+$b]} {$j < $d} {incr j $a} {
+	midiput $mf 1 "$j NoteOn $channel $nextpitch $nextvolume"
+    }
+}
+
+midiput $mf 1 "[miditrack $mf 1 end] MetaEndOfTrack"
+midiwrite $f $mf
+midifree $mf
