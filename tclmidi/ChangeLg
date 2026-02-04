@@ -1,0 +1,198 @@
+For tclmidi-3.1
+
+* This file has gone unmodified for too long.  I can't remember all
+  the changes I have made.  Bad mike.
+
+* tclmidi now runs under windows!
+
+* tclmidi now uses autoconfig - no more makefile editing
+
+* tclmidi is now a loadable module - tcl 7.5 required
+
+* Pnp support code.  Works, but needs to be more general (ie support
+  mem map stuff better)
+
+* GUS support in the driver - kinda.
+
+* Had to break the barrier between the tcl code and libmidi++.a so I
+  could use the TCL_7_5 Tcl_Channel stuff.  This really isn't necessary
+  for Unix support, but will be very useful when we port to Windows and
+  the Mac.  Since I already broke the barrier with the event code in
+  TclmDriver75, this one wasn't too painful - it's also pretty localized,
+  and can be avoided by not defining TCL_7_5.
+
+* Reworked TclmDriver to use new improved event loop in TCL_7_5 - no
+  more asynch signals!
+
+* Added support for TCL_7_5.
+
+* Major and much needed reorg of the driver file names.  Now all generic
+  support files start with sup_, all interface start with iface_, all
+  timering mechanisms start with timer_, and all system dependent files
+  start with sys_.
+
+* added man page for midigrep
+
+* added new midigrep command to speed searching for certain event
+  patterns
+
+For tclmidi-3.0.0
+
+* Fix midiget abs-time bug.  It wasn't correctly updating cur_event pointer
+  in some cases.
+
+* MidiDev-Feature now returns a ostrstream *.  This way TclmPlay.cc, doesn't
+  have to know anything about feature types.
+
+* Support for multiple devices in synch.
+
+* Added a new queue to contain events written to raw device.  Perviously
+  could only handle one event at a time.
+
+* It looks like the linux driver now gets an official major number.  Number
+  35.
+
+From tclmidi-2.2.1 to tclmidi-2.2.2
+
+* only one cooked open per device, but unlimited raw opens.  Multiple
+  processes reading can lead to unexpected results.
+
+* MIDITHRU is treated similarly to raw writes, and is protected from
+  running status errors.
+
+* Removed locking in midi_write_events.  It is now called via the
+  timeout callback with a 0 tick delay.
+
+* Added new "raw" mididevice.  Reads data w/o timestamps and writes
+  data w/o timestamps.  Should still be safe to use in conjunction
+  with timed device (ie running status won't get confused and events
+  won't get written in middle of others).
+
+* Added locking to midi_write_events to prevent re-entrancy
+
+* MIDI_THRU fixed so it doesn't reset on every open(2)
+
+* Removed extra 0x prefix from data lists.
+
+* Fixed bug in BSD/OS midiintr - passed wrong softc as an arg.
+
+* Added driver support files for NetBSD
+
+* EventTree::GetEvents now works if it is called for a time that only
+  contains NoteOff event half from Note events (ie it now skips ahead
+  to the next "real" event).
+
+* Text type Meta events now return text in {}'s instead of double quotes.
+
+From tclmidi-2.2 to tclmidi-2.2.1
+
+* Documentation on how to install the various drivers.
+
+From tclmidi-2.1 to tclmidi-2.2
+
+* Fixed bug where driver would stall if wqueue drained at inopportune
+  time during write(2).
+
+* midithru tcl command now acts even if driver isn't currently
+  recording/playing.
+
+* Better MIDI_THRU support.  Now will pass data even if device isn't
+  open.
+
+* Unified Driver Code!
+
+From tclmidi-2.0 to tclmidi-2.1
+
+* midiioctl.h for BSD drivers is now put in /usr/include/sys for
+  inclusion.
+
+* new miditime command.  Returns current driver time in either SMF
+  or SMPTE format (if supported).
+
+* mididevice now returns 1 or 0 if called w/o any arguments.  1 means
+  there is device support compiled in, 0 there is not.
+
+* Reading a MetaKey event from SMF file now defaults to C major if
+  either field is invalid.
+
+* more accurate driver timing
+
+* SMPTE support in driver
+
+* Many thanks to Stephen Yost for porting tclmidi to Windows!
+
+* Created new NOP EventType in driver.  Doesn't do anything but will
+  do better job of keeping timing synched.  Ie driver will block until
+  MetaEndOfTrack event is "played" when closed.
+
+* midiget will now return list of events with time >= requested time
+  posible incompatibility (suggested by Andy de Torres)
+
+* Small modifications in Linux driver Makefile (Greg)
+
+* Fixed memory leak in driver (Greg)
+
+* Pathes from Greg Wolodkin to fix load/unload problem in Linux driver
+  and off by one error in MPU401.C
+
+* Linux stuff from Alberto to make installation easier
+
+* Linux installation improvements from Alberto (no more kernel patch for
+  loadable module)
+
+* removed ugly signal kludge in Linux driver.
+
+* removed non-quad version of driver.
+
+* midiget was returning an event list instead of NoEvent if time
+  didn't match.  Now returns NoEvent.
+
+* mididelete was failing for Note events if NoteOff pair didn't have
+  velocity zero.  Would also fail if NoteOff pair was really NoteOn
+  with velocity 0.  Now works correctly.
+
+* make install now automatically sets path to tclmidi when installing
+  scripts
+
+* Fixed midiwait problem in MPU401 device interface?
+
+* Fixed Song::SetNumTracks bug.  Wasn't actually allocating new track.
+
+* Changed mtohl, htoml, etc. to use an inline function instead of
+  a macro definition.  I think the new way might be faster, but it
+  does generate some harmless warnings
+
+* Removed midi_killable from the driver.  After talking with people,
+  I realized it wasn't really necessary.  SIGIO and SIGURG are ignored
+  by default, thus it's not really a security hole.
+
+* Trying out a different way of converting between kernel and smf ticks
+  in the drivers.  Don't know if it is better or not.
+
+* midiget did not return an error when "getting" from a non existant
+  track
+
+* Fixed(?) some harmless compiler warning in BSD driver (thanks to
+  Andreas for pointing these out).
+
+* NetBSD patches for 4.4 BETA version from Andreas Gustafsson.
+
+* Song Locks EventTree before modifying it (if USE_PTHREADS is defined).
+
+* Song now contains an array of EventTree pointers instead of an
+  array of EventTrees.  This should speed copying and changing the
+  number of tracks.
+
+* Event now contains EventTreeNode pointer.  This should speed traversals
+  and note insertions.  The EventTree code no longer must hunt through
+  the tree for a particular event just to determine its node.
+
+* Removed class methods in EventTree that return EventTreeNodes, they
+  should no longer be needed now that Events contain node pointers.
+
+* EventTree::GetRange now adjusts times in new tree to be relative
+  to the start time.
+
+* Modified Makefiles to pass flags better.
+
+* Linux-1.1.50 patches from Alberto Vignani

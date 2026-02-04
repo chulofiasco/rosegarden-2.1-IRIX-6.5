@@ -1,0 +1,38 @@
+midigrep should only match one event no matter how many patterns are
+looking for the event (ie break out of the loop as soon as a match
+is detected).
+
+midigrep should do a better job with reallocs
+
+make a release_driver function that undoes what init_dev allocates.
+modify note_on caching in driver so we can turn note back on at the
+    proper velocity if a channel becomes enables and a note is currently on.
+
+
+In tclmidi:
+  write doc on libtclmidi.a, the internal C++ interface
+  new commands for pause/resume
+  Use real time (ie seconds or parts thereof - use smpte? or somethig
+like 1/100 or 1/120 of second?) as event time stamps, not SMF ticks,
+which are relative to tempo changes.  Or at least communicate to
+the driver in that fashion.
+  MidiTime events should complain if the denominator is a bad value
+(like 4/5 time).
+  midisplit should split each channel into a separate track
+  mplay should check for more than 16 channels and automatically split
+the song into 2 (or more songs) and play each through multiple syched
+devices.
+  make a midigrep command
+
+In Driver:
+  GUS (and other sound card) support
+  Find tester for SVR4
+  Pause/Resume - time remaining between events?
+  Read and write events using a real clock instead of SMF ticks.  (see above)
+  Make a makefile for installing driver under BSD.
+  Handle Start, Stop, Continue events?
+  Send/Receive MIDI Clocks
+
+Long term:
+  Write a graphical notation program based on tclmidi and/or libmidi++.a
+That was why I rewrote tclmidi, wasn't it?

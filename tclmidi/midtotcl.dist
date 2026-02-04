@@ -1,0 +1,84 @@
+#!/usr/local/bin/tclsh
+if {[catch {package require tclmidi}]} {
+	puts stderr {Can't find tclmidi package}
+	exit 1
+}
+
+proc Usage {} {
+	puts stderr {Usage: midtotcl [-playable] [filename]}
+}
+
+if {$argc > 3} {
+	Usage
+	exit 1
+}
+
+set playable 0
+set fname stdin
+set f stdin
+
+for {set i 0} {$i < $argc} {incr i} {
+	switch -- [lindex $argv $i] {
+	"-?" -
+	"-h" -
+	"-help" {
+		Usage
+		exit 1
+	}
+	"-playable" -
+	"-p" {
+		set playable 1
+	}
+	default {
+		if {$fname != "stdin"} {
+			Usage
+			exit 1
+		} else {
+			set fname [lindex $argv $i]
+			set f [open $fname r]
+		}
+	}
+	}
+}
+
+set mf [midiread $f]
+midirewind $mf
+
+set config [midiconfig $mf tracks division format]
+set tracks [lindex [lindex $config 0] 1]
+set division [lindex [lindex $config 1] 1]
+set format [lindex [lindex $config 2] 1]
+
+puts {#!/usr/local/bin/tclsh}
+puts "\# tclmidi commands for midi file $fname"
+puts ""
+puts "if {\[catch {package require tclmidi}\]} {"
+puts "	puts stderr {Can't find tclmidi package}"
+puts "	exit 1"
+puts "}"
+puts ""
+puts {set mf [midimake]}
+puts "midiconfig \$mf {tracks $tracks} {division $division} {format $format}"
+
+for {set i 0} {$i < $tracks} {incr i} {
+	puts ""
+	puts "\# track $i"
+	while {[set event [midiget $mf $i next]] != "EOT"} {
+		puts "midiput \$mf $i {$event}"
+	}
+}
+puts ""
+if {$playable} {
+	puts {# play song}
+	puts {set dev [mididevice /dev/midi0]}
+	puts {midiplay $dev $mf}
+	puts {midiwait $dev}
+	puts {midistop $dev}
+	puts {mididevice $dev close}
+} else {
+	puts {# write midi file}
+	puts {midiwrite stdout $mf}
+	puts {flush stdout}
+}
+midifree $mf
+close $f

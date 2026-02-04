@@ -1,0 +1,447 @@
+dnl	This file is an input file used by the GNU "autoconf" program to
+dnl	generate the file "configure", which is run to configure the
+dnl	Makefile in this directory.
+AC_INIT(tclmCmd.cxx)
+
+AC_ARG_WITH(tclsh, [  --with-tclsh=PATH       Use interpreter PATH],
+	TCLSH_PATH=$withval)
+
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_INSTALL
+AC_ISC_POSIX
+AC_CHECK_HEADERS(unistd.h)
+AC_CHECK_HEADERS(sys/time.h)
+AC_CHECK_HEADERS(sys/filio.h)
+AC_CHECK_HEADERS(linux/termios.h)
+AC_CHECK_HEADERS(sys/midiioctl.h)
+AC_HEADER_TIME
+AC_TYPE_SIGNAL
+AC_C_BIGENDIAN
+AC_C_INLINE
+AC_PATH_PROG(TCLSH_PATH, tclsh)
+AC_PATH_PROG(TCLSH_PATH, tclsh7.5)
+
+
+#--------------------------------------------------------------------
+#	The statements below define a collection of symbols related to
+#	dynamic loading and shared libraries:
+#
+#	DL_OBJS -	Name of the object file that implements dynamic
+#			loading for Tcl on this system.
+#	DL_LIBS -	Library file(s) to include in tclsh and other base
+#			applications in order for the "load" command to work.
+#	LD_FLAGS -	Flags to pass to the compiler when linking object
+#			files into an executable application binary such
+#			as tclsh.
+#	LD_SEARCH_FLAGS-Flags to pass to ld, such as "-R /usr/local/tcl/lib",
+#			that tell the run-time dynamic linker where to look
+#			for shared libraries such as libtcl.so.  Depends on
+#			the variable LIB_INSTALL_DIR in the Makefile.
+#	MAKE_LIB -	Command to execute to build the Tcl library;
+#			differs depending on whether or not Tcl is being
+#			compiled as a shared library.
+#	SHLIB_CFLAGS -	Flags to pass to cc when compiling the components
+#			of a shared library (may request position-independent
+#			code, among other things).
+#	SHLIB_LD -	Base command to use for combining object files
+#			into a shared library.
+#	SHLIB_LD_LIBS -	Dependent libraries for the linker to scan when
+#			creating shared libraries.  This symbol typically
+#			goes at the end of the "ld" commands that build
+#			shared libraries. The value of the symbol is
+#			"${LIBS}" if all of the dependent libraries should
+#			be specified when creating a shared library.  If
+#			dependent libraries should not be specified (as on
+#			SunOS 4.x, where they cause the link to fail, or in
+#			general if Tcl and Tk aren't themselves shared
+#			libraries), then this symbol has an empty string
+#			as its value.
+#	SHLIB_SUFFIX -	Suffix to use for the names of dynamically loadable
+#			extensions.  An empty string means we don't know how
+#			to use shared libraries on this platform.
+#	TCL_LIB_FILE -	Name of the file that contains the Tcl library, such
+#			as libtcl7.5.so or libtcl7.5.a.
+#	TCL_LIB_SUFFIX -Specifies everything that comes after the "libtcl"
+#			in the shared library name, using the $VERSION variable
+#			to put the version in the right place.  This is used
+#			by platforms that need non-standard library names.
+#			Examples:  ${VERSION}.so.1.1 on NetBSD, since it needs
+#			to have a version after the .so, and ${VERSION}.a
+#			on AIX, since the Tcl shared library needs to have
+#			a .a extension whereas shared objects for loadable
+#			extensions have a .so extension.  Defaults to
+#			${VERSION}${SHLIB_SUFFIX}.
+#--------------------------------------------------------------------
+# To use C++ code as a loadable module, we must have the c++ library
+# linked into the tclmidi.so library.  Otherwise we get unresolved
+# externals to all the c++ support functions when we load tclmidi.
+#
+# The correct method for this needs to be determined somehow.  I
+# don't know the best way to do it, or how to do it for anything
+# other than FreeBSD.
+#
+
+# Step 1: set the variable "system" to hold the name and version number
+# for the system.  This can usually be done via the "uname" command, but
+# there are a few systems, like Next, where this doesn't work.
+
+AC_MSG_CHECKING([system version (for dynamic loading)])
+if test -f /usr/lib/NextStep/software_version; then
+    system=NEXTSTEP-`awk '/3/,/3/' /usr/lib/NextStep/software_version`
+else
+    system=`uname -s`-`uname -r`
+    if test "$?" -ne 0 ; then
+	AC_MSG_RESULT([unknown (can't find uname command)])
+	system=unknown
+    else
+	# Special check for weird MP-RAS system (uname returns weird
+	# results, and the version is kept in special file).
+    
+	if test -r /etc/.relid -a "X`uname -n`" = "X`uname -s`" ; then
+	    system=MP-RAS-`awk '{print $3}' /etc/.relid'`
+	fi
+	if test "`uname -s`" = "AIX" ; then
+	    system=AIX-`uname -v`.`uname -r`
+	fi
+	AC_MSG_RESULT($system)
+    fi
+fi
+
+# Step 2: check for existence of -ldl library.  This is needed because
+# Linux can use either -ldl or -ldld for dynamic loading.
+
+AC_CHECK_LIB(dl, dlopen, have_dl=yes, have_dl=no)
+
+# Step 4: set configuration options based on system name and version.
+
+fullSrcDir=`cd $srcdir; pwd`
+AIX=no
+TCL_SHARED_LIB_SUFFIX=""
+TCL_UNSHARED_LIB_SUFFIX=""
+SHLIB_CXX=""
+TCL_LIB_VERSIONS_OK=ok
+case $system in
+    AIX-*)
+	SHLIB_CFLAGS=""
+	SHLIB_LD="$fullSrcDir/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512"
+	SHLIB_LD_LIBS='${LIBS}'
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o tclLoadAix.o"
+	DL_LIBS="-lld"
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS='-L${LIB_INSTALL_DIR}'
+	AC_DEFINE(NO_DLFCN_H)
+	AIX=yes
+	TCL_SHARED_LIB_SUFFIX='${VERSION}.a'
+	;;
+    HP-UX-*.08.*|HP-UX-*.09.*|HP-UX-*.10.*)
+	SHLIB_CFLAGS="+z"
+	SHLIB_LD="ld -b"
+	SHLIB_LD_LIBS='${LIBS}'
+	SHLIB_SUFFIX=".sl"
+	DL_OBJS="tclLoadShl.o"
+	DL_LIBS="-ldld"
+	LD_FLAGS="-Wl,-E"
+	LD_SEARCH_FLAGS='-Wl,+b,${LIB_INSTALL_DIR}:.'
+	;;
+    IRIX-4.*)
+	SHLIB_CFLAGS="-G 0"
+	SHLIB_SUFFIX="..o"
+	SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
+	SHLIB_LD_LIBS=""
+	DL_OBJS="tclLoadAout.o"
+	DL_LIBS=""
+	LD_FLAGS="-Wl,-D,08000000"
+	LD_SEARCH_FLAGS=""
+	;;
+    IRIX-5.*)
+	SHLIB_CFLAGS=""
+	SHLIB_LD="ld -shared -rdata_shared"
+	SHLIB_LD_LIBS="-ldmedia"
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS=""
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS='-Wl,-rpath,${LIB_INSTALL_DIR}'
+	;;
+    IRIX-6.*|IRIX64-6.*)
+	SHLIB_CFLAGS=""
+	SHLIB_LD="ld -n32 -shared -rdata_shared"
+	SHLIB_LD_LIBS="-ldmedia"
+	SHLIB_LD_CXX="-lC -lCio -lm"
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS=""
+	LD_FLAGS="-n32"
+	LD_SEARCH_FLAGS='-Wl,-rpath,${LIB_INSTALL_DIR}'
+	;;
+    Linux*)
+	SHLIB_CFLAGS="-fPIC"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	if test "$have_dl" = yes; then
+	    SHLIB_LD="${CC} -shared"
+	    # Greg figured out how to use gcc instead of ld..
+	    SHLIB_LD_CXX="-Wl,-Bstatic -Wl,-lg++ -Wl,-lstdc++ -Wl,-lgcc"
+	    DL_OBJS="tclLoadDl.o"
+	    DL_LIBS="-ldl"
+	    LD_FLAGS="-rdynamic"
+	    LD_SEARCH_FLAGS=""
+	else
+	    AC_CHECK_HEADER(dld.h, [
+		SHLIB_LD="ld -shared"
+	        # Greg figured out how to use gcc instead of ld..
+		# -lgcc can be found in /usr/lib/gcc-lib/i486-linux/2.7.0/
+		# or something similar.
+	        SHLIB_LD_CXX="-Bstatic -lg++ -lstdc++ -lgcc"
+		DL_OBJS="tclLoadDld.o"
+		DL_LIBS="-ldld"
+		LD_FLAGS=""
+		LD_SEARCH_FLAGS=""])
+	fi
+
+
+	;;
+    MP-RAS-02*)
+	SHLIB_CFLAGS="-K PIC"
+	SHLIB_LD="cc -G"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS="-ldl"
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS=""
+	;;
+    MP-RAS-*)
+	SHLIB_CFLAGS="-K PIC"
+	SHLIB_LD="cc -G"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS="-ldl"
+	LD_FLAGS="-Wl,-Bexport"
+	LD_SEARCH_FLAGS=""
+	;;
+    NetBSD-*|FreeBSD-*)
+	# Not available on all versions:  check for include file.
+	AC_CHECK_HEADER(dlfcn.h, [
+	    SHLIB_CFLAGS="-fpic"
+	    SHLIB_LD="ld -Bshareable"
+	    SHLIB_LD_LIBS=""
+	    SHLIB_SUFFIX=".so"
+	    DL_OBJS="tclLoadDl2.o"
+	    DL_LIBS=""
+	    LD_FLAGS=""
+	    LD_SEARCH_FLAGS=""
+	], [
+	    SHLIB_CFLAGS=""
+	    SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
+	    SHLIB_LD_LIBS=""
+	    SHLIB_SUFFIX="..o"
+	    DL_OBJS="tclLoadAout.o"
+	    DL_LIBS=""
+	    LD_FLAGS=""
+	    LD_SEARCH_FLAGS=""
+	])
+
+	# FreeBSD doesn't handle version numbers with dots.  Also, have to
+	# append a dummy version number to .so file names.
+	# I don't believe this is true (anymore) - mbd
+
+	TCL_SHARED_LIB_SUFFIX='`echo ${VERSION} | tr -d .`.so.1.0'
+	TCL_UNSHARED_LIB_SUFFIX='`echo ${VERSION} | tr -d .`.a'
+	TCL_LIB_VERSIONS_OK=nodots
+
+	SHLIB_LD_CXX="-Bstatic -lg++ -lgcc 2> /dev/null"
+
+	;;
+    NEXTSTEP-*)
+	SHLIB_CFLAGS=""
+	SHLIB_LD="cc -nostdlib -r"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadNext.o"
+	DL_LIBS=""
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS=""
+	;;
+    OSF1-1.[012])
+	# OSF/1 1.[012] from OSF, and derivatives, including Paragon OSF/1
+	SHLIB_CFLAGS=""
+	# Hack: make package name same as library name
+	SHLIB_LD='ld -R -export $@:'
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadOSF.o"
+	DL_LIBS=""
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS=""
+	;;
+    OSF1-1.*)
+	# OSF/1 1.3 from OSF using ELF, and derivatives, including AD2
+	SHLIB_CFLAGS="-fpic"
+	SHLIB_LD="ld -shared"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS=""
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS=""
+	;;
+    OSF1-V*)
+        # Digital OSF/1
+	SHLIB_CFLAGS=""
+	SHLIB_LD='ld -shared -expect_unresolved "*"'
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS=""
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS='-Wl,-rpath,${LIB_INSTALL_DIR}'
+	;;
+    RISCos-*)
+	SHLIB_CFLAGS="-G 0"
+	SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX="..o"
+	DL_OBJS="tclLoadAout.o"
+	DL_LIBS=""
+	LD_FLAGS="-Wl,-D,08000000"
+	LD_SEARCH_FLAGS=""
+	;;
+    SCO_SV-3.2*)
+        # Note, dlopen is available only on SCO 3.2.5 and greater.  However,
+        # this test works, since "uname -s" was non-standard in 3.2.4 and
+        # below.
+	SHLIB_CFLAGS="-Kpic -belf"
+	SHLIB_LD="ld -G"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS=""
+	LD_FLAGS="-belf -Wl,-Bexport"
+	LD_SEARCH_FLAGS=""
+	;;
+     SINIX*5.4*)
+	SHLIB_CFLAGS="-K PIC"
+	SHLIB_LD="cc -G"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS="-ldl"
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS=""
+	;;
+    SunOS-4*)
+	SHLIB_CFLAGS="-PIC"
+	SHLIB_LD="ld"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS="-ldl"
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS='-L${LIB_INSTALL_DIR}'
+
+	# SunOS can't handle version numbers with dots in them in library
+	# specs, like -ltcl7.5, so use -ltcl75 instead.  Also, it
+	# requires an extra version number at the end of .so file names.
+	# So, the library has to have a name like libtcl75.so.1.0
+
+	TCL_SHARED_LIB_SUFFIX='`echo ${VERSION} | tr -d .`.so.1.0'
+	TCL_UNSHARED_LIB_SUFFIX='`echo ${VERSION} | tr -d .`.a'
+	TCL_LIB_VERSIONS_OK=nodots
+	;;
+    SunOS-5*)
+	SHLIB_CFLAGS="-K PIC"
+	SHLIB_LD="/usr/ccs/bin/ld -G -z text"
+	SHLIB_LD_LIBS='${LIBS}'
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS="-ldl"
+	LD_FLAGS=""
+	LD_SEARCH_FLAGS='-R ${LIB_INSTALL_DIR}'
+	;;
+    ULTRIX-4.*)
+	SHLIB_CFLAGS="-G 0"
+	SHLIB_SUFFIX="..o"
+	SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
+	SHLIB_LD_LIBS=""
+	DL_OBJS="tclLoadAout.o"
+	DL_LIBS=""
+	LD_FLAGS="-Wl,-D,08000000"
+	LD_SEARCH_FLAGS=""
+	;;
+    UNIX_SV*)
+	SHLIB_CFLAGS="-K PIC"
+	SHLIB_LD="cc -G"
+	SHLIB_LD_LIBS=""
+	SHLIB_SUFFIX=".so"
+	DL_OBJS="tclLoadDl.o"
+	DL_LIBS="-ldl"
+	LD_FLAGS="-Wl,-Bexport"
+	LD_SEARCH_FLAGS=""
+	;;
+esac
+
+
+
+if test "$TCL_SHARED_LIB_SUFFIX" = "" ; then
+    TCL_SHARED_LIB_SUFFIX='${VERSION}${SHLIB_SUFFIX}'
+fi
+
+if test -z "$SHLIB_LD_CXX" ; then
+	echo "I don't know how to statically link the c++ library into"
+	echo "the tclmidi library for your system type.  If you let me"
+	echo "know how to do this I will gladly add it to this script."
+	echo "Ugly details on why we need to do this available upon"
+	echo "request.  durian@boogie.com"
+	exit 1
+fi
+
+TCL_SHLIB_CFLAGS="${SHLIB_CFLAGS}"
+TCL_LD_SEARCH_FLAGS="${LD_SEARCH_FLAGS}"
+eval "TCL_LIB_FILE=libtcl${TCL_SHARED_LIB_SUFFIX}"
+
+# Base command to use for combining object files into a shared library:
+TCL_SHLIB_LD="$SHLIB_LD"
+
+# Either '$LIBS' (if dependent libraries should be included when linking
+# shared libraries) or an empty string.  See Tcl's configure.in for more
+# explanation.
+TCL_SHLIB_LD_LIBS="$SHLIB_LD_LIBS"
+
+# Suffix to use for the name of a shared library.
+TCL_SHLIB_SUFFIX="$SHLIB_SUFFIX"
+
+SHLIB_CFLAGS=$TCL_SHLIB_CFLAGS
+SHLIB_LD=$TCL_SHLIB_LD
+SHLIB_LD_LIBS=$TCL_SHLIB_LD_LIBS
+SHLIB_SUFFIX=$TCL_SHLIB_SUFFIX
+SHLIB_VERSION=$TCL_SHLIB_VERSION
+TCL_LIBS=$TCL_LIBS
+TCL_VERSION=$TCL_VERSION
+
+AC_SUBST(CC)
+AC_SUBST(CXX)
+AC_SUBST(CFLAGS)
+AC_SUBST(CXXFLAGS)
+AC_SUBST(SHLIB_CFLAGS)
+AC_SUBST(SHLIB_LD)
+AC_SUBST(SHLIB_LD_LIBS)
+AC_SUBST(SHLIB_SUFFIX)
+AC_SUBST(SHLIB_VERSION)
+AC_SUBST(TCL_LIBS)
+AC_SUBST(TCL_VERSION)
+AC_SUBST(TCL_SRC_DIR)
+AC_SUBST(TCL_BIN_DIR)
+AC_SUBST(TCLSH_PATH)
+
+
+export SHLIB_LD_CXX
+AC_SUBST(SHLIB_LD_CXX)
+
+
+
+AC_OUTPUT(Makefile device/Makefile events/Makefile patch/Makefile rb/Makefile \
+    smf/Makefile song/Makefile man/Makefile)

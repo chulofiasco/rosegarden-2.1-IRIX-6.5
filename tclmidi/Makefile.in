@@ -1,0 +1,154 @@
+# This Makefile is used to create the example loadable module.
+# It also illustrates how to take advantage of configuration
+# exported by Tcl to set up Makefiles for shared libraries.
+#
+
+PROJECT = tclmidi
+VER_MAJ = 3
+VER_MIN = 1
+
+SCRIPTS = midtotcl minfo mplay mrec
+
+# The directory containing the Tcl library archive file appropriate
+# for this version of Tk:
+TCL_BIN_DIR = @TCL_BIN_DIR@
+
+#----------------------------------------------------------------
+# The information below is modified by the configure script when
+# Makefile is generated from Makefile.in.  You shouldn't normally
+# modify any of this stuff by hand.
+#----------------------------------------------------------------
+
+SHLIB_CFLAGS =		@SHLIB_CFLAGS@
+SHLIB_LD =		@SHLIB_LD@
+SHLIB_SUFFIX =		@SHLIB_SUFFIX@
+SHLIB_VERSION =		@SHLIB_VERSION@
+SRC_DIR =		@srcdir@
+libdir =		@libdir@
+bindir =		@bindir@
+prefix =		@prefix@
+INSTALL = 		@INSTALL@
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+CFLAGS = @CFLAGS@ @DEFS@
+CXXFLAGS = @CXXFLAGS@ @DEFS@
+CPPFLAGS = @CPPFLAGS@
+CC_SWITCHES = ${CPPFLAGS} @CXXFLAGS@ @DEFS@ -DTCL_7_5 ${SHLIB_CFLAGS} \
+    -Idevice -Ievents -Irb -Ipatch -Ismf -Isong -I.
+
+TCLMFILES = tclmCmd.o tclmUtil.o tclmEvnt.o tclmPlay.o tclmPtch.o TclmIntp.o
+TCLMFILES_SRC = tclmCmd.cxx tclmUtil.cxx tclmEvnt.cxx tclmPlay.cxx \
+    tclmPtch.cxx TclmIntp.cxx
+
+.SUFFIXES: .cxx $(SUFFIXES)
+
+all: pkgIndex.tcl $(SCRIPTS)
+
+test: pkgIndex.tcl
+	@echo "Testing example..."
+	@echo 'lappend auto_path .; package require $(PROJECT); \
+		if ![catch {$(PROJECT)}] { \
+		    exit 0 \
+		} else { \
+		    puts "$(PROJECT) failed to load and run"; \
+		    exit 1 \
+		}' | @TCLSH_PATH@
+	@echo "Test passed."
+
+pkgIndex.tcl: $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN)
+	@echo "Creating package index for tclmidi"
+	@echo 'package ifneeded tclmidi $(VER_MAJ).$(VER_MIN) [list load [file join $$dir $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN)]]' > pkgIndex.tcl
+
+.cxx.o:
+	@CXX@ -c $(CC_SWITCHES) $<
+
+$(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN): events/objs smf/objs \
+    song/objs device/objs patch/objs rb/objs $(TCLMFILES)
+	${SHLIB_LD} `cat events/objs smf/objs song/objs  device/objs \
+	    patch/objs rb/objs` $(TCLMFILES) \
+	    -o $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN) \
+	    @SHLIB_LD_LIBS@  @SHLIB_LD_CXX@
+
+events/objs: FORCE
+	cd events; $(MAKE) objs
+
+smf/objs: FORCE
+	cd smf; $(MAKE) objs
+
+song/objs: FORCE
+	cd song; $(MAKE) objs
+
+device/objs: FORCE
+	cd device; $(MAKE) objs
+
+patch/objs: FORCE
+	cd patch; $(MAKE) objs
+
+rb/objs: FORCE
+	cd rb; $(MAKE) objs
+
+mplay: mplay.dist
+	sed 's#/usr/local/bin/tclsh#@TCLSH_PATH@#' < mplay.dist > mplay
+
+minfo: minfo.dist
+	sed 's#/usr/local/bin/tclsh#@TCLSH_PATH@#' < minfo.dist > minfo
+
+mrec: mrec.dist
+	sed 's#/usr/local/bin/tclsh#@TCLSH_PATH@#' < mrec.dist > mrec
+
+midtotcl: midtotcl.dist
+	sed 's#/usr/local/bin/tclsh#@TCLSH_PATH@#' < midtotcl.dist > midtotcl
+
+install: $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN) $(SCRIPTS) pkgIndex.tcl
+	-mkdir -p $(prefix)$(libdir)/tclmidi
+	@INSTALL_DATA@ $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN) \
+	    $(prefix)$(libdir)/tclmidi
+	@INSTALL_DATA@ pkgIndex.tcl $(prefix)$(libdir)/tclmidi
+	cd man; $(MAKE) install
+	@INSTALL@ -m 755 $(SCRIPTS) $(prefix)$(bindir)
+	@echo
+	@echo
+	@echo "===================================================="
+	@echo "You must add $(prefix)$(libdir)/tclmidi to your"
+	@echo "TCLLIBPATH environment variable.  This environment"
+	@echo "variable is a list of directories a tcl interpreter"
+	@echo "will search to find loadable modules.  The list is"
+	@echo "white space separated (as opposed to colon separated"
+	@echo "like many other Unix environment variables)."
+	@echo "===================================================="
+
+depend:
+	@echo "This only works if you're using GCC"
+	cd events; $(MAKE) depend
+	cd device; $(MAKE) depend
+	cd patch; $(MAKE) depend
+	cd rb; $(MAKE) depend
+	cd smf; $(MAKE) depend
+	cd song; $(MAKE) depend
+	sed "/[#]# Dependancies/,$$$$d" < Makefile > Makefile.tmp
+	echo >> Makefile.tmp
+	echo "##" "Dependancies" >> Makefile.tmp
+	@CXX@ -M $(CC_SWITCHES) $(TCLMFILES_SRC) >> Makefile.tmp
+	cp Makefile.tmp Makefile
+	rm Makefile.tmp
+
+clean:
+	rm -f *.o $(PROJECT)${SHLIB_SUFFIX}.$(VER_MAJ).$(VER_MIN) \
+	    config.cache config.log config.status lib.exp
+	rm -f $(SCRIPTS)
+	cd events; $(MAKE) clean
+	cd device; $(MAKE) clean
+	cd patch; $(MAKE) clean
+	cd rb; $(MAKE) clean
+	cd smf; $(MAKE) clean
+	cd song; $(MAKE) clean
+
+Makefile: Makefile.in
+	./config.status
+
+distclean: clean
+	rm -f Makefile
+
+FORCE:

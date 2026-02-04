@@ -1,0 +1,117 @@
+#!/usr/local/bin/tclsh
+if {[catch {package require tclmidi}]} {
+	puts stderr {Can't find tclmidi package}
+	exit 1
+}
+proc Usage {} {
+	puts stderr {Usage: mplay [-dev device] [-quiet] [-repeat] [-smpte] \
+	    [filename]}
+}
+
+set repeat ""
+set quiet 0
+set smpte 0
+set fname stdin
+set f stdin
+set device "/dev/midi0"
+
+for {set i 0} {$i < $argc} {incr i} {
+	switch -- [lindex $argv $i] {
+	"-?" -
+	"-h" -
+	"-help" {
+		Usage
+		exit 1
+	}
+	"-dev" {
+		if {$i == [expr $argc - 1]} {
+			puts stderr "missing device name"
+		}
+		incr i
+		set device [lindex $argv $i]
+	}
+	"-repeat" {
+		set repeat repeat
+	}
+	"-quiet" {
+		set quiet 1
+	}
+	"-smpte" {
+		set smpte 1
+	}
+	default {
+		if {$fname != "stdin"} {
+			Usage
+			exit 1
+		} else {
+			set fname [lindex $argv $i]
+			set f [open $fname r]
+		}
+	}
+	}
+}
+
+set dev [mididevice $device]
+if {$smpte} {
+	if {catch "midifeature $dev smpte_timing" err} {
+		puts stderr "$device is not SMPTE equipped: $err"
+		exit 1
+	}
+}
+
+# can't read key strokes if file is coming from stdin
+if {$fname == "stdin"} {
+	set quiet 1
+}
+
+if {!$quiet} {
+	puts "loading, please wait"
+}
+set mf [midiread $f]
+
+if {!$quiet && !$smpte} {
+	puts "press return to begin playing"
+	gets stdin
+}
+if {![midiplay $dev $mf $repeat]} {
+	puts stderr "midiplay command not available"
+	exit 1
+}
+if {!$smpte} {
+	if {$repeat != "repeat" || $quiet} {
+		midiwait $dev
+puts "did midiwait"
+		midistop $dev
+puts "did midistop"
+		mididevice $dev close
+puts "did mididevice $dev close"
+	} else {
+		puts "press return to stop playing"
+		gets stdin
+		midistop $dev
+		mididevice $dev close
+	}
+} else {
+	if {$quiet} {
+		midiwait $dev
+		midistop $dev
+		mididevice $dev close
+	} else {
+		set tm [midifeature $dev get_smpte]
+		puts -nonewline $tm
+		flush stdout
+
+		set lt [string range $tm 0 7]
+		while 1 {
+			set tm [midifeature $dev get_smpte]
+			set nt [string range $tm 0 7]
+			if {$nt != $lt} {
+				puts -nonewline "\r                        \r"
+				puts -nonewline "$nt"
+				flush stdout
+				set lt $nt
+			}
+			exec sleep 1
+		}
+	}
+}

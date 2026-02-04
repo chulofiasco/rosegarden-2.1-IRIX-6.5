@@ -1,0 +1,46 @@
+  Well I've made a partial attempt to incorporate pthreads into
+tclmidi.  The idea was to use separate threads for playing and
+recording, and thus get rid of the ASYNC I/O stuff.  But there
+are a couple big problems with this.
+  1) Finding a pthreads package.  If you are on a system that has
+thread support built into the kernel, then you might be able to
+get things to work.  I don't have such a system.  There is only
+one freely available pthreads package that I know of and it
+implements threads at a library level.  It is a very good package,
+but it is missing support for select(2), needs a special pthread_init()
+call at the beginning of main and appears to screw up some i/o stuff
+(do to remapping of file descriptors).  The last problem might be
+fixed in a newer version of the package.  The lack of a free, portable
+pthreads package that meets my needs is why I'm finally giving up
+on thread support.  At least for now.
+  2) Retrofitting the tclmidi code to support threads.  I'd like
+to hide all the thread support in the midi++ library and keep things
+as transparent as possible.  This way you won't have to code any
+differently if you are using threads or not.  If midi++ was built
+with threads support, it will use them and lock accordingly.  If
+it was built without thread support it will work as before.
+  My main concern is locking the EventTrees so two threads can't
+change it as the same time.  I've had luck with that, and getting
+events and putting events lock the tree like they should.  The problem
+is with locking the individual events.  It is possible to lock the
+tree until an event has been located and returned, but the event itself
+must be locked too.  Otherwise another thread might invalidate the
+the event while one thread is holding a pointer to it.  One possible
+solution is to return copies of events instead of pointers to events
+in the tree.  But this would add overhead and would be a major change.
+The other option is to automatically lock the event when it is 
+accessed, and for the thread getting that event to unlock it when
+it is no longer needed.  The draw back to this solution is now code
+must be aware that mutexes are being used and must unlock events
+as necessary.  It will also increase the size of events since they
+must now contain mutex locks.
+
+  So those are my two big problems with tclmidi and PTHREADS.  There
+is some support for them in the code and I've even made an initial
+attempt at a threaded device interface (device/MPU401Thread.C).
+If you wish to play with the treads, add -DUSE_PTHREADS to CFLAGS.
+  If Provenzano's pthreads library improves and starts supporting
+select() I might play with threads some more, but until then, not
+much will happen.
+
+mike

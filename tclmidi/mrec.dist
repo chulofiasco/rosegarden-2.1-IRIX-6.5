@@ -1,0 +1,180 @@
+#!/usr/local/bin/tclsh
+if {[catch {package require tclmidi}]} {
+	puts stderr {Can't find tclmidi package}
+	exit 1
+}
+proc Usage {} {
+	puts stderr {Usage: mrec [-dev device] [-thru] [-merge] \
+	    [[-repeat] -play play_filename] [-tempo tempo] [rec_filename]}
+}
+
+set repeat ""
+set tempo 120
+set merge 0
+set pfname stdin
+set pf ""
+set rfname stdout
+set rf stdout
+set device "/dev/midi0"
+set mthru 0
+
+for {set i 0} {$i < $argc} {incr i} {
+	switch -- [lindex $argv $i] {
+	"-?" -
+	"-h" -
+	"-help" {
+		Usage
+		exit 1
+	}
+	"-dev" {
+		if {$i == [expr $argc - 1]} {
+			puts stderr "missing device name"
+			exit 1
+		}
+		incr i
+		set device [lindex $argv $i]
+	}
+	"-thru" {
+		set mthru 1
+	}
+	"-repeat" {
+		set repeat repeat
+	}
+	"-play" {
+		incr i
+		if {$i >= $argc || $pfname != "stdin"} {
+			Usage
+			exit 1
+		}
+		set pfname [lindex $argv $i]
+		if {$pfname == "-"} {
+			set pf stdin
+		} else {
+			set pf [open $pfname r]
+		}
+	}
+	"-tempo" {
+		incr i
+		if {$i >= $argc} {
+			Usage
+			exit 1
+		}
+		set tempo [lindex $argv $i]
+	}
+	"-merge" {
+		set merge 1
+	}
+	default {
+		if {$rfname != "stdout"} {
+			Usage
+			exit 1
+		}
+		set rfname [lindex $argv $i]
+		if {$rfname == "-"} {
+			set rf stdout
+		} else {
+			set rf [open $rfname w]
+		}
+	}
+	}
+}
+
+set dev [mididevice $device]
+if {$mthru} {
+	mididevice $dev {midithru on}
+}
+
+if {$pf != ""} {
+	puts "please wait, loading play file"
+	set pmf [midiread $pf]
+} else {
+	set pmf [midimake]
+	midiconfig $pmf {tracks 1}
+	midiput $pmf 0 "0 metatempo $tempo"
+}
+
+set rmf [midimake]
+set pconfig [midiconfig $pmf division]
+midiconfig $rmf [lindex $pconfig 0] {tracks 1}
+
+puts "press return to begin recording"
+gets stdin
+
+if {![midirecord $dev $rmf $pmf $repeat]} {
+	puts stderr "midirecord command not available"
+	exit 1
+}
+# if we're repeating or not playing something, prompt to quit
+if {$pf == "" || $repeat != ""} {
+	puts "press return to stop recording"
+	gets stdin
+} else {
+	midiwait $dev
+}
+midistop $dev
+mididevice $dev close
+
+midirewind $rmf
+if {!$merge} {
+	# remove the EOT event from track 0 of the play file
+	# so it won't be copied into the record track
+	midirewind $pmf
+	set lastevent [midiget $pmf 0 prev]
+	if {[lindex $lastevent 1] == "MetaEndOfTrack"} {
+		mididelete $pmf 0 $lastevent
+	}
+	# copy meta events from play file into record track
+	if {[lindex [lindex [midiconfig $pmf format] 0] 1] == 0} {
+		set playmeta [midimake]
+		midiconfig $playmeta {format 0} {tracks 1}
+		# meta events go to the record file, others are thrown away
+		midisplit "$pmf 0" "$rmf 0" "$playmeta 0"
+		midifree $playmeta
+	} else {
+		# copy all of track 0 of the pmf
+		midicopy "$rmf 0" 0 "$pmf 0" 0 \
+		    [expr "[miditrack $pmf 0 end] + 1"]
+	}
+
+	# add EOT
+	midiput $rmf 0 "[miditrack $rmf 0 end] MetaEndOfTrack"
+	midiwrite $rf $rmf
+	midifree $pmf
+	midifree $rmf
+} else {
+	# create a format one file consiting of the play file
+	# plus the recorded track
+	set playconfig [midiconfig $pmf]
+	set playtracks [lindex [lindex $playconfig 2] 1]
+	set playdiv [lindex [lindex $playconfig 1] 1]
+	set playformat [lindex [lindex $playconfig 0] 1]
+	set newfile [midimake]
+	midiconfig $newfile "format 1" "division $playdiv" \
+	    "tracks [expr $playtracks+1]"
+	if {$playformat != 0} {
+		# copy each track to newfile
+		midiconfig $newfile "tracks [expr $playtracks+1]"
+		for {set i 0} {$i < $playtracks} {incr i} {
+			midicopy "$newfile $i" 0 "$pmf $i" \
+			    0 [expr "[miditrack $pmf $i end] + 1"]
+		}
+		set newtrack $i
+		midicopy "$newfile $i" 0 "$rmf 0" 0 \
+		    [expr "[miditrack $rmf 0 end] + 1"]
+	} else {
+		# split track 0 into newfile
+		midiconfig $newfile "tracks [expr $playtracks+2]"
+		midisplit "$pmf 0" "$newfile 0" "$newfile 1"
+		midicopy "$newfile 2" 0 "$rmf 0" 0 \
+		    [expr "[miditrack $rmf 0 end] + 1"]
+		set newtrack 2
+	}
+	# add EOT to recorded track
+	midiput $newfile $newtrack \
+	    "[miditrack $newfile $newtrack end] MetaEndOfTrack"
+
+	midiwrite $rf $newfile
+	midifree $pmf
+	midifree $rmf
+	midifree $newfile
+}

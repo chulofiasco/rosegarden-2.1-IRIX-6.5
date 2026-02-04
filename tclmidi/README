@@ -1,0 +1,134 @@
+OVERVIEW
+  Tclmidi is language designed for creating and editing standard
+MIDI files.  With the proper device interface it will also play
+and record MIDI files.  Since tclmidi is a language supporting
+function calls, recursion and conditionals, you can use these
+features for editing, sequencing and writing complex scripts.
+The brave might even want to try their hand at algorithmic
+composition.
+  The basis of tclmidi is John Ousterhout's popular TCL language.
+tclmidi adds a few new commands specific to manipulating MIDI
+files, and playing/recording them.  You'll need to have TCL-7.5
+installed on your system to build tclmidi.  I no longer support
+earlier versions.
+  I've tried to be POSIX complient while writing tclmidi.  It has
+been built on numerous machines and should compile on any Unix
+like machine with a C++ compiler.  It now also runs under Windows.
+  Tclmidi comes with a device driver to interface with a few types of
+MIDI cards and also support for using your serial port as a MIDI
+interface.  Supported cards include MPU401, MQX32, Gravis UltraSound
+and SoundBlaster (though both the GUS and SB support is limited to the
+MIDI ports, the driver does not yet use these board to generate their
+own sounds - the SB hasn't been tested much either).  There is some
+proto code to use the GUS to generate its own sound, but it doesn't
+work yet.  Look for it in future releases.  Tclmidi will also support
+some features of the different cards, including the SMPTE support found
+on the MQX32.
+  The driver tries to be OS independent too.  90% of the driver is
+completely portable, only the remaining 10% needs to be rewritten to
+support a new UNIX varient.  This distribution comes with support for
+BSD/OS, Linux, FreeBSD, NetBSD and Unixware (though the Unixware driver
+isn't completely tested).  These five cover a wide range of systems and
+one should make a good basis for a port to a new system.
+
+WHAT'S NEW IN TCLMIDI-3.1.0
+  Tclmidi is now a loadable module that works in conjunction with
+Tcl-7.5.  There are no longer a tclmidi or tkmidi executables.  Instead
+you use the standard tclsh or wish interpreters and then load the
+tclmidi commands using the "package require tclmidi" command.
+  Tclmidi now builds using the "configure" script.  You should no longer
+need to edit a Makefile.  Just "./configure; make" to build the package.
+  Installation has gotten a bit trickier.  This is because of TCL's
+method of locating loadable libraries and building the pkgIndex.tcl file,
+not because of something found in tclmidi itself.  By default, tclmidi
+installs the library in /usr/local/lib/tclmidi and builds a pkgIndex.tcl
+in that directory.  In order for tclsh or wish to find these files
+you must add /usr/local/lib/tclmidi to your TCLLIBPATH environment
+variable or add "lappend auto_path /usr/local/lib/tclmidi" to the
+beginning of any script that uses tclmidi.
+  The tclmidi driver now has some proto-code for using a Gravis
+Ultra Sound (both old and new PnP) to synthesize sound directly.
+Unfortunately, this code doesn't work yet.  This will be my major
+goal for the next release (as well as supporting other sound cards).
+  Windows users will be pleased to learn that tclmidi will run
+under Windows.  I'm very unfamiliar with the Windows 95 environment
+and the Visual C++ compiler and thus don't have a Makefile to build
+the .dll from source (VC++ uses "projects" and I can't figure out how
+to create a Makefile from a project").  However, rest assured that
+I do build the .dll from the exact same source with no modifications.
+I also pre-compile the tclmidi.dll and make it available for anonymous
+ftp.  If there are any Windows wizards out there that would like to help
+me create a Makefile and/or write a good installation script, please
+let me know.
+  Added a new command, midigrep.  It allows you to search tracks
+looking for events using pattern matching.  Much faster than doing the
+same thing with tcl code.
+  And of course, there have been a few bug fixes.
+
+REQUIREMENTS
+  You need tcl-7.5 installed.  You don't need the source though, as
+all the information tclmidi needs can be found in the installed header
+files.
+  You also need a C++ compiler.  G++ is free and works.
+
+COMPILATION NOTES
+  ./configure
+  make
+  make install
+
+WINDOWS SUPPORT
+  Is back!  As I mentioned above, I don't have a Makefile to build it
+from the source (VC++ uses "projects"), but it does build from the
+unmodified sources.  I also make a pre-compiled version of tclmidi.dll
+available so you don't have to compile it yourself.
+  You need tcl-7.5 installed on your system.  You can get pre-built
+versions of tcl and tk via anonymous ftp from ftp.smli.com.
+  To install tclmidi, you need to put the tclmidi.dll file in some
+directory that tclsh or wish will search and then build a pkgIndex.tcl
+that references the dll.  I'm going to try to write a tcl script
+that will do the installation automatically.  For now I'll install
+tclmidi.dll in the tcl lib directory, but eventually I'd like to
+put it in a different directory and just have people set their
+TCLLIBPATH environment variable.  Does anyone out there know how to
+set an environment variable under Windows/Windows 95/Windows NT?  If
+so, please let me know.
+
+MISSING THINGS
+  Scripts.  I've included four, mplay, mrec, minfo and midtocl.
+If you write some good ones, send them to me and I'll include
+them.  Lucho Georgiev has written a few, which can be found in
+the contrib directory (though by now they are out of date and I
+haven't had a chance to update them).  I'm hoping others will
+contribute too.
+  Xdrum support.  Xdrum won't work with this version of tclmidi.
+I'll eventually redo xdrum to work with tclmidi, but it might
+be a while.  I also want to write a X based score editor based
+on this stuff.  That will probably take *quite* a while.
+
+MAILING LIST
+  I've set up a mailing list for tclmidi discussion.  To subscribe,
+send mail to tclmidi-request@boogie.com and include the phrase
+"subscribe" in the body of the message.  The subject line is
+ignored, so don't put the phrase there.  To send mail to the list,
+email tclmidi@boogie.com.
+
+SPECIAL THANKS
+  Thanks goes to all those who have helped me get this thing working.
+Extra special thanks goes to the following for putting up with a lot
+of system crashes and debugging to make the driver ports usable.
+Thank them for getting the driver to work.  Blame me for any bugs
+you find.
+    Greg Wolodkin <greg@eecs.berkeley.edu>   -  SMPTE, Linux, all around help
+    Ralf Jaegar  <raja@rajas.rhein-main.de>  -  Linux
+    Andreas Gustafsson <gson@niksula.hut.fi> -  NetBSD
+    Luchezar Georgiev <lucho@tu-varna.bg>    -  Linux
+    Alberto Vignani <alberto.vignani@pmn.it> -  Linux
+    Allaoua Bouabdallah <alawa@tao.aiuniv-paris8.fr> - UnixWare
+    John Utz <spaz@u.washington.edu>         -  FreeBSD
+    Dejan Vucinic <dejan@mit.edu>            -  Serial interface
+
+  And of course I'd like to thank everyone who has been using
+tclmidi, finding bugs and helping me test.
+
+mike
+durian@boogie.com

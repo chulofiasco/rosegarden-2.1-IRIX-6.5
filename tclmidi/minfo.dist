@@ -1,0 +1,37 @@
+#!/usr/local/bin/tclsh
+if {[catch {package require tclmidi}]} {
+	puts stderr {Can't find tclmidi package}
+	exit 1
+}
+
+if {$argc > 1} {
+	puts stderr {Usage: minfo [filename]}
+	exit 1
+}
+
+if {$argc == 0} {
+	set fname stdin
+	set f stdin
+} else {
+	set fname [lindex $argv 0]
+	set f [open $fname r]
+}
+set mf [midiread $f]
+midirewind $mf
+
+set config [midiconfig $mf tracks division format]
+set tracks [lindex [lindex $config 0] 1]
+set division [lindex [lindex $config 1] 1]
+set format [lindex [lindex $config 2] 1]
+
+puts "File: $fname"
+puts "Format: $format"
+puts "Tracks: $tracks"
+puts "Division: $division"
+for {set i 0} {$i < $tracks} {incr i} {
+	puts ""
+	puts "Track: $i"
+	while {[set event [midiget $mf $i next]] != "EOT"} {
+		puts $event
+	}
+}

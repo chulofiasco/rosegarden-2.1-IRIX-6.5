@@ -1,0 +1,74 @@
+  So you want to use tclmidi with a different MIDI driver?  Well,
+you'll need to create a new subclass of MidiDevice in the device
+directory.  MPU401 is an example of this for use with the MPU401
+driver shipped with tclmidi.
+  The MidiDevice class is a pure virtual class and contains the
+prototypes for the five virtual functions that need to be written
+in the new subclass.  These virtual functions are Play, Record,
+Stop, Wait and GetTime.
+
+int Play(Song *s, int r = 0)
+  This is the function that plays MIDI songs.  The first argument
+is a pointer to the song to be played and the second argument is
+a boolean that determines if the song should be repeated when
+it reaches the end.
+  Play returns an int signifying if the song could be played or
+not.  1 if playing is possible, 0 if not.
+  Play should return immediately, and must not block.
+
+
+int Record(Song *rec_song, Song *play_song = 0, int r = 0)
+  This is the function that records a MIDI song.  The first argument
+is a pointer to the Song where the incoming events should be placed.
+The second argument is an optional argument.  It specifies a song
+that should be played while recording.  The last argument is another
+optional argument that determines if the play song should be repeated
+when it reaches its end.
+  Record returns an int signifying if the song could be recorded or
+not.  1 if recording is possible, 0 if not.
+  Like Play, Record should return immediately, and must not block.
+
+int Stop(void)
+  This function stops all Playing and recording currently in progress.
+It should turn off any notes currently on.
+  Stop returns 1 if it could successfully stop recording or playing,
+0 otherwise.
+
+int Wait(void)
+  This function blocks until the song currently playing reaches the
+end.  In the case that the song playing is in repeat mode, Wait
+will block forever until a Stop call is made.
+  Wait returns 1 if it could wait successfully, 0 otherwise.
+
+int GetTime(TimeType tt, void *time)
+  This function gets the current time in the device.  This time
+represents the time since the device started playing or recording.
+GetTime will place the current time in the memory pointed to by
+the time argument.  The form of the time is represented by the
+TimeTime field.  Currently this can be either SMFTIME or SMPTETIME.
+If it is SMFTIME, time should point to an unsigned long.  If
+the TimeType is SMPTETIME, the time field should point to a
+SMPTETime object.
+  GetTime returns 1 on success, 0 otherwise.
+
+
+  The tricky part to implementing a device interface is the requirement
+that Play and Record not block.  The MPU401 interface does this by
+catching SIGIOs and putting the device in ASYNC mode.  Other devices
+that don't have an ASYNC mode will have to come up with other methods
+to avoid blocking.  Forking, spawning a thread or using itimer might
+be solutions.
+  The new class should be wrapped in a define to control if it
+will be compiled.  Something similar to USE_MPU401.
+  Once the new class is written, a hook should be added to tclmPlay.cc.
+The proper header file should be included and an instance of the
+device interface created.  Lines similar to the following should be added:
+#ifdef USE_MPU401
+#include "MPU401.h"
+#endif
+
+#ifdef USE_MPU401
+	tclm_interp->SetMidiDevice(new MPU401("/dev/midi0"));
+#else
+	tclm_interp->SetMidiDevice(0);
+#endif

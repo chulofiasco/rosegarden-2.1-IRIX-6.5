@@ -1,0 +1,45 @@
+INSTALLING THE MPU401 DRIVER
+  Before installing tclmidi, you will need to decide if you
+wish to install the MPU401 driver I have supplied.
+Currently, I have drivers with the same interface for BSD/OS (formerly
+BSD/386), Linux  and Unixware.  If you wish to install
+a driver, go to the drivers directory (cd drivers) and
+follow the instructions there.  For Linux and Unixware there are
+makefiles that do most of the work.  For BSDI, you have to do
+some things by hand.
+
+INSTALLING THE TCLMIDI PACKAGE
+  Before trying to build tclmidi, you will need to edit the Makefile.
+It is chock full of comments and has default settings for many
+machines.  Comment out the incorrect definitions, and uncomment
+the correct ones.  This should be pretty straight forward.
+  If you wish to build in support for the MPU401 driver, you
+will need to define USE_MPU401 under MIDIDEF.  Without this definition,
+you will still be able to build and use tclmidi, you just won't be able
+to play or record.  If you define this, you should also define
+your system type (BSD, linux, SVR4, etc.).  This definition controls
+the location of the driver include file and some other minor
+system incompatibilites.  The rest of the source is platform
+independant and the definition isn't needed if USE_MPU401 is not
+defined.
+  Once you have customized the Makefile, you need only type
+    make
+and then
+    make install.
+  To install the man pages use
+    make install-man-cooked
+or
+    make install-man-raw
+
+  The man pages are written using the newer mandoc macros instead of
+the man macros.  "Cooking" the man pages involves running them
+through groff (you can use nroff if you want by editing man/Makefile),
+and then installing the processed man pages.  The raw target installs
+the man sources without processing them.
+
+  If you want a version of tclmidi that includes tk support type
+    make tkmidi
+and then
+    make install-tkmidi
+
+  That should be everything.
