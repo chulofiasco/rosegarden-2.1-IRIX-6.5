@@ -1,0 +1,42 @@
+.Dd January 30, 1994
+.Dt MIDIREWIND N
+.Os
+.Sh NAME
+.Nm midirewind
+.Nd "tclmidi command to reset a MIDI song pointer to the beginning"
+.Sh SYNOPSIS
+.Nm
+.Ar mfileId
+.Op track
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+sets the internal place keeper of
+a \%MIDI song to the beginning.
+The first argument is a \%MIDI song descriptor
+as returned by
+.Xr midimake n
+or
+.Xr midiread n .
+An optional second argument may also be specified to
+rewind only a specific track.
+This argument should be a track number.
+Without a second argument, all tracks in the \%MIDI song
+are rewound.
+.Pp
+.Nm
+affects all future calls to
+.Xr midiget n
+for the song.
+.Sh RETURN VALUES
+.Nm
+does not return anything.
+.Sh SEE ALSO
+.Xr tclm 1 ,
+.Xr midiread n ,
+.Xr midimake n ,
+.Xr midiget n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

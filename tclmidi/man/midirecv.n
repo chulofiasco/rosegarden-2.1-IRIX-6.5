@@ -1,0 +1,48 @@
+.Dd November 30, 1995
+.Dt MIDIRECV N
+.Os
+.Sh NAME
+.Nm midirecv
+.Nd "tclmidi command to read events immediately from a raw MIDI device"
+.Sh SYNOPSIS
+.Nm
+.Ar DevID
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+reads events from a raw device.
+All events currently available are returned with a time stamp of 0.
+If no events are available,
+.Nm
+will block until one arrives.
+.Pp
+The first argument is a device ID, as returned by a call to
+.Xr mididevice n .
+It should be a raw MIDI device (one with a name like
+.Pa /dev/rmidi0).
+.Pp
+.Nm
+can be used simultaneously with
+.Xr midiplay n .
+Using it in conjunction with
+.Xr midirecord n
+on the same device will cause problems as they will both
+try to read from the same stream.
+.Pp
+See
+.Xr midievents n ,
+for a description of \%MIDI events.
+.Sh RETURN VALUES
+.Nm
+returns a list of all events currently available.
+All events will have a timestamp of 0.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr mididevice n ,
+.Xr midiplay n ,
+.Xr midirecord n ,
+.Xr midievents n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

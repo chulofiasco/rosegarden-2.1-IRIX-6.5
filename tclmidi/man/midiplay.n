@@ -1,0 +1,53 @@
+.Dd January 30, 1994
+.Dt MIDIPLAY N
+.Os
+.Sh NAME
+.Nm midiplay
+.Nd "tclmidi command to play a MIDI song"
+.Sh SYNOPSIS
+.Nm
+.Ar DevID MidiID
+.Op repeat
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that plays a \%MIDI
+song through the \%MIDI device.
+.Pp
+The first argument to
+.Nm
+is a \%MIDI device identifier, as returned by the
+.Xr midideivce n
+command.
+The second argument is a
+song descriptor as returned by
+.Xr midimake n
+or
+.Xr midiread n .
+There may also be an optional third argument,
+.Dq repeat .
+If
+.Dq repeat
+is specified, the song will replay once
+the end is reached.
+.Sh RETURN VALUES
+.Nm
+returns immediately with
+the value 1 if the song could be played
+or 0 if there is no \%MIDI device available.
+.Xr midistop n
+must be used to stop playing of the song
+and
+.Xr midiwait n
+can be used to block until the song reaches
+the end.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr mididevice n ,
+.Xr midiread n ,
+.Xr midimake n ,
+.Xr midistop n ,
+.Xr midiwait n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

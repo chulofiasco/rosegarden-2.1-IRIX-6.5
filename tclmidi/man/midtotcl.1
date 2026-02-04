@@ -1,0 +1,41 @@
+.Dd June 8, 1994
+.Dt MIDTOTCL 1
+.Os
+.Sh NAME
+.Nm midtotcl
+.Nd "create the tclmidi commands that will generate a MIDI file"
+.Sh SYNOPSIS
+.Nm
+.Op Fl playable
+.Op filename
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+script that prints out the tclmidi commands necessary
+to reconstruct a \%MIDI file.
+This is useful for editing existing \%MIDI files.
+By default,
+.Nm
+adds commands to print the \%MIDI to stdout in
+the form of a Standard Midi File.
+If the
+.Fl playable
+option is specified,
+.Nm
+will add commands to automatically play the \%MIDI
+song after building it.
+The file name may be specified on the command line
+or read from stdin.
+See
+.Xr midievents n
+for a discription of the different types of events
+and their parameters.
+A similar script is the
+.Xr minfo 1
+program that prints the data in a \%MIDI file.
+.Sh SEE ALSO
+.Xr midievents n
+.Xr minfo 1
+.Sh AUTHORS
+Mike Durian - durian@boogie.com

@@ -1,0 +1,136 @@
+.Dd January 30, 1994
+.Dt MIDIEVENTS N
+.Os
+.Sh NAME
+.Nm midievents
+.Nd "the description tclmidi events"
+.Sh DESCRIPTION
+The
+.Xr midiget n
+and
+.Xr midiput n
+commands both use MIDI events in the same form.
+A
+.Xr tclmidi 1
+event consists of a list, where the first element
+is the time at which the event occurs and the second
+is the name of the event.
+The list may contain other elements too, depending on
+the event type.
+This is a list of all currently supported event types:
+.Bl -tag -width {time
+.It {time NoteOff channel pitch [velocity]}
+The NoteOff event has three arguments: the first is the channel,
+the second the pitch, and the optional third is the velocity.
+If a velocity is not specified, 0 is used.
+.It {time NoteOn channel pitch velocity}
+The NoteOn event has three arguments: the first is the channel,
+the second the pitch and the third the velocity.
+.It {time Note channel pitch velocity duration}
+The Note event is really a combination of the NoteOn and NoteOff
+events.
+In fact, two events exist in the \%MIDI song with a link connecting
+them.
+The Note event takes four arguments.
+The first is the channel,
+and the second is the pitch.
+The third is the velocity of the NoteOn, and the fourth is
+the duration
+until the corresponding NoteOff.
+The implied NoteOff event assumes a velocity of zero.
+.It {time KeyPressure channel pitch value}
+The KeyPressure event takes three arguments.
+The first is the channel, the second the pitch and the third
+the pressure value.
+.It {time Parameter channel parameter value}
+The Parameter event has three arguments.
+The first is the channel, the second the parameter number and
+the third the associated value.
+.It {time Program channel value}
+The Program event has two arguments.
+This first is the channel and the second the program value.
+.It {time ChannelPressure channel value}
+The ChannelPressure event has two arguments.
+The first is the channel and the second the pressure associated
+with that channel.
+.It {time PitchWheel channel value}
+The PitchWheel event has two arguments.
+The first is the channel number and the second the pitch wheel
+setting.
+.It {time SystemExclusive {byte byte ...}}
+The SystemExclusive event has one argument.
+It is a list of data bytes to be sent as a system exclusive
+event.
+.It {time MetaSequenceNumber number}
+The MetaSequenceNumber event has one argument.
+It is the sequence number.
+.It {time MetaText text}
+The MetaText event has one argument.
+It is a text string.
+.It {time MetaCopyright copyright}
+The MetaCopyright event has one argument.
+It is a text string.
+.It {time MetaSequenceName name}
+The MetaSequenceName event has one argument.
+It is a text string.
+.It {time MetaInstrumentName name}
+The MetaInstrumentName event has one argument.
+It is a text string.
+.It {time MetaLyric lyric}
+The MetaLyric event has one argument.
+It is a text string.
+.It {time MetaMarker mark}
+The MetaMarker event has one argument.
+It is a text string.
+.It {time MetaCue cue}
+The MetaCue event has one argument.
+It is a text string.
+.It {time MetaChannelPrefix {byte byte ...}}
+.Xr tclmidi 1
+does not know the proper form for a MetaChannelPrefix
+event, thus it has one argument.
+This argument is a list of data bytes.
+.It {time MetaPortNumber port}
+This event determines which port to use on a multiport
+system.
+It takes one argument, which is the port number.
+.It {time MetaEndOfTrack}
+The MetaEndOfTrack event has no arguments.
+.It {time MetaTempo bpm}
+The MetaTempo event has one argument.
+It is the tempo specified in beats per minute.
+.It {time MetaSMPTE hour minute second frame fractional_frame}
+The MetaSMPTE event has five arguments.
+They are the hour, minute, second, frame and fractional frame.
+.It {time MetaTime numerator denominator clocks 32nds}
+The MetaTime event has four arguments.
+The first is the numerator of the time signature and the
+second is the denominator.
+The third argument is clock ticks per beat, and the fourth
+is the number of 32nd notes per quarter note.
+.It {time MetaKey key major|minor}
+The MetaKey event has two arguments.
+The first is a text string describing the key and the
+second is either
+.Dq major
+or
+.Dq minor.
+The key strings may be the key name, A - G, followed by
+an optional ``flat'' or ``sharp.''
+.It {time MetaSequencerSpecific {byte byte ...}}
+The MetaSequencerSpecific event has one argument.
+It is a list of data bytes.
+.It {time MetaUnknown code {byte byte ...}}
+The MetaUnknown event is for events not directly supported
+by
+.Xr tclmidi 1 .
+It has two arguments.
+The first is the one byte code of the meta event, and
+the second is a list of the data bytes.
+.El
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiput n ,
+.Xr midiget n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

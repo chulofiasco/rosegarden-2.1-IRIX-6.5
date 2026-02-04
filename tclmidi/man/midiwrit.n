@@ -1,0 +1,38 @@
+.Dd January 30, 1994
+.Dt MIDIWRITE N
+.Os
+.Sh NAME
+.Nm midiwrite
+.Nd "tclmidi command to write a MIDI song as a Standard MIDI File"
+.Sh SYNOPSIS
+.Nm
+.Ar FileID
+.Ar MidiID
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that writes a \%MIDI song to
+an open tcl file descriptor in the form of a Standard \%MIDI File.
+This command takes two arguments.
+The first is a tcl file descriptor as returned
+by the
+.Nm tcl
+command
+.Xr open n ,
+the string ``stdout'' or ``stderr.''
+The second argument is a \%MIDI song descriptor
+as returned by
+.Xr midimake n
+or
+.Xr midiread n .
+.Sh RETURN VALUES
+.Nm
+does not return anything.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr open n ,
+.Xr midiread n ,
+.Xr midimake n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

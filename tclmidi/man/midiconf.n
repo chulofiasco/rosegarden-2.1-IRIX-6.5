@@ -1,0 +1,87 @@
+.Dd January 14, 1994
+.Dt MIDICONFIG N
+.Os
+.Sh NAME
+.Nm midiconfig
+.Nd "tclmidi command to get or modify the configuration values of a MIDI song"
+.Sh SYNOPSIS
+.Nm
+.Ar mfileId
+.Op format Op value
+.Op division Op value
+.Op tracks Op value
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+gets or modifies the configurations
+values of
+a \%MIDI song.
+.Pp
+Without arguments
+.Nm
+reports all three configuration values.
+It can also take up to three optional arguments.
+All arguments should be lists consisting of the parameter
+name followed by an optional value.
+If a value for a parameter is not specified then the current
+setting is reported.
+If a value is specified then the song parameter is changed.
+.Pp
+mfileId is a valid \%MIDI song identifier as returned by
+.Xr midimake n
+or
+.Xr midiread n .
+.Pp
+The different parameters are:
+.Bl -tag -width division
+.It format
+This option determines the song type.
+There are three valid values: 0, 1 and 2.
+A format 0 song has only one track which
+intermixes meta and normal events.
+A format 1 song can have many tracks, but
+track 0 always contains most of the meta events,
+specifically MetaTempo events.
+A format 2 song is similar to format 1, but
+each track can be played separately instead
+of playing them all in parallel.
+.It division
+This specifies the resolution of the timing
+for the song.
+If the unit of quanta for a song is is clock
+tick, there will be
+.Em value
+clock ticks per
+beat.
+.It tracks
+This option specifies the number of tracks
+in the song.
+These will by dynamically created and freed
+automatically.
+The tracks are numbered 0 through
+.Em value
+- 1 including.
+A format 0 song should have only one track.
+.El
+.Sh RETURN VALUES
+If parameters are being set,
+.Nm
+will return nothing.
+If parameters are being queried,
+a list of lists will be returned.
+Each sublist will contain the parameter
+name and its associated value.
+The parameters are returned in the order
+specified or in the order
+.Em format, division, tracks
+if
+.Nm
+is called without arguments.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiread n ,
+.Xr midimake n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

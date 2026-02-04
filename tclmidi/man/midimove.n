@@ -1,0 +1,64 @@
+.Dd April 13, 1994
+.Dt MIDIMOVE N
+.Os
+.Sh NAME
+.Nm midimove
+.Nd "tclmidi command to move a range of events in a MIDI song"
+.Sh SYNOPSIS
+.Nm
+.Pf { Ar destMidiID destTrack Ns }
+.Ar destStartTime
+.Pf { Ar srcMidiID srcTrack Ns }
+.Ar srcStartTime
+.Ar srcEndTime
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+moves a range of events.
+These events can be moved from one track to another,
+or moved within the same track.
+The source range may overlap with the destination.
+.Pp
+The first argument is a list specifying a particular track
+in a \%MIDI song.
+The first element of this list is a \%MIDI song identifier
+as returned by
+.Xr midimake n ,
+or
+.Xr midinew n .
+The second element is a valid track number in the \%MIDI song.
+This list specifies the destination track for the move.
+.Pp
+The third argument is the time to start depositing the
+events specified in the source range.
+Note, the first event might not be placed at exactly the
+requested time if an event does not occur at the start
+time for the source range.
+The offset between the first event and the destination start
+time will be the same as the offset between the first event
+found in the source range and the start time of the source range.
+.Pp
+The fourth argument is another list identical in form to
+the list identifying the destination track.
+This list specified the source track.
+.Pp
+The fifth and last arguments specify the range of events to
+be moved.
+They determine the start and end times of the range.
+All events found at time
+.Ar srcStartTime
+up to, but not including events found at time
+.Ar srcEndTime
+will be moved.
+.Sh RETURN VALUES
+.Nm
+does not return anything.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiread n ,
+.Xr midimake n ,
+.Xr midicopy n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

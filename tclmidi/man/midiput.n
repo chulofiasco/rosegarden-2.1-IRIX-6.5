@@ -1,0 +1,39 @@
+.Dd January 30, 1994
+.Dt MIDIPUT N
+.Os
+.Sh NAME
+.Nm midiput
+.Nd "tclmidi command to insert an event in a MIDI song"
+.Sh SYNOPSIS
+.Nm
+.Ar MidiID
+.Ar track
+.Ar event
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+inserts an event in a track
+of a \%MIDI song.
+The first argument is a \%MIDI song descriptor
+as returned by
+.Xr midimake n
+or
+.Xr midiread n .
+The second argument is the track in the \%MIDI song.
+The third argument is the event to insert.
+See
+.Xr midievents n ,
+for a description of \%MIDI events.
+.Sh RETURN VALUES
+.Nm
+returns nothing.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiread n ,
+.Xr midimake n ,
+.Xr midiget n ,
+.Xr midievents n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

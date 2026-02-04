@@ -1,0 +1,29 @@
+.Dd February 3, 1994
+.Dt MINFO 1
+.Os
+.Sh NAME
+.Nm minfo
+.Nd "a tclmidi script to print a MIDI file in human readible form"
+.Sh SYNOPSIS
+.Nm
+.Op filename
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+script that prints a \%MIDI file
+in a human readible form.
+The file name may be specified on the command line
+or read from stdin.
+It prints out the header data for the \%MIDI file
+(tracks, division and format) and then lists the
+events for each track in the file.
+The events are listed one line per event.
+See
+.Xr midievents n
+for a discription of the different types of events
+and their parameters.
+.Sh SEE ALSO
+.Xr midievents n
+.Sh AUTHORS
+Mike Durian - durian@boogie.com

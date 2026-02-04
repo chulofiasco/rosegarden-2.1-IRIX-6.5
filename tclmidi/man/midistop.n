@@ -1,0 +1,29 @@
+.Dd January 30, 1994
+.Dt MIDISTOP N
+.Os
+.Sh NAME
+.Nm midistop
+.Nd "tclmidi command to stop playing or recording a MIDI song"
+.Sh SYNOPSIS
+.Nm DevID
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that stops the playing or
+recording of a \%MIDI song on a particular device interface.
+The argument is a \%MIDI device identifier, as returned from a
+call to
+.Xr mididevice n .
+.Sh RETURN VALUES
+.Nm
+returns 1
+if it could successfully
+stop playing or recording, 0 otherwise.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr mididevice n ,
+.Xr midiplay n ,
+.Xr midirecord n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

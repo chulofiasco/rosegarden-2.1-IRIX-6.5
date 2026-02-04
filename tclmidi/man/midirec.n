@@ -1,0 +1,71 @@
+.Dd January 30, 1994
+.Dt MIDIRECORD N
+.Os
+.Sh NAME
+.Nm midirecord
+.Nd "tclmidi command to record a MIDI song"
+.Sh SYNOPSIS
+.Nm
+.Ar DevID
+.Ar RecMidiID
+.Op PlayMidiID Op repeat
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that records events from a \%MIDI
+device and puts them in a \%MIDI song.
+.Pp
+The first argument to
+.Nm
+is a \%MIDI device identifier as returned from a call to
+.Xr mididevice n .
+The second argument
+is the \%MIDI song descriptor of the record song.
+It should be one returned from
+.Xr midimake n
+or
+.Xr midiread n .
+The third argument is an optional \%MIDI song descriptor
+for a song that should be played while recording.
+Furthermore, an optional fourth argument of
+.Dq repeat
+may be specified
+so the play song will be repeated.
+.Pp
+Recording continues until the
+.Xr midistop n
+command is issued.
+.Xr midiwait n
+may be used to block until the play song finishes.
+.Pp
+All recorded events are put into track 0 of the \%MIDI song.
+.Sh RETURN VALUES
+.Nm
+returns immediately with 0
+if no \%MIDI devices are available, or
+1 if one is.
+.Sh BUGS
+The MPU-401 device interface
+dynamically creates events in the record \%MIDI song
+asynchronously.
+Since this involves a call to
+.Xr malloc 3
+which
+is not re-entrant, this is a potential hazard.
+Until I figure out a way around this, avoid other
+calls to
+.Xr malloc 3
+while recording.
+The current TCL signal synchronizing commands found are
+not adequate for this task.
+.Sh SEE ALSO
+.Xr tclm 1 ,
+.Xr mididevice n ,
+.Xr midiplay n ,
+.Xr midiread n ,
+.Xr midimake n ,
+.Xr midistop n ,
+.Xr midiwait n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

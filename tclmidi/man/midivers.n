@@ -1,0 +1,21 @@
+.Dd February 15, 1994
+.Dt MIDIVERSION N
+.Os
+.Sh NAME
+.Nm midiversion
+.Nd "tclmidi command to report the version"
+.Sh SYNOPSIS
+.Nm
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that reports the version that
+is running.
+.Sh RETURN VALUES
+.Nm
+returns the version number.
+.Sh SEE ALSO
+.Xr tclmidi 1
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

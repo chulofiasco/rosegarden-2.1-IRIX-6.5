@@ -1,0 +1,127 @@
+.Dd February 3, 1993
+.Dt TCLMIDI 1
+.Os
+.Sh NAME
+.Nm tclmidi
+.Nd "a TCL based interpreter for manipulating MIDI files"
+.Sh SYNOPSIS
+.Nm
+.Sh DESCRIPTION
+.Nm
+is an extension of John Ousterhout's TCL language.
+The extension commands are designed to facilitate the
+creation and modification of \%MIDI files.
+.Nm
+is based on an earlier program called
+.Nm tclm ,
+but provides many improvements.
+Among these are
+.Bl -item -offset indent
+.It
+absolute time indexing.
+Events
+may now be inserted and removed from any place in
+the \%MIDI song.
+.It
+a note concept.
+NoteOn and NoteOff events may now
+be handled together as a single Note event.
+.It
+an underlying object oriented design.
+.Nm
+is just a wrapper around a powerful C++ library
+called
+.Nm libmidi++.a .
+.It
+a song structure based on a red/black tree.
+This allows access to events in a reasonable time
+frame regardless of the song size.
+Sequential access is also quick due to the leaves
+of the tree being a double-linked list.
+.El
+In addition to the normal TCL commands, the following
+are also available.
+.Bl -tag -offset indent -width midiconfig
+.It midiconfig
+get or modify the configuration values of a \%MIDI song
+.It mididevice
+get or modify the configuration values of a \%MIDI device
+.It midifree
+free the space used by a \%MIDI song
+.It midiget
+get one event from a \%MIDI song
+.It midimake
+create an empty \%MIDI song
+.It midimerge
+merge multiple tracks of \%MIDI songs to one track
+.It midiplay
+play a \%MIDI song
+.It midiput
+insert an event in a \%MIDI song
+.It midiread
+read a \%MIDI song from a Standard \%MIDI File
+.It midirecord
+record a \%MIDI song
+.It midirewind
+reset a \%MIDI song pointer to the beginning
+.It midisplit
+split a track into a meta track and an other event track
+.It midistop
+stop playing or recording a \%MIDI song
+.It miditrack
+get information about a track in a \%MIDI song
+.It midiwait
+block until a \%MIDI song finishes playing
+.It midiwrite
+write a \%MIDI song as a Standard \%MIDI File
+.It midiversion
+report the
+.Xr tclmidi 1
+version number
+.El
+.Pp
+The commands,
+.Xr mididevice n ,
+.Xr midiplay n ,
+.Xr midirecord n ,
+.Xr midistop n ,
+and
+.Xr midiwait n
+are only supported for certain \%MIDI drivers.
+Currently this is limited to the MPU-401 UART driver
+for the following operating systems:
+.Bl -item -offset indent -compact
+.It
+BSD/386
+.It
+Linux
+.It
+NetBSD
+.It
+SVR4
+.El
+.Sh SEE ALSO
+.Xr midiconfig n ,
+.Xr mididevice n ,
+.Xr midifree n ,
+.Xr midiget n ,
+.Xr midimake n ,
+.Xr midimerge n ,
+.Xr midiplay n ,
+.Xr midiput n ,
+.Xr midiread n ,
+.Xr midirecord n ,
+.Xr midirewind n ,
+.Xr midisplit n ,
+.Xr midistop n ,
+.Xr miditrack n ,
+.Xr midiwait n ,
+.Xr midiwrite n ,
+.Xr midiversion n ,
+.Xr midievents n ,
+.Xr minfo 1 ,
+.Xr mplay 1 ,
+.Xr mrecord 1 ,
+.Xr midtotcl 1
+.Sh AUTHORS
+Mike Durian - durian@boogie.com

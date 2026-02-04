@@ -1,0 +1,44 @@
+.Dd January 30, 1994
+.Dt MIDIMAKE N
+.Os
+.Sh NAME
+.Nm midimake
+.Nd "tclmidi command to create an empty MIDI song"
+.Sh SYNOPSIS
+.Nm
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that creates an empty \%MIDI song
+for use by other
+.Xr tclmidi 1
+commands.
+By default the \%MIDI
+song is created with 0
+tracks allocated, the format is type zero and the division
+is 120.
+These defaults can then be changed with
+the
+.Xr midiconfig n
+command.
+.Pp
+Since
+.Nm
+allocates space for the \%MIDI
+song,
+.Xr midifree n
+should be used
+when the file is no longer needed.
+.Sh RETURN VALUES
+.Nm
+returns a
+\%MIDI song descriptor
+for use by other
+.Xr tclmidi 1
+commands.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiconfig n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

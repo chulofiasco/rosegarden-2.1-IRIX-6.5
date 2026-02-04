@@ -1,0 +1,45 @@
+.Dd January 30, 1994
+.Dt MIDISPLIT N
+.Os
+.Sh NAME
+.Nm midisplit
+.Nd "tclmidi command to split a track into a meta track and an other track"
+.Sh SYNOPSIS
+.Nm
+.Pf { Ar srcMidiId srcTrack Ns }
+.Pf { Ar metaMidiID metaTrack Ns }
+.Pf { Ar otherMidiID otherTrack Ns }
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+splits one track into two tracks.
+The first of the resulting tracks will contain
+only meta events, while the second will
+contain all other events.
+Both tracks will be terminated with a MetaEndOfTrack
+event.
+.Pp
+The first argument is a list that contains the \%MIDI
+song descriptor of the source track and the track number
+in that song.
+The second argument is a similar list for the track where
+meta events should go, and the third argument is a list
+describing where the remaining events should go.
+.Pp
+The \%MIDI song descriptors
+should be values returned by either
+.Xr midiread n
+or
+.Xr midimake n .
+.Sh RETURN VALUES
+.Nm
+returns nothing.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiread n ,
+.Xr midimake n ,
+.Xr midimerge n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

@@ -1,0 +1,58 @@
+.Dd Nov 30, 1995
+.Dt MIDIFEATURE N
+.Os
+.Sh NAME
+.Nm midifeature
+.Nd "tclmidi command to control hardware specific features on a MIDI device"
+.Sh SYNOPSIS
+.Nm
+DevID
+.Op device_specific_features
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+allows you to control features available only on some \%MIDI hardware
+interfaces.
+The ability to control features common to all \%MIDI interfaces is
+done with the
+.Xr mididevice n
+command.
+The first argument is the device identifier, as returned by a call
+to
+.Xr mididevice n .
+The remaining arguments are device specific.
+.Pp
+Currently, the following features are available:
+.Bl -tag -width mpu401_timing
+.It kernel_timing
+This feature enable kernel based timing on the interface.
+This is the default timing mode on all devices.
+.It smpte_timing
+This feature is only available on the MQX-32 \%MIDI interface.
+It enables an external timing mode based on a \%SMPTE tape.
+The device will follow the SMPTE tape times, even if the tape
+is rewound, or fast-forwarded.
+.It mpu401_timing
+This feature is available on all fully MPU401 compatible boards.
+It puts the board in intelligent mode and uses it as a timing
+source.
+Due to driver implementation details, it really is no more accurate
+than kernel_timing, and perhaps less so.
+It use is discouraged, and is only used for driver debugging purposes.
+.It get_smpte
+This feature is only available on the MQX-32 \%MIDI interface when
+that device is in SMPTE mode.
+It returns the current SMPTE time.
+The time is in the form:
+hh:mm:ss:fr:ff
+.El
+.Sh RETURN VALUES
+Return values are dependent on the feature type.
+See the list above for details.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr mididevice n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

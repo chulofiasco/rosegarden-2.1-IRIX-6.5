@@ -1,0 +1,29 @@
+.Dd January 8, 1995
+.Dt MIDITIME N
+.Os
+.Sh NAME
+.Nm miditime
+.Nd "tclmidi command to get the current MIDI device time"
+.Sh SYNOPSIS
+.Nm
+DevID
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+gets the current time in the MIDI device.
+The argument is a device identifier, as return by a call to
+.Xr mididevice n .
+.Pp
+.Nm
+returns the time as SMF ticks since the beginning of the
+song being played or recorded.
+.Sh RETURN VALUES
+The number of SMF ticks on a device since the start of playing or
+recording.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr mididevice n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

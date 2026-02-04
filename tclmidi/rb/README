@@ -1,0 +1,110 @@
+$Revision: 1.1.1.1 $
+
+Rb.c, Rb.h, List.h, and list.c are files for doing red-black trees and 
+doubly linked lists, respectively.
+
+Rb.h, Rb.c:
+
+Rb.h contains the typedef for red-black tree structures.  Basically, 
+red-black trees are balanced trees whose external nodes are sorted
+by a key, and connected in a linked list.  The following is how
+you use rb.c and rb.h:
+
+Include rb.h in your source.
+
+Make_rb() returns the head of a red-black tree.  It serves two functions:
+Its p.root pointer points to the root of the red-black tree.  Its 
+c.list.flink and c.list.blink pointers point to the first and last 
+external nodes of the tree.  When the tree is empty, all these pointers
+point to itself.
+
+The external nodes can be traversed in sorted order with their
+c.list.flink and c.list.blink pointers.  The macros rb_first, rb_last,
+rb_next, rb_prev, and rb_traverse can be used to traverse external node lists.
+
+External nodes hold two pieces of information: the key and the value
+(in k.key and v.val, respectively).   The key can be a character 
+string, an integer, or a general pointer.  Val is typed as a character
+pointer, but can be any pointer.  If the key is a character string, 
+then one can insert it, and a value into a tree with rb_insert().  If
+it is an integer, then rb_inserti() should be used.  If it is a general 
+pointer, then rb_insertg() must be used, with a comparison function 
+passed as the fourth argument.  This function takes two keys as arguments,
+and returns a negative value, positive value, or 0, depending on whether
+the first key is less than, greater than or equal to the second.  Thus,
+one could use rb_insertg(t, s, v, strcmp) to insert the value v with 
+a character string s into the tree t.
+
+Rb_find_key(t, k) returns the external node in t whose value is equal
+k or whose value is the smallest value greater than k.  (Here, k is
+a string).  If there is no value greater than or equal to k, then 
+t is returned.  Rb_find_ikey(t,k) works when k is an integer, and 
+Rb_find_gkey(t,k,cmp) works for general pointers.
+
+Rb_find_key_n(t, k, n) is the same as rb_find_key, except that it
+returns whether or not k was found in n (n is an int *).  Rb_find_ikey_n
+and Rb_find_gkey_n are the analogous routines for integer and general
+keys.
+
+Rb_insert_b(e, k, v) makes a new external node with key k and val v, and 
+inserts it before the external node e.  If e is the head of a tree, 
+then the new node is inserted at the end of the external node list.
+If this insertion violates sorted order, no error is flagged.  It is 
+assumed that the user knows what he/she is doing.  Rb_insert_a(e,k,v)
+inserts the new node after e (if e = t, it inserts the new node at the
+beginning of the list).
+
+Rb_insert() is therefore really a combination of Rb_find_key() and
+Rb_insert_b().
+
+Rb_delete_node(e) deletes the external node e from a tree (and thus from 
+the linked list of external nodes).  The node is free'd as well, so
+don't retain pointers to it.
+
+Red-black trees are spiffy because find_key, insert, and delete are all
+done in log(n) time.  Thus, they can be freely used instead of hash-tables,
+with the benifit of having the elements in sorted order at all times, and
+with the guarantee of operations being in log(n) time.
+
+Other routines:
+
+Rb_print_tree() will grossly print out a red-black tree with string keys.
+Rb_iprint_tree() will do the same with trees with integer keys.
+Rb_nblack(e) will report the number of black nodes on the path from external
+  node e to the root.  The path length is less than twice this value.
+Rb_plength(e) reports the length of the path from e to the root.
+
+
+List.c and list.h
+
+These are routines for generic doubly linked lists.  Doubly linked lists
+are any structs whose first two fields are flink and blink pointers.
+Mk_list(t) returns an empty list with the type t.  The empty list is 
+a struct whose flink and blink point to itself.  Insert() and delete_item()
+insert and delete nodes from a list -- unlike the rb routines, no allocation
+is done here.  In insert(), the node to be inserted is assumed to be allocated,
+and in delete_item(), the deleted node is not free'd.
+
+Get_node() allocates a node from a node list.  The head element in the linked
+list has info about how big of a node to allocate.  Free_node() deallocates
+a node.  In actuality, free_node doesn't call free, but chains the node onto
+a queue of nodes.  That way, get_node first returns nodes from this queue, 
+and malloc need not be called.  This is quite a possible memory leak.  To
+be safe, you can malloc and free your own nodes, instead of calling get_node()
+and free_node().
+
+List.c and list.h are kind of gross, and should be generally avoided because
+of allocation problems.  Try dlist.c & dlist.h for doubly linked lists which
+are more like the red-black tree structs.
+
+If you have any questions or comments about this, please let me know.
+
+Take it Easy,
+
+Jim Plank
+jsp@princeton.edu or
+plank@cs.utk.edu
+
+35 Olden St
+Princeton University
+Princeton, NJ 80544-2087

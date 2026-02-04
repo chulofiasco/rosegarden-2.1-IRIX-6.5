@@ -1,0 +1,51 @@
+.Dd January 30, 1994
+.Dt MIDIMERGE N
+.Os
+.Sh NAME
+.Nm midimerge
+.Nd "tclmdi command to merge multiple tracks of MIDI songs to one track"
+.Sh SYNOPSIS
+.Nm
+.Pf { Ar destMidiID destTrack Ns }
+.Pf { Ar srcMidiID srcTrack Ns }
+.Op { Ar srcMidiID srcTrack Ns } ...
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+merges one or more source tracks to a single destination track
+of a \%MIDI song.
+The first option is a list that designates output track.
+The first element of that list is the \%MIDI song descriptor
+for the track, and the second argument of the list is the
+track in that \%MIDI song.
+.Pp
+The second, and optional remaining arguments, are lists specifying
+the source tracks.
+The form of the source lists is the same as that for the destination
+track.
+.Pp
+The times of events in a source track are adjusted as necessary to convert
+from the division of the source track to the division of the
+destination track.
+See
+.Xr midiconfig n
+for a description of the division song configuration option.
+.Pp
+All \%MIDI song descriptors should be values returned from a
+call to
+.Xr midimake n
+or
+.Xr midiread n .
+.Sh RETURN VALUES
+.Nm
+returns nothing.
+.Sh SEE ALSO
+.Xr tclm 1 ,
+.Xr midiconfig n ,
+.Xr midisplit n ,
+.Xr midimake n ,
+.Xr midiread n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

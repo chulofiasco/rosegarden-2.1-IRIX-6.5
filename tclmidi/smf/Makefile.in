@@ -1,0 +1,41 @@
+#----------------------------------------------------------------
+# The information below is modified by the configure script when
+# Makefile is generated from Makefile.in.  You shouldn't normally
+# modify any of this stuff by hand.
+#----------------------------------------------------------------
+
+SHLIB_CFLAGS =		@SHLIB_CFLAGS@
+SHLIB_LD =		@SHLIB_LD@
+SHLIB_SUFFIX =		@SHLIB_SUFFIX@
+SHLIB_VERSION =		@SHLIB_VERSION@
+SRC_DIR =		@srcdir@
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+CFLAGS = @CFLAGS@ @DEFS@
+CXXFLAGS = @CXXFLAGS@ @DEFS@
+CPPFLAGS = @CPPFLAGS@
+CC_SWITCHES = ${CPPFLAGS} @CXXFLAGS@ @DEFS@ -DTCL_7_5 -I${TCL_GENERIC_DIR} ${SHLIB_CFLAGS}
+
+SMFFILES = SMFUtils.o SMFHead.o SMFTrack.o
+SMFFILES_SRC = SMFUtils.cxx SMFHead.cxx SMFTrack.cxx
+
+.SUFFIXES: .cxx $(SUFFIXES)
+
+.cxx.o:
+	@CXX@ -c $(CC_SWITCHES) $<
+
+objs: $(SMFFILES)
+	for f in $(SMFFILES) ; do echo smf/$$f ; done > objs
+
+depend:
+	sed "/[#]# Dependancies/,$$$$d" < Makefile > Makefile.tmp
+	echo >> Makefile.tmp
+	echo "##" "Dependancies" >> Makefile.tmp
+	@CXX@ -M $(CC_SWITCHES) $(SMFFILES_SRC) >> Makefile.tmp
+	cp Makefile.tmp Makefile
+	rm Makefile.tmp
+
+clean:
+	-rm *.o objs

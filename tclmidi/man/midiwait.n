@@ -1,0 +1,34 @@
+.Dd January 30, 1994
+.Dt MIDIWAIT N
+.Os
+.Sh NAME
+.Nm midiwait
+.Nd "tclmidi command to block until playing or recording a MIDI song finishes"
+.Sh SYNOPSIS
+.Nm DevID
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that blocks until a \%MIDI song finishes
+playing.
+The argument is a device identifier, as return by a call to
+.Xr mididevice n .
+.Nm
+only works during recording if a song is also being played.
+.Sh RETURN VALUES
+.Nm
+returns 1
+if it could successfully
+stop playing or recording, 0 otherwise.
+.Sh BUGS
+Care should be taken to avoid calling
+.Nm
+when a song is playing in repeat mode.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr mididevice n ,
+.Xr midiplay n ,
+.Xr midirecord n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

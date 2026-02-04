@@ -1,0 +1,50 @@
+.Dd November 30, 1995
+.Dt MIDISEND N
+.Os
+.Sh NAME
+.Nm midisend
+.Nd "tclmidi command to write an event(s) immediately to a raw MIDI device"
+.Sh SYNOPSIS
+.Nm
+.Ar DevID event
+.Op event ...
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+write an event or events to a raw device.
+The list of events will be sent out on the MIDI stream with a little
+delay as possible.
+.Pp
+The first argument is a device ID, as returned by a call to
+.Xr mididevice n .
+It should be a raw MIDI device (one with a name like
+.Pa /dev/rmidi0).
+The second argument is an events followed by zero of more optional
+events.
+Each event should have a time stamp, but the stamp
+will be ignored.
+.Pp
+.Nm
+can be used simultaneously with
+.Xr midiplay n
+and
+.Xr midirecord n .
+Untimed events can be sent to a raw device while timed events
+are being played to the timed interface of the device.
+.Pp
+See
+.Xr midievents n ,
+for a description of \%MIDI events.
+.Sh RETURN VALUES
+.Nm
+returns nothing.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr mididevice n ,
+.Xr midiplay n ,
+.Xr midirecord n ,
+.Xr midievents n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

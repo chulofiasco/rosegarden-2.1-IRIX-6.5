@@ -1,0 +1,62 @@
+.Dd February 3, 1994
+.Dt MPLAY 1
+.Os
+.Sh NAME
+.Nm mplay
+.Nd "a tclmidi script to play a MIDI file"
+.Sh SYNOPSIS
+.Nm
+.Op Fl dev DevicePath
+.Op Fl repeat
+.Op Fl smpte
+.Op Fl quiet
+.Op file
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+script that plays a \%MIDI file.
+The file name may be specified on the command line
+or read from stdin.
+The options are as follows:
+.Bl -tag -width Fl repeat
+.It Fl dev DevicePath
+Use the device DevicePath instead of the default
+.Pa /dev/midi0 .
+.It Fl repeat
+Play the file repeatedly.
+If not in quiet mode, the playing may be stopped
+by pressing the return key.
+Otherwise the process
+must be killed.
+.It Fl smpte
+With this flag
+.Nm
+will use
+.Pa /dev/smpte0
+instead of the default
+.Pa /dev/midi0 .
+It will also let the SMPTE tape cotrol starting and
+stopping the song.
+.It Fl quiet
+With this option
+.Nm
+will not print out messages or ask for input.
+.El
+.Pp
+Since
+.Nm
+makes use of the
+.Xr midiplay n
+.Xr tclmidi 1
+command,
+this program will only work
+if
+.Xr tclmidi 1
+was compiled with a device
+interface.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiplay n
+.Sh AUTHORS
+Mike Durian - durian@boogie.com

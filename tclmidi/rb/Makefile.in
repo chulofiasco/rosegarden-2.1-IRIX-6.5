@@ -1,0 +1,44 @@
+#----------------------------------------------------------------
+# The information below is modified by the configure script when
+# Makefile is generated from Makefile.in.  You shouldn't normally
+# modify any of this stuff by hand.
+#----------------------------------------------------------------
+
+SHLIB_CFLAGS =		@SHLIB_CFLAGS@
+SHLIB_LD =		@SHLIB_LD@
+SHLIB_SUFFIX =		@SHLIB_SUFFIX@
+SHLIB_VERSION =		@SHLIB_VERSION@
+SRC_DIR =		@srcdir@
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+CFLAGS = @CFLAGS@ @DEFS@
+CXXFLAGS = @CXXFLAGS@ @DEFS@
+CPPFLAGS = @CPPFLAGS@
+CC_SWITCHES = ${CPPFLAGS} @CXXFLAGS@ @DEFS@ -DTCL_7_5 -I${TCL_GENERIC_DIR} ${SHLIB_CFLAGS}
+
+RBFILES = rb.o list.o
+RBFILES_SRC = rb.c list.c
+
+.SUFFIXES: .cxx $(SUFFIXES)
+
+.cxx.o:
+	@CXX@ -c $(CC_SWITCHES) $<
+
+.c.o:
+	@CC@ -c $(CC_SWITCHES) $<
+
+objs: $(RBFILES)
+	for f in $(RBFILES) ; do echo rb/$$f ; done > objs
+
+depend:
+	sed "/[#]# Dependancies/,$$$$d" < Makefile > Makefile.tmp
+	echo >> Makefile.tmp
+	echo "##" "Dependancies" >> Makefile.tmp
+	@CXX@ -M $(CC_SWITCHES) $(RBFILES_SRC) >> Makefile.tmp
+	cp Makefile.tmp Makefile
+	rm Makefile.tmp
+
+clean:
+	-rm *.o objs

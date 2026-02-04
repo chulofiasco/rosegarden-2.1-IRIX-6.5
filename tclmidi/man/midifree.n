@@ -1,0 +1,31 @@
+.Dd January 30, 1994
+.Dt MIDIFREE N
+.Os
+.Sh NAME
+.Nm midifree
+.Nd "tclmidi command to free the space used by a MIDI song"
+.Sh SYNOPSIS
+.Nm
+.Ar MidiID
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+frees the space used by a
+\%MIDI song created from a previous
+call to
+.Xr midiread n
+or
+.Xr midimake n .
+This command takes one argument, which
+is the descriptor of a \%MIDI song.
+.Sh RETURN VALUES
+.Nm
+does not return anything.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiread n ,
+.Xr midimake n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

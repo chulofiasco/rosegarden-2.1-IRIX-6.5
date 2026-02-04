@@ -1,0 +1,10 @@
+  Don't expect much from these tests.  They're basically just for
+my benefit.  I used them to test the tclmidi commands as I created
+them.  They don't do anything useful like give you a success/failed
+message.  You must look at the code and figure out if they did the
+right thing.
+  The only reason I'm including them is so people can take a look
+at the various syntax for the commands, and see simple examples of
+how to use them.
+
+mike

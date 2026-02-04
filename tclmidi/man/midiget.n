@@ -1,0 +1,73 @@
+.Dd January 30, 1994
+.Dt MIDIGET N
+.Os
+.Sh NAME
+.Nm midiget
+.Nd "tclmidi command to get one event from a MIDI song"
+.Sh SYNOPSIS
+.Nm
+.Ar MidiID
+.Ar track
+.Ar index
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+gets one event from the specified track
+of a
+\%MIDI
+Song.
+This first argument is the descriptor for
+the \%MIDI song.
+This descriptor should be one returned by
+.Xr midimake n
+or
+.Xr midiread n .
+The second argument specifies the track to
+index.
+The third argument is an index for that track.
+This argument may be an absolute time index,
+the string ``next'' or the string ``prev.''
+.Pp
+Indices of ``next'' or ``prev'' will return one event
+that is immediately after or before the last event returned
+by
+.Nm Ns .
+The string ``EOT'' will be returned when the end (or beginning
+in the case of ``prev'') of the track is reached.
+The command
+.Xr midirewind n
+will reset the track position so that indices of ``next''
+or ``prev'' will return the first and last events of the
+track, respectively.
+.Pp
+An absolute time index will return a list of all events at
+the specified time.
+If there are no events at the specified time, then a list
+of events is returned with a time as close to, but greater
+than the time specified.
+If there are no events with a time equal to or greater than
+the specified time, then the string ``EOT'' is returned.
+.Sh RETURN VALUES
+.Nm
+with an index of ``next'' or ``prev,'' returns one event,
+unless the end or beginning of the track is reached, in
+which case the string, ``EOT'' is returned.
+.Nm
+with an absolute time index returns a list of
+all events that occur at that time.
+If no events exist with a time equal to or greater than the specified
+time, the string
+``EOT'' is returned.
+All events are in standard event form,
+.Xr midievents n .
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiread n ,
+.Xr midimake n ,
+.Xr midirewind n ,
+.Xr midiput n ,
+.Xr midievents n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

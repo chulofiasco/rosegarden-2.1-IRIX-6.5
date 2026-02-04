@@ -1,0 +1,58 @@
+.Dd June 22, 1994
+.Dt MIDITRACK N
+.Os
+.Sh NAME
+.Nm miditrack
+.Nd "tclmidi command to get information about a MIDI track"
+.Sh SYNOPSIS
+.Nm
+.Ar mfileId
+.Ar track
+.Ar {start|end}
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+gets information about a \%MIDI track.
+Currently two types of information can be obtained.
+These are the time of the first event found in
+the track, and the time of the last event in the track.
+The time of the last event in the track might be different
+than that returned by a call to
+.Xr midiget
+getting the last event in a track.
+This is because
+.Xr midiget
+returns NoteOn/NoteOff event pairs as a single Note
+event, and the Note event contains the time of the
+NoteOn event.
+.Nm
+will return the time of the last event in a file
+including NoteOff halves of Note events.
+.Pp
+The first argument to
+.Nm
+is a \%MIDI song identifier.
+The second argument is a track number of that song,
+and the last argument is one of either
+.Dq start
+or
+.Dq end Ns .
+.Sh RETURN VALUES
+.Nm
+returns the time of the first or last event in a track
+for the
+.Ar start
+and
+.Ar end
+options.
+.Sh NOTES
+.Nm
+might be expanded in the future to supply other types
+of information about \%MIDI tracks.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiget n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

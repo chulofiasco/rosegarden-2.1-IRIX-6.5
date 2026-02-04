@@ -1,0 +1,58 @@
+.Dd April 13, 1994
+.Dt MIDIDELETE N
+.Os
+.Sh NAME
+.Nm mididelete
+.Nd "tclmidi command to delete an event or events in a MIDI song"
+.Sh SYNOPSIS
+.Nm
+.Ar MidiID
+.Ar track
+.Ar event
+.br
+.Nm
+.Ar MidiID
+.Ar track
+.Ar Dq range
+.Ar start
+.Ar end
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+command that
+deletes one or more events from a specified
+track in a \%MIDI song.
+The first argument is a \%MIDI song descriptor
+as returned by
+.Xr midimake n
+or
+.Xr midiread n .
+The second argument is the track in the \%MIDI song.
+In the first form, the third argument is a specific event
+to remove.
+For formatting of events, see
+.Xr midievents n .
+.Pp
+In the second form, the third argument is the string
+.Dq range .
+The fourth argument is then the start time of events
+to be delete and the last argument is the end time of
+the range.
+All events starting at time
+.Ar start
+up to but not including events at time
+.Ar end
+are then deleted.
+.Sh RETURN VALUES
+.Nm
+returns a 1 if the event or events were successfully removed,
+or 0 if, in the first case, the event could not be found.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midiread n ,
+.Xr midimake n ,
+.Xr midiput n ,
+.Xr midievents n
+.Sh AUTHOR
+Mike Durian - durian@boogie.com

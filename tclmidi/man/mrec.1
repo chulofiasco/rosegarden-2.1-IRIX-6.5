@@ -1,0 +1,89 @@
+.Dd February 10, 1994
+.Dt MREC 1
+.Os
+.Sh NAME
+.Nm mrec
+.Nd "a tclmidi script to record a MIDI file"
+.Sh SYNOPSIS
+.Nm
+.Op Fl dev DevicePath
+.Op Fl merge
+.Op Fl thru
+.Oo
+.Op Fl repeat
+.Fl play Ar play_filename
+.Oc
+.Op Fl tempo Ar tempo
+.Op rec_filename
+.Sh DESCRIPTION
+.Nm
+is a
+.Xr tclmidi 1
+script that records a \%MIDI file while optionally
+simultaneously playing another \%MIDI file.
+If a record filename is not specified, the recorded
+\%MIDI file will be written to stdout.
+By default
+.Nm
+creates a format 0 \%MIDI file containing the recorded
+events and any meta events found in the optional play file.
+The options are as follows:
+.Bl -tag -width Fl repeat
+.It Fl dev DevicePath
+Use DeviceName as the device instead of the default
+.Pa /dev/midi0 .
+.It Fl thru
+If this flag is specified, data arriving at the \%MIDI IN
+port will be passed to the \%MIDI OUT port.
+By default, the data is not passed.
+.It Fl merge
+With this option,
+.Nm
+will create a format 1 \%MIDI file from a combination
+of the newly recorded events and the tracks contained
+in the optional play file.
+If the play file is a format 0 file, it will be split
+into a format 1 file.
+The recorded events will appear as a new track after
+all the tracks found in the play file.
+.It Fl repeat
+This option specifies that the play file should be repeated
+until recording is finished.
+It is only valid with the
+.Fl play
+option.
+.It Fl play
+This option specifies that another \%MIDI file should
+be played while recording.
+.It Fl tempo
+This option specifies the tempo to use for recording.
+It is only valid if a play file is not specified.
+If a play file is specified, tempos are taken from
+it instead.
+The default tempo is 120 bpm.
+.El
+.Pp
+If a play song is specified, a message will be printed saying
+the file is being loaded.
+Once loaded, the program will wait for the return key
+to be pressed before beginning to record.
+If a play file is specified and is not playing in repeat mode,
+recording will stop when the play file ends.
+Otherwise, recording stops when a return key is pressed.
+.Pp
+Since
+.Nm
+makes use of the
+.Xr midirecord n
+.Xr tclmidi 1
+command,
+this program will only work
+if
+.Xr tclmidi 1
+was compiled with a device
+interface.
+.Sh SEE ALSO
+.Xr tclmidi 1 ,
+.Xr midirecord n
+.Sh AUTHORS
+Mike Durian - durian@boogie.com
