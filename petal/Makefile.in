@@ -1,0 +1,26 @@
+CC = @CC@
+LD = @PETAL_LD@
+CFLAGS = @PETAL_CFLAGS@
+LDFLAGS = @PETAL_LDFLAGS@
+
+all : petaleditor/pkgIndex.tcl petalmidi/pkgIndex.tcl pkgIndex.tcl
+
+pkgIndex.tcl : Petal.so Petal.tcl
+	@echo "The error message for Petal.tcl is normal"
+	echo "pkg_mkIndex . Petal.so Petal.tcl" | tclsh
+
+petaleditor/pkgIndex.tcl : petaleditor/PetalEditor.tcl
+	cd petaleditor; make
+
+petalmidi/pkgIndex.tcl : petalmidi/PetalMidi.tcl
+	cd petalmidi; make
+
+Petal.so : Petal.o
+	$(LD) $(LDFLAGS) Petal.o -o Petal.so
+
+Petal.o : Petal.c
+	$(CC) $(CFLAGS) -c -o Petal.o Petal.c
+
+clean :
+	rm -f Petal.o Petal.so
+	rm -f pkgIndex.tcl petaleditor/pkgIndex.tcl petalmidi/pkgIndex.tcl

@@ -1,0 +1,2 @@
+#!/bin/sh
+cat /home/glaurent/rosegarden/common/music/test.mid

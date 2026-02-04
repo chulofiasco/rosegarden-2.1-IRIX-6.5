@@ -1,0 +1,91 @@
+
+** Note:
+** The file "petal-doc.ps" contains part of a programming manual for
+** petal; it's a very simple first draft and is not guaranteed to be
+** entirely accurate.  The entire text of the manual is also available
+** in the Rosegarden online help, although it's perhaps more difficult
+** to read there.
+
+
+Petal v0.2
+
+First, a warning :
+
+THIS IS ALPHA CODE. 
+
+And now back to our scheduled program.
+
+Here's a first "usable" (hopefully :-) release of Petal.
+
+Petal itself is Petal.c and Petal.tcl, plus two auxiliary packages in
+the 'editor' and 'midi' directories.
+
+Two sample scripts are harmonizer.tcl and pattern.tcl. They should be
+understandable without too much problems, and be taken as samples for
+other filters you'd like to write.
+
+Every Petal filter should start with :
+
+package require "Petal"
+PetalInit
+
+and end with
+
+PetalExit
+
+It should also be executable and the exec. shell should be tclsh. In
+Unix, that just means you put '#!<path-to-tclsh>' on the 1st line, as
+usual. In Windows, I don't know.
+
+When writing a new filter, it is best to test it under your favourite
+shell than through the 'Apply Filter' functions of the Editor or the
+Sequencer. A filter must be passed at least 1 and up to 4
+arguments. It will read it's input from stdin and dump the output to
+stdout, so don't forget redirections.
+
+The first argument determines the Petal 'mode' ('MIDI' or 'EDITOR')
+according to what kind of data you intend to feed to it.
+
+The next arguments are optional and have defaults. They are all
+integers.
+
+The 2nd arg. is the nb. of the main track (or staff) the filter will
+process.
+
+The 3rd arg. determines whether the content of the main track will be
+copied to the new track (the one which will contain the filter output)
+prior to any operation. 0 means no, any other value means yes.
+
+The 4th arg. is the nb. of the reference track (see pattern.tcl for an
+example of its use).
+
+About Petal commands:
+
+Every command or variable that is prefixed with "Petal" (PetalGetItem,
+PetalPutItem, $petalItemIndexes...) deals with Petal's internal data
+structures and should be used as the only API when dealing with those.
+
+Other functions (GetDuration, GetOnePitch, GetPitches, etc...) will be
+documented later, you pretty much have them all used in harmonizer.tcl
+and pattern.tcl
+
+Every filter sticking to this API should be usable "as is" by both the
+Editor and the Sequencer. Both examples are.
+
+About the 'Apply Filter' functions :
+
+In the Editor, applying a filter will leave your curent data untouched
+and just add one more staff. In the Sequencer, it will first close
+your file and reload something entirely new. Although a well-written
+filter should leave all previously existing data intact and return the
+input song with one more track, if something goes wrong you'll end up
+with nothing. It is best to save before you use this function.
+
+The two shell scripts 'fakeecho' and 'rawdump' were used to help
+debugging the ApplyFilter function in the Sequencer.
+
+There is currently no way to specify arguments for the filters from
+the 'Apply Filter' function, except in the Editor where arg #2 will be
+the selected track, and arg #4 the next one if any. Arg #3 is always 1
+both in the Editor and the Sequencer. In the Sequencer, arg #2 is 1
+and arg #4 is 2.

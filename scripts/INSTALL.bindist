@@ -1,0 +1,66 @@
+# This file is not relevant to the Rosegarden source distribution.
+# It is here so that make-bindist.sh can include it in any binary
+# distribution you may build.
+
+Rosegarden 2.1 installation
+===========================
+
+These instructions are for installing a binary distribution of
+Rosegarden 2.1 for Unix.  Source distributions are also available,
+from the ftp site at ftp://ftp.maths.bath.ac.uk/pub/dream/ROSE .
+
+This distribution is @distname@.
+
+
+What this distribution contains
+-------------------------------
+
+This distribution contains several documentation files (ANNOUNCEMENT,
+README, CHANGES, COPYRIGHT, COPYING and INSTALL); an X resource file
+called Rosegarden; and a tar archive called package.tar.  The archive
+contains:
+
+	bin/
+	bin/rosegarden
+	lib/
+	lib/rosegarden/
+	lib/rosegarden/bin/
+	lib/rosegarden/bin/sequencer
+	lib/rosegarden/bin/editor
+	lib/rosegarden/example/
+	lib/rosegarden/example/glazunov.rose
+	lib/rosegarden/synth-patches/
+	lib/rosegarden/synth-patches/std.sb
+	lib/rosegarden/synth-patches/drums.sb
+	lib/rosegarden/help/
+	lib/rosegarden/help/rosehelp.info
+	lib/rosegarden/help/rosehelp.hnx
+	lib/rosegarden/petal/
+	lib/rosegarden/petal/Petal.tcl
+	lib/rosegarden/petal/PetalEditor.tcl
+	lib/rosegarden/petal/PetalMidi.tcl
+	lib/rosegarden/rosepetal-filters/
+	lib/rosegarden/rosepetal-filters/harmonizer.tcl
+	lib/rosegarden/rosepetal-filters/pattern.tcl
+
+
+Installation
+------------
+
+If you normally keep external applications in a common area such as
+/usr/local, you may very well find you can install this software
+successfully just by sitting in /usr/local and unpacking the
+package.tar archive.  You should then copy the Rosegarden resource
+file to your home directory, or another appropriate place such as
+/usr/lib/X11/app-defaults, and then you should be able to run
+/usr/local/bin/rosegarden.
+
+If you have unpacked the files in a directory other than /usr/local,
+you should edit the Rosegarden resource file to contain the correct
+paths for the executables, help files, patch files and so on.  See the
+comments in that file.
+
+
+Chris Cannam, cannam@zands.com
+October 1997
+

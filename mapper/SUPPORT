@@ -1,0 +1,77 @@
+The Mapper library provides a common interface for
+Rosegarden to talk to the MIDI IO stream on your
+local, friendly unix box - providing it is already
+supported.
+
+If the src/ directory contains files with your system's
+name on them then it's a fair bet that your system
+is supported in one way or another.
+
+This blurb probably won't be a lot of interest to you
+unless your box isn't currently supported.  If it isn't
+then if you have some time, expertise and are feeling
+brave then you may want to develop yourself local support
+on the skeleton API provided.  This is what this file
+is here for.
+
+What to do if your box isn't supported
+--------------------------------------
+
+If your box isn't supported as yet then follow these
+handy hints for adding support yourself through the
+library.
+
+Three files currently comprise the Mapper library:
+
+ Device.c - gives the application routines to create
+            and control both device and track
+            information.  Useful to allow Rosegarden
+            to tell what is happening where during IO.
+
+ Mapper.c (with system specific variants)
+
+          - provides routines that wrap the MIDI IO
+            functionality of various UNIX flavours.
+            This will need all the work if it's not
+            already supported.
+
+ Timer.c  (with variants)
+          - provides Timer routines for any low level
+            timer you see fit to implement.  The Linux
+            example is simple because we directly call
+            the OSS API.  SGI/ZILOG examples show the
+            messy (but perhaps more satisfying) approach.
+
+By following the API layed down in Timer_STUB.c and
+Mapper_STUB.c you can build your own low level support
+for your local system.
+
+You'll need to add your new system type to the umbrella
+files Timer.c and Mapper.c as well as changing a definition
+in the top level Makefile.  This will allow you to build
+your new library (make Mapper).  If this is successful
+then you can try and re-link the Sequencer with the new
+library.  According to the sophistication of the system
+that you're supporting you may want some extra bits and
+bobs in the Sequencer proper.  You may notice that some
+GUI changes are made by using the same system definitions
+that you used to make the library (i.e SYSTEM_LINUX).
+You may use this method to alter Sequencer functionality
+but *please* don't alter it for the sake of it with this
+method - it's ugly enough already in places.
+
+The header file Mapper.h provides the prototypes for the
+Mapper library.  This file itself includes system specific
+includes.  If you need other than the supplied GENERIC
+and LINUX definitions then work this in yourself.
+
+If you get something working and are willing to share it
+then send us the code and we may stick it in the next
+release of the distribution.
+
+I'll support this effort to a certain extent but please
+remember the ever present caveat that we all have day jobs.
+
+Good luck.
+
+Richard Bown, March 1997
